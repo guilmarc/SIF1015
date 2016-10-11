@@ -18,7 +18,7 @@ make
 
 ### Création de module
 L'usage de la commande crée un fichier `argument.h` et `argument.c` et écrit les en-têtes. Remplacez `argument` par le nom du module en question.
-```
+```c
 make module argument
 
 //  Crée un fichier argument.c qui contient :
