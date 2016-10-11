@@ -1,6 +1,9 @@
 CC = gcc
 CFLAGS = -g -Wall
 TARGET = linked_info
+CCRED=$(echo -e "\033[0;31m")
+CCYELLOW=$(echo -e "\033[0;33m")
+CCEND=$(echo -e "\033[0m")
 
 default: $(TARGET)
 
@@ -28,3 +31,4 @@ module:
 	echo "#define "$(shell echo $(I) | tr a-z A-Z)_H >> $(I).h
 	echo "\n" >> $(I).h
 	echo "#endif" >> $(I).h
+	echo "\nCreated, don't forget to add "$(I)" into the makefile"

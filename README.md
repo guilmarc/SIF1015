@@ -34,6 +34,18 @@ make module I=argument
 #endif
 ```
 
+Vous devez par la suite l'ajouter à votre `makefile` de la façon suivante
+```
+argument.o: argument.c argument.h
+    $(CC) -c argument.c $(CFLAGS) -I.
+```
+
+Et ajoutez a la compilation du programme principal
+```
+$(TARGET): main.o linked_list.o member_info.o argment.o
+	$(CC) $(CFLAGS) -o $(TARGET) main.o linked_list.o member_info.o argment.o
+```
+
 ### Néttoyer le dossier de Travail
 La commande suivante supprimera tous les fichiers compilé dans le dossier courant.
 ```
