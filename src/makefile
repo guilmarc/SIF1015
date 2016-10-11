@@ -18,3 +18,13 @@ member_info.o: member_info.c member_info.h
 
 clean:
 	$(RM) *.o *.gch linked_info
+
+module:
+	touch $(I).h $(I).c
+	echo "#include <stdio.h>" >> $(I).c
+	echo "#include <stlib.h>" >> $(I).c
+	echo "#include <"$(I)".h>" >> $(I).c
+	echo "#ifndef "$(shell echo $(I) | tr a-z A-Z)_H >> $(I).h
+	echo "#define "$(shell echo $(I) | tr a-z A-Z)_H >> $(I).h
+	echo "\n" >> $(I).h
+	echo "#endif" >> $(I).h

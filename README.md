@@ -16,6 +16,24 @@ make
 ./linked_info
 ```
 
+### Création de module
+L'usage de la commande crée un fichier `argument.h` et `argument.c` et écrit les en-têtes. Remplacez `argument` par le nom du module en question.
+```
+make module argument
+
+//  Crée un fichier argument.c qui contient :
+#include <stdio.h>
+#include <stdlib.h>
+#include "argument.h"
+
+//  Crée un fichier argument.h qui contient :
+#ifndef ARGUMENT_H
+#define ARGUMENT_H
+
+
+#endif
+```
+
 ### Néttoyer le dossier de Travail
 La commande suivante supprimera tous les fichiers compilé dans le dossier courant.
 ```
