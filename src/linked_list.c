@@ -10,13 +10,6 @@ Node* createNode(MemberInfo* member) {
     return node;
 }
 
-Node* createNode() {
-    Node* node = malloc(sizeof(Node));
-    node->member = NULL;
-    node->next = NULL;
-    return node;
-}
-
 void appendNode(Node* headNode, MemberInfo* member) {
     Node* node = createNode(member);
     Node* lastNode = getLastNode(headNode);
