@@ -1,17 +1,17 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
-#include "member_info.h"
+#include "member.h"
 
 typedef struct node {
-	MemberInfo* member;
+	Member* member;
     struct node* next;
 } Node;
 
 Node* getLastNode(Node* headNode);
-Node* createNode(MemberInfo* member);
-void appendNode(Node* headNode, MemberInfo* member);
-int removeNode(Node* headNode, MemberInfo* member);
-int replaceNode(Node* headNode, MemberInfo* oldMember, MemberInfo* newMember);
+Node* createNode(Member* member);
+void appendNode(Node* headNode, Member* member);
+int removeNode(Node* headNode, Member* member);
+int replaceNode(Node* headNode, Member* oldMember, Member* newMember);
 int countNodes(Node* headNode);
 void displayAll(Node* headNode);
 

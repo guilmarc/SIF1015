@@ -3,20 +3,20 @@
 #include "linked_list.h"
 
 
-Node* createNode(MemberInfo* member) {
+Node* createNode(Member* member) {
     Node* node = malloc(sizeof(Node));
     node->member = member;
     node->next = NULL;
     return node;
 }
 
-void appendNode(Node* headNode, MemberInfo* member) {
+void appendNode(Node* headNode, Member* member) {
     Node* node = createNode(member);
     Node* lastNode = getLastNode(headNode);
     lastNode->next = node;
 }
 
-int removeNode(Node* headNode, MemberInfo* member) {
+int removeNode(Node* headNode, Member* member) {
     Node* current = headNode->next;
     Node* previous = headNode;
     while(current != NULL) {
@@ -31,7 +31,7 @@ int removeNode(Node* headNode, MemberInfo* member) {
     return 0;
 }
 
-int replaceNode(Node* headNode, MemberInfo* oldMember, MemberInfo* newMember) {
+int replaceNode(Node* headNode, Member* oldMember, Member* newMember) {
     Node* current = headNode;
     while(current != NULL) {
         if(current->member == oldMember) {
@@ -66,7 +66,7 @@ int countNodes(Node* headNode) {
 void displayAll(Node* headNode) {
     Node* current = headNode;
     while(current != NULL) {
-        displayMemberInfo(current->member);
+        displayMember(current->member);
         current = current->next;
     }
 }

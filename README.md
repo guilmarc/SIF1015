@@ -42,8 +42,8 @@ argument.o: argument.c argument.h
 
 Et ajoutez a la compilation du programme principal
 ```
-$(TARGET): main.o linked_list.o member_info.o argment.o
-	$(CC) $(CFLAGS) -o $(TARGET) main.o linked_list.o member_info.o argment.o
+$(TARGET): main.o linked_list.o member.o argment.o
+	$(CC) $(CFLAGS) -o $(TARGET) main.o linked_list.o member.o argment.o
 ```
 
 ### Néttoyer le dossier de Travail
