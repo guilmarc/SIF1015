@@ -26,7 +26,7 @@ make clean
 Travail Pratique 1 (LINUX)
 Concurrence et exclusion mutuelle : gestion de ressources partagées
 
-En vous inspirant des utilitaires de gestion de membres d’un regroupement de professionnels en informatique linkedINFO et  d’une liste chaînée qui vous sont fournis dans le dossier /exempleLinkedinINFO-A16 qui est disponible sur le site ftp de l’UQTR (dmiftp.uqtr.ca/FMeunier/sif1015/exemples) et sur le serveur  DMILinux.uqtr.ca ainsi que  des notions de gestion du partage des ressources présentées en classe, vous devez implanter un programme permettant la gestion des échanges de messages entre membres de ce regroupement de professionnels en informatique. Ce programme devrait comporter les spécifications suivantes:
+En vous inspirant des utilitaires de gestion de membres d’un regroupement de professionnels en informatique linkedINFO et  d’une liste chaînée qui vous sont fournis dans le dossier `/exempleLinkedinINFO-A16` qui est disponible sur le site ftp de l’UQTR (`dmiftp.uqtr.ca/FMeunier/sif1015/exemples`) et sur le serveur [DMILinux.uqtr.ca](ftp://DMILinux.uqtr.ca) ainsi que  des notions de gestion du partage des ressources présentées en classe, vous devez implanter un programme permettant la gestion des échanges de messages entre membres de ce regroupement de professionnels en informatique. Ce programme devrait comporter les spécifications suivantes:
 
 
 ## Étape 1
@@ -59,7 +59,21 @@ E titi
 L C 1-15
 ```
 ## Étape 2
-Chaque ligne d’un fichier de transactions commence par une lettre qui représente le type de transaction à effectuer. A pour l’ajout d’un membre  du regroupement LinkedINFO, en spécifiant son nick (unique), sa spécialité, sa formation et  son expérience, M pour la modification des informations d’un  membre, en spécifiant le numéro de nœud à modifier, le nouveau nick, la nouvelle spécialité, la nouvelle formation et la nouvelle expérience, E pour l’élimination (sortir) un membre  en spécifiant son nick, L pour l’affichage à la console des informations des membres selon les options suivantes : C pour l’affichage complet des informations des membres dont le numéro de nœud est spécifié dans un intervalle et T  pour la transmission d’un message texte provenant d’un membre à acheminer aux membres ayant une spécialité donnée  (option PG) ou acheminé à un autre membre (option GG).
+Chaque ligne d’un fichier de transactions commence par une lettre qui représente le type de transaction à effectuer.
+
+### A (Ajout)
+Pour l’ajout d’un membre  du regroupement LinkedINFO, en spécifiant son nick (unique), sa spécialité, sa formation et  son expérience,
+
+### M (Modification)
+Pour la modification des informations d’un  membre, en spécifiant le numéro de nœud à modifier, le nouveau nick, la nouvelle spécialité, la nouvelle formation et la nouvelle expérience,
+
+### E (Elimination)
+Pour l’élimination (sortir) un membre  en spécifiant son nick,
+
+### L (Lecture)
+Pour l’affichage à la console des informations des membres selon les options suivantes :
+- `C` pour l’affichage complet des informations des membres dont le numéro de nœud est spécifié dans un intervalle
+- `T` pour la transmission d’un message texte provenant d’un membre à acheminer aux membres ayant une spécialité donnée  (option `PG`) ou acheminé à un autre membre (option `GG`).
 
 ## Étape 3
 Votre programme (`main()`) crée une liste chaînée devant contenir la liste des membres. Chaque nœud de cette liste correspond à une structure de la forme :
