@@ -17,4 +17,4 @@ member_info.o: member_info.c member_info.h
 	$(CC) -c member_info.c $(CFLAGS) -I.
 
 clean:
-	$(RM) *.o linked_info
+	$(RM) *.o *.gch linked_info
