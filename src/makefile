@@ -8,13 +8,13 @@ $(TARGET): main.o linked_list.o member_info.o
 	$(CC) $(CFLAGS) -o $(TARGET) main.o linked_list.o member_info.o
 
 main.o: main.c main.h
-	gcc -c main.c -Wall -I.
+	$(CC) -c main.c $(CFLAGS) -I.
 
 linked_list.o: linked_list.c linked_list.h
-	gcc -c linked_list.c -Wall -I.
+	$(CC) -c linked_list.c $(CFLAGS) -I.
 
 member_info.o: member_info.c member_info.h
-	gcc -c member_info.c -Wall -I.
+	$(CC) -c member_info.c $(CFLAGS) -I.
 
 clean:
-	$(RM) *.o
+	$(RM) *.o linked_info

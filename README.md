@@ -6,6 +6,23 @@
 
 > Nicolas Boisvert
 
+# Manuel
+
+### Compiler
+**Assurez-vous d'avoir le compilateur `gcc` pour pouvoir compiler** et déplacez vous dans le dossier `./src`
+
+```
+make
+./linked_info
+```
+
+### Néttoyer le dossier de Travail
+La commande suivante supprimera tous les fichiers compilé dans le dossier courant.
+```
+make clean
+```
+
+# Devis
 Travail Pratique 1 (LINUX)
 Concurrence et exclusion mutuelle : gestion de ressources partagées
 
