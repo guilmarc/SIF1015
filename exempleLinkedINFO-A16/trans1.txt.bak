@@ -1,0 +1,20 @@
+A roger SIF1015
+A ben SIF1015
+A joe SIF1015
+L 1-10
+T joe SIF1015 Le tp1 requiert-il de la concurrence
+L 1-10
+T ben SIF1015 Oui! Puisque l'accès a la liste chainée est concurrent
+L 1-10
+T roger SIF1015 C'est surtout que chaque transaction est threadée
+L 1-10
+A max SIF1053
+A kim SIF1053
+T kim SIF1053 L'énonce du tp1 est-il sur le site ftp?
+L 1-10
+T max SIF1053 Non pas encore
+L 1-10
+E ben SIF1015
+L 1-10
+A jim SIF1015
+L 1-10
