@@ -7,8 +7,8 @@ CCEND=$(echo -e "\033[0m")
 
 default: $(TARGET)
 
-$(TARGET): main.o linked_list.o member_info.o
-	$(CC) $(CFLAGS) -o $(TARGET) main.o linked_list.o member_info.o
+$(TARGET): main.o linked_list.o member_info.o 
+	$(CC) $(CFLAGS) -o $(TARGET) main.o linked_list.o member_info.o 
 
 main.o: main.c main.h
 	$(CC) -c main.c $(CFLAGS) -I.
@@ -25,7 +25,7 @@ clean:
 module:
 	touch $(I).h $(I).c
 	echo "#include <stdio.h>" >> $(I).c
-	echo "#include <stlib.h>" >> $(I).c
+	echo "#include <stdlib.h>" >> $(I).c
 	echo "#include <"$(I)".h>" >> $(I).c
 	echo "#ifndef "$(shell echo $(I) | tr a-z A-Z)_H >> $(I).h
 	echo "#define "$(shell echo $(I) | tr a-z A-Z)_H >> $(I).h
