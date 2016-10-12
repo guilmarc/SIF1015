@@ -1,34 +1,40 @@
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include <stdio.h>
 #include "main.h"
 #include "linked_list.h"
 #include "member.h"
 #include "main.h"
 
+const char FILEPATH[] = "trans2.txt";
+const char FILEOPEN_METHOD[] = "r";
+const int MAX_BUFFER_SIZE = 1024;
 
-int main() {
-    Member* member1 = createMember();
-    member1->experiences = 2;
-    Member* member2 = createMember();
-    member2->experiences = 23;
-    Member* member3 = createMember();
-    member3->experiences = 254;
-    Member* member4 = createMember();
-    member4->experiences = 1000;
-    Member* member5 = createMember();
-    member5->experiences = 1123;
+int main(int argc, char **argv) {
+    parseCommand("A Tidge 2001");
+    return 0;
+}
 
-    Node* head = createNode(member1);
-    appendNode(head, member2);
-    appendNode(head, member3);
-    appendNode(head, member4);
-    printf("\n");
-    displayAll(head);
-    removeNode(head, member3);
-    printf("\n");
-    displayAll(head);
-    replaceNode(head, member4, member5);
-    printf("\n");
-    displayAll(head);
+void loadFile(Node* headNode) {
+    //FILE *file = fopen(FILEPATH, FILEOPEN_METHOD);
+}
+
+int parseCommand(char commandString[]) {
+    char command = toupper(commandString[0]);
+    switch (command) {
+        case 'A':
+            break;
+        case 'M':
+            break;
+        case 'E':
+            break;
+        case 'L':
+            break;
+        default:
+            printf("Undefined command \'%c\'\n", command);
+            return -1;
+            break;
+    }
     return 0;
 }
