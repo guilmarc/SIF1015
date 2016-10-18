@@ -8,7 +8,7 @@ typedef struct node {
 } Node;
 
 Node* getLastNode(Node* headNode);
-Node* createNode(Member* member);
+Node* createNode();
 void appendNode(Node* headNode, Member* member);
 int removeNode(Node* headNode, Member* member);
 int replaceNode(Node* headNode, Member* oldMember, Member* newMember);

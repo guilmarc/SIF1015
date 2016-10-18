@@ -13,18 +13,10 @@ A titi AnalysteSecurite BAC 17
 A rig ProgrammeurC BAC 25
 L C 1-15
 M 2 tiben AnalysteSysteme BAC 5
-L S AnalysteSysteme
 L C 1-15
-E titi
+T PG tiben AdminReseau Message aux admin reseau
 L C 1-15
-T PG ben AdminReseau Message aux admin reseau
-L C 1-15
-T PG fm AnalysteSysteme Message aux membres du meme groupe que Ben
-L C 1-15
+T PG fm AnalysteSysteme Message aux membres du meme groupe que tiBen
 T PP fm bb Message de fm a bb
-E rig
-L C 1-15
-L SE AnalysteSysteme 5-10
-L S ProgrammeurC
 
 
