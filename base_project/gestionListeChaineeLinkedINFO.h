@@ -5,23 +5,25 @@
 #include <pthread.h>
 #include <unistd.h>
 
-struct infoMembre{
+struct Member {
 	char ptrNick[100];
 	char ptrSpecialite[100];
 	char ptrFormation[100];
 	int Experience;
-	};
+} typedef Member;
 
-struct noeud{
-	struct infoMembre membre;
-	struct noeud		*suivant;
-	};
+struct node{
+	Member membre;
+	struct node *next;
+};
+
+typedef struct node Node;
 
 void error(const int exitcode, const char * message);
 
 void* readTranslinkedINFO(char* nomFichier);
 
-struct noeud * findPrevlinkedINFO(const char* ptrNick); // ptrNick unique
+Node * findPrevlinkedINFO(const char* ptrNick); // ptrNick unique
 
 void addItemlinkedINFO(const char* ptrNick, const char* ptrSpecialite, const char* ptrFormation, const int Experience);
 void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* ptrSpecialite, const char* ptrFormation, const int Experience);

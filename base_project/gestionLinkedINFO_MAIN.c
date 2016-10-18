@@ -14,9 +14,9 @@
 #include "gestionListeChaineeLinkedINFO.h"
 
 //Pointeur de tete de liste
-struct noeud* head;
+Node* head;
 //Pointeur de queue de liste pour ajout rapide
-struct noeud* queue;
+Node* queue;
 
 
 int main(int argc, char* argv[]){

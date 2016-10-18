@@ -1,57 +1,26 @@
-//#########################################################
-//#
-//# Titre : 	Utilitaires Liste Chainee et CHAT LINUX Automne 16
-//#			SIF-1015 - Systeme d'exploitation
-//#			Universite du Quebec a Trois-Rivieres
-//#
-//# Auteur : 	Francois Meunier
-//#	Date :	Septembre 2016
-//#
-//# Langage : 	ANSI C on LINUX
-//#
-//#######################################
-
 #include "gestionListeChaineeLinkedINFO.h"
 
-//Pointeur de tete de liste
-extern struct noeud* head;
-//Pointeur de queue de liste pour ajout rapide
-extern struct noeud* queue;
+extern Node* head;
+extern Node* queue;
 
+Node * findPrevlinkedINFO(const char* ptrNick){
+    if ((head != NULL) || (queue != NULL)){
+        Node * ptr = head;
+        while (ptr->next!=NULL){
 
-//#######################################
-//#
-//# Recherche le PREDECESSEUR d'un item dans la liste chainee
-//#
-//# RETOUR: Le pointeur vers le predecesseur est retourne
-//#
-//#
-//# 		Retourne NULL dans le cas ou l'item est introuvable
-//#
-struct noeud * findPrevlinkedINFO(const char* ptrNick){
+            printf("\n dans findPrevlinkedINFO  nick suivant %s NICK %s COMPARAISON %d %d", ptr->next->membre.ptrNick,ptrNick, (int)(strlen(ptr->next->membre.ptrNick)), (int)(strlen(ptrNick)));
 
-    //La liste est vide
-    if ((head==NULL)&&(queue==NULL)) return NULL;
+            //Est-ce le predecesseur de l'item recherche?
+            if((strcmp(ptr->next->membre.ptrNick,ptrNick) == 0) ){
 
-    //Pointeur de navigation
-    struct noeud * ptr = head;
+                //On retourne un pointeur sur l'item precedent
+                return ptr;
+            }
 
-    //Tant qu'un item suivant existe
-    while (ptr->suivant!=NULL){
-
-        printf("\n dans findPrevlinkedINFO  nick suivant %s NICK %s COMPARAISON %d %d", ptr->suivant->membre.ptrNick,ptrNick, (int)(strlen(ptr->suivant->membre.ptrNick)), (int)(strlen(ptrNick)));
-
-        //Est-ce le predecesseur de l'item recherche?
-        if((strcmp(ptr->suivant->membre.ptrNick,ptrNick) == 0) ){
-
-            //On retourne un pointeur sur l'item precedent
-            return ptr;
+            //Deplacement du pointeur de navigation
+            ptr=ptr->next;
         }
-
-        //Deplacement du pointeur de navigation
-        ptr=ptr->suivant;
     }
-
     //On retourne un pointeur NULL
     return NULL;
 }
@@ -63,7 +32,7 @@ struct noeud * findPrevlinkedINFO(const char* ptrNick){
 void addItemlinkedINFO(const char* ptrNick, const char* ptrSpecialite, const char* ptrFormation, const int Experience){
 
     //Creation de l'enregistrement en memoire
-    struct noeud* ni = (struct noeud*)malloc(sizeof(struct noeud));
+    Node* ni = (Node*)malloc(sizeof(Node));
 
 
     //Affectation des valeurs des champs
@@ -76,16 +45,16 @@ void addItemlinkedINFO(const char* ptrNick, const char* ptrSpecialite, const cha
     if(head == NULL) // ajout au debut de la liste vide
     {
         //  premier noeud
-        ni->suivant= NULL;
+        ni->next= NULL;
         queue = head = ni;
 
     }
     else  // ajout a la fin de la liste
     {
-        struct noeud* tptr = queue;
-        ni->suivant= NULL;
+        Node* tptr = queue;
+        ni->next= NULL;
         queue = ni;
-        tptr->suivant = ni;
+        tptr->next = ni;
     }
 
 }
@@ -106,7 +75,7 @@ void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* pt
     //Recherche de l'element a� modifier
 
 
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     while (ptr!=NULL){
@@ -123,7 +92,7 @@ void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* pt
         }
 
         else{
-            ptr = ptr->suivant;
+            ptr = ptr->next;
             noentree++;
         }
 
@@ -137,8 +106,8 @@ void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* pt
 //# Retire un item de la liste chainee
 //#
 void removeItemlinkedINFO(const char* ptrNick){
-    struct noeud * ptr;
-    struct noeud * optr;
+    Node * ptr;
+    Node * optr;
 
     //Verification sommaire liste non vide
 
@@ -157,7 +126,7 @@ void removeItemlinkedINFO(const char* ptrNick){
                 queue = head = NULL;
                 return;
             }
-            head = ptr->suivant;
+            head = ptr->next;
             //printf("tete\n");
             free(ptr);
         }
@@ -169,18 +138,18 @@ void removeItemlinkedINFO(const char* ptrNick){
         //Item  trouve
         if (ptr!=NULL)
         {
-            if (queue==ptr->suivant) // suppression de l'element de queue
+            if (queue==ptr->next) // suppression de l'element de queue
             {
                 queue=ptr;
-                free(ptr->suivant);
-                ptr->suivant=NULL;
+                free(ptr->next);
+                ptr->next=NULL;
                 //printf("queue\n");
                 return;
             }
             else // suppression d'un element dans la liste
             {
-                optr = ptr->suivant;
-                ptr->suivant = ptr->suivant->suivant;
+                optr = ptr->next;
+                ptr->next = ptr->next->next;
                 //printf("autre\n");
                 free(optr);
             }
@@ -198,7 +167,7 @@ void listItemsCompletlinkedINFO(const int start, const int end){
     int noentree=1;
     printHeader();
 
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     while (ptr!=NULL){
@@ -216,7 +185,7 @@ void listItemsCompletlinkedINFO(const int start, const int end){
             ptr=NULL;
         }
         else{
-            ptr = ptr->suivant;
+            ptr = ptr->next;
             noentree++;
         }
 
@@ -232,7 +201,7 @@ void listItemsParSpecialitelinkedINFO(const char* ptrSpecialite){
     int noentree=1;
     printHeader();
 
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     while (ptr!=NULL){
@@ -244,7 +213,7 @@ void listItemsParSpecialitelinkedINFO(const char* ptrSpecialite){
             ptr->membre.ptrFormation, ptr->membre.Experience);
         }
         else{
-            ptr = ptr->suivant;
+            ptr = ptr->next;
             noentree++;
         }
 
@@ -260,7 +229,7 @@ void listItemsParSpecialiteExperiencelinkedINFO(const char* ptrSpecialite, const
     int noentree=1;
     printHeader();
 
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     while (ptr!=NULL){
@@ -272,7 +241,7 @@ void listItemsParSpecialiteExperiencelinkedINFO(const char* ptrSpecialite, const
             ptr->membre.ptrFormation, ptr->membre.Experience);
         }
         else{
-            ptr = ptr->suivant;
+            ptr = ptr->next;
             noentree++;
         }
 
@@ -287,7 +256,7 @@ void listItemsParSpecialiteFormationlinkedINFO(const char* ptrSpecialite, const 
 
     int noentree=1;
     printHeader();
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     while (ptr!=NULL){
@@ -299,7 +268,7 @@ void listItemsParSpecialiteFormationlinkedINFO(const char* ptrSpecialite, const 
                 ptr->membre.ptrFormation, ptr->membre.Experience);
         }
         else{
-            ptr = ptr->suivant;
+            ptr = ptr->next;
             noentree++;
         }
 
@@ -316,7 +285,7 @@ void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* ptrSpeciali
 
     printHeader();
 
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     while (ptr!=NULL){
@@ -328,7 +297,7 @@ void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* ptrSpeciali
             ptr->membre.ptrFormation, ptr->membre.Experience);
         }
         else{
-            ptr = ptr->suivant;
+            ptr = ptr->next;
             noentree++;
         }
 
@@ -343,7 +312,7 @@ void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* ptrSpeciali
 void transTextGroupelinkedINFO(const char* ptrNick, const char* ptrGroupe, const char* ptrTexte){
 
 
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     printf("%s \t %s ",ptrNick, ptrGroupe);
@@ -356,7 +325,7 @@ void transTextGroupelinkedINFO(const char* ptrNick, const char* ptrGroupe, const
             printf("membre: %s \t transmet au groupe: %s",ptr->membre.ptrNick, ptr->membre.ptrSpecialite);
             printf("   TEXTE ENVOYE/RECU: %s\n",ptrTexte);
         }
-        ptr = ptr->suivant;
+        ptr = ptr->next;
 
     }
 
@@ -381,7 +350,7 @@ void printFooter() {
 void transTextPersonnellinkedINFO(const char* ptrNick1, const char* ptrNick2, const char* ptrTexte){
 
 
-    struct noeud * ptr = head;			//premier element
+    Node * ptr = head;			//premier element
 
 
     printf("%s \t %s ",ptrNick1, ptrNick2);
@@ -394,7 +363,7 @@ void transTextPersonnellinkedINFO(const char* ptrNick1, const char* ptrNick2, co
             printf(" membre: %s \t transmet au membre: %s ",ptrNick1, ptrNick2);
             printf("TEXTE ENVOYE/RECU: %s\n",ptrTexte);
         }
-        ptr = ptr->suivant;
+        ptr = ptr->next;
 
     }
 

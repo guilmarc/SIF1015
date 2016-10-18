@@ -14,9 +14,9 @@
 #include "gestionListeChaineeLinkedINFO.h"
 
 //Pointeur de tete de liste
-extern struct noeud* head;
+extern Node* head;
 //Pointeur de queue de liste pour ajout rapide
-extern struct noeud* queue;
+extern Node* queue;
 
 //#######################################
 //#
