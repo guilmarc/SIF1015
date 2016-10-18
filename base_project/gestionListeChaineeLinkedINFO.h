@@ -6,14 +6,14 @@
 #include <unistd.h>
 
 struct Member {
-	char ptrNick[100];
-	char ptrSpecialite[100];
-	char ptrFormation[100];
-	int Experience;
+	char nickname[100];
+	char speciality[100];
+	char scholarships[100];
+	int experiences;
 } typedef Member;
 
 struct node{
-	Member membre;
+	Member member;
 	struct node *next;
 };
 
@@ -21,20 +21,24 @@ typedef struct node Node;
 
 void error(const int exitcode, const char * message);
 
-void* readTranslinkedINFO(char* nomFichier);
+void* readTrans(char* filename);
 
-Node * findPrevlinkedINFO(const char* ptrNick); // ptrNick unique
+Node * findPrev(const char* nickname); // nickname unique
 
-void addItemlinkedINFO(const char* ptrNick, const char* ptrSpecialite, const char* ptrFormation, const int Experience);
-void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* ptrSpecialite, const char* ptrFormation, const int Experience);
-void removeItemlinkedINFO(const char* ptrNick);
-void listItemsCompletlinkedINFO(const int start, const int end);
-void listItemsParSpecialitelinkedINFO(const char* ptrSpecialite);
-void listItemsParSpecialiteExperiencelinkedINFO(const char* ptrSpecialite, const int start, const int end);
-void listItemsParSpecialiteFormationlinkedINFO(const char* ptrSpecialite, const char* ptrFormation);
-void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* ptrSpecialite, const char* ptrFormation, const int start, const int end );
-void transTextGroupelinkedINFO(const char* ptrNick, const char* ptrGroupe, const char* ptrTexte); // groupes possibles: Formation ou Specialite
-void transTextPersonnellinkedINFO(const char* ptrNick1, const char* ptrNick2, const char* ptrTexte);
+void addItem(const char* nickname, const char* speciality, const char* scholarships, const int experiences);
+void addMemberItem(const Member member);
+void modifyItem(const int nodeIndex, const char* nickname, const char* speciality, const char* scholarships, const int experiences);
+void modifyMemberItem(const int nodeIndex, const Member member);
+void removeItem(const char* nickname);
+void listAllItems(const int start, const int end);
+void listItemsBySpecialities(const char* speciality);
+void listItemsBySpecialitiesExperiences(const char* speciality, const int start, const int end);
+void listItemsBySpecialitiesScholarships(const char* speciality, const char* scholarships);
+void listItemsBySpecialitiesScholarshipsExperiences(const char* speciality, const char* scholarships, const int start, const int end );
+void transTextGroupe(const char* nickname, const char* ptrGroupe, const char* ptrTexte); // groupes possibles: Formation ou Specialite
+void transTextPersonnel(const char* nickname1, const char* nickname2, const char* ptrTexte);
 
+
+void printMember(Member member, int recordIndex);
 void printHeader();
 void printFooter();
