@@ -24,6 +24,10 @@ void error(const int exitcode, const char * message) {
     exit(exitcode);
 }
 
+void parseCommand(char* commandString) {
+    printf("COMMAND : %s", commandString);
+}
+
 void* readTrans(char* filename) {
     FILE *file;
     char buffer[MAX_BUFFER_SIZE];
@@ -37,7 +41,6 @@ void* readTrans(char* filename) {
     fgets(buffer, MAX_BUFFER_SIZE, file);
 
     while (!feof(file)) {
-
         tok = strtok_r(buffer, " ", &splitPointer);
 
         switch(tok[0]) {

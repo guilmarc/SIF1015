@@ -23,6 +23,8 @@ void error(const int exitcode, const char * message);
 
 void* readTrans(char* filename);
 
+void parseCommand(char* commandString);
+
 Node * findPrev(const char* nickname); // nickname unique
 
 void addItem(const char* nickname, const char* speciality, const char* scholarships, const int experiences);
