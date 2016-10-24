@@ -13,18 +13,19 @@ A titi AnalysteSecurite BAC 17
 A rig ProgrammeurC BAC 25
 L C 1-15
 M 2 tiben AnalysteSysteme BAC 5
+L C 1-15
 L S AnalysteSysteme
-L C 1-15
-E titi
-L C 1-15
-T PG ben AdminReseau Message aux admin reseau
-L C 1-15
-T PG fm AnalysteSysteme Message aux membres du meme groupe que Ben
-L C 1-15
-T PP fm bb Message de fm a bb
+L SE AnalysteSysteme 5-10
+L SF ProgrammeurC DEC
+L SFE AdminReseau DEC 5-10
+L S AnalysteSysteme
+T PP rog tiben je me cherche une job
+T PG fm ProgrammeurC je cherche un programmeur en C sur LINUX
 E rig
 L C 1-15
-L SE AnalysteSysteme 5-10
-L S ProgrammeurC
+
+
+
+
 
 

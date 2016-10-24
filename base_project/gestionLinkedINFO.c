@@ -2,12 +2,12 @@
 //#
 //# Titre : 	Utilitaires CHAT LINUX Automne 16
 //#			SIF-1015 - Systeme d'exploitation
-//#			Universite du Quebec a� Trois-Rivieres
+//#			Universite du Quebec aï¿½ Trois-Rivieres
 //#
 //# Auteur : 	Francois Meunier
 //#	Date :	Septembre 2016
 //#
-//# Langage : 	ANSI C on LINUX 
+//# Langage : 	ANSI C on LINUX
 //#
 //#######################################
 
@@ -25,7 +25,7 @@ extern struct noeud* queue;
 void error(const int exitcode, const char * message){
 	printf("\n-------------------------\n%s\n",message);
 	exit(exitcode);
-	}
+}
 
 
 
@@ -65,7 +65,7 @@ void* readTranslinkedINFO(char* nomFichier){
 				//Appel de la fonction associee
 				addItemlinkedINFO(ptrNick, ptrSpecialite, ptrFormation, experience);
 				break;
-				}
+			}
 			case 'M':
 			case 'm':{
 				//Extraction des parametres
@@ -77,7 +77,7 @@ void* readTranslinkedINFO(char* nomFichier){
 				//Appel de la fonction associee
 				modifyItemlinkedINFO(noNoeud, ptrNick, ptrSpecialite, ptrFormation, experience);
 				break;
-				}
+			}
 			case 'E':
 			case 'e':{
 				//Extraction du parametre
@@ -86,22 +86,22 @@ void* readTranslinkedINFO(char* nomFichier){
 				//Appel de la fonction associee
 				removeItemlinkedINFO(ptrNick);
 				break;
-				}
+			}
 			case 'L':
 			case 'l':{
 				//Extraction des parametres
 				char *ptrType = strtok_r(NULL, " ", &sp);
-				
-				if(ptrType[0] == 'C') // affichage complet
+
+				if(strcmp(ptrType, "C") == 0) // affichage complet
 				{
 					int nstart = atoi(strtok_r(NULL, "-", &sp));
 					int nend = atoi(strtok_r(NULL, "\n", &sp));
 					//Appel de la fonction associee
 					listItemsCompletlinkedINFO(nstart, nend);
 				}
-				else if(ptrType[0] == 'S') // affichage par specialite
+				else if(strcmp(ptrType, "S") == 0) // affichage par specialite
 				{
-					char* ptrSpecialite = strtok_r(NULL, "^M", &sp);
+					char* ptrSpecialite = strtok_r(NULL, "\n", &sp);
 					//Appel de la fonction associee
 					listItemsParSpecialitelinkedINFO(ptrSpecialite);
 				}
@@ -128,24 +128,24 @@ void* readTranslinkedINFO(char* nomFichier){
 					int nend = atoi(strtok_r(NULL, "\n", &sp));
 					//Appel de la fonction associee
 					listItemsParSpecialiteFormationExperiencelinkedINFO(ptrSpecialite, ptrFormation, nstart, nend);
-				}				
-				break;
 				}
+				break;
+			}
 			case 'T':
 			case 't':{
-				
+
 				//Extraction des parametres
 				char *ptrType = strtok_r(NULL, " ", &sp);
-				
+
 				if(strcmp(ptrType, "PG") == 0) // affichage complet
 				{
 					char *ptrNick = strtok_r(NULL, " ", &sp);
 					char *ptrGroupe = strtok_r(NULL, " ", &sp);
 					char *ptrTexte = strtok_r(NULL, "\n", &sp);
 
-				//Appel de la fonction associee
+					//Appel de la fonction associee
 					transTextGroupelinkedINFO(ptrNick, ptrGroupe,ptrTexte);
-					
+
 				}
 				else if(strcmp(ptrType, "PP") == 0) // affichage complet
 				{
@@ -153,12 +153,12 @@ void* readTranslinkedINFO(char* nomFichier){
 					char *ptrNick2 = strtok_r(NULL, " ", &sp);
 					char *ptrTexte = strtok_r(NULL, "\n", &sp);
 
-				//Appel de la fonction associee
+					//Appel de la fonction associee
 					transTextPersonnellinkedINFO(ptrNick1, ptrNick2,ptrTexte);
-					
+
 				}
 				break;
-				}
+			}
 
 		}
 
@@ -170,5 +170,4 @@ void* readTranslinkedINFO(char* nomFichier){
 	//Retour
 	return NULL;
 }
-
 

@@ -2,12 +2,12 @@
 //#
 //# Titre : 	UTILITAIRES (MAIN) TP1 LINUX Automne 16
 //#			SIF-1015 - Systeme d'exploitation
-//#			Universite du Quebec a� Trois-Rivieres
+//#			Universite du Quebec aï¿½ Trois-Rivieres
 //#
 //# Auteur : 	Francois Meunier
 //#	Date :	Septembre 2016
 //#
-//# Langage : 	ANSI C on LINUX 
+//# Langage : 	ANSI C on LINUX
 //#
 //#######################################
 
@@ -27,4 +27,3 @@ int main(int argc, char* argv[]){
 	//Fin du programme
 	exit(0);
 }
-

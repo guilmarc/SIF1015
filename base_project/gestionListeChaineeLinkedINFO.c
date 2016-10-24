@@ -38,23 +38,21 @@ struct noeud * findPrevlinkedINFO(const char* ptrNick){
 
 	//Tant qu'un item suivant existe
 	while (ptr->suivant!=NULL){
-	  
-	  printf("\n dans findPrevlinkedINFO  nick suivant %s NICK %s COMPARAISON %d %d", ptr->suivant->membre.ptrNick,ptrNick, (int)(strlen(ptr->suivant->membre.ptrNick)), (int)(strlen(ptrNick)));
 
 		//Est-ce le predecesseur de l'item recherche?
 		if((strcmp(ptr->suivant->membre.ptrNick,ptrNick) == 0) ){
-		
+
 			//On retourne un pointeur sur l'item precedent
 			return ptr;
 		}
 
 		//Deplacement du pointeur de navigation
 		ptr=ptr->suivant;
-		}
+	}
 
 	//On retourne un pointeur NULL
 	return NULL;
-	}
+}
 
 //#######################################
 //#
@@ -71,11 +69,11 @@ void addItemlinkedINFO(const char* ptrNick, const char* ptrSpecialite, const cha
 	strcpy(ni->membre.ptrSpecialite, ptrSpecialite);
 	strcpy(ni->membre.ptrFormation, ptrFormation);
 	ni->membre.Experience = Experience;
-	
+
 
 	if(head == NULL) // ajout au debut de la liste vide
 	{
-		//  premier noeud 
+		//  premier noeud
 		ni->suivant= NULL;
 		queue = head = ni;
 
@@ -87,7 +85,7 @@ void addItemlinkedINFO(const char* ptrNick, const char* ptrSpecialite, const cha
 		queue = ni;
 		tptr->suivant = ni;
 	}
-	
+
 }
 
 //#######################################
@@ -103,8 +101,8 @@ void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* pt
 		return;
 
 
-	//Recherche de l'element a� modifier
-	
+	//Recherche de l'element aï¿½ modifier
+
 
 	struct noeud * ptr = head;			//premier element
 
@@ -120,8 +118,8 @@ void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* pt
 			ptr->membre.Experience = Experience;
 			//printf("%d: %s \t  %s \t %s \t %s \t %d\n",noentree,ptr->membre.ptrNick,ptr->membre.ptrFormation, ptr->membre.ptrSpecialite, ptr->membre.experience );
 			return;
-			}
-		
+		}
+
 		else{
 			ptr = ptr->suivant;
 			noentree++;
@@ -137,55 +135,55 @@ void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* pt
 //# Retire un item de la liste chainee
 //#
 void removeItemlinkedINFO(const char* ptrNick){
-    struct noeud * ptr;
-    struct noeud * optr;
+	struct noeud * ptr;
+	struct noeud * optr;
 
-    //Verification sommaire liste non vide
-    
-    if ((head==NULL)&&(queue==NULL)) 
-      return;
-    
-    if(strcmp(head->membre.ptrNick,ptrNick) == 0)
-    {
-        ptr = head; // suppression du premier element de la liste
+	//Verification sommaire liste non vide
 
-        if(head == ptr) // suppression de l'element de tete
-        {
-            if(head==queue) // un seul element dans la liste
-            {
-                free(ptr);
-                queue = head = NULL;
-                return;
-            }
-            head = ptr->suivant;
-            //printf("tete\n");
-            free(ptr);
-        }
-    }
-    else
-    {
-        ptr = findPrevlinkedINFO(ptrNick); // ptr pointe sur l'element precedent de celui a supprimer
+	if ((head==NULL)&&(queue==NULL))
+		return;
 
-        //Item  trouve
-        if (ptr!=NULL)
-        {
-            if (queue==ptr->suivant) // suppression de l'element de queue
-            {
-                queue=ptr;
-                free(ptr->suivant);
-                ptr->suivant=NULL;
-                //printf("queue\n");
-                return;
-            }
-            else // suppression d'un element dans la liste
-            {
-                optr = ptr->suivant;
-                ptr->suivant = ptr->suivant->suivant;
-                //printf("autre\n");
-                free(optr);
-            }
-        }
-    }
+	if(strcmp(head->membre.ptrNick,ptrNick) == 0)
+	{
+		ptr = head; // suppression du premier element de la liste
+
+		if(head == ptr) // suppression de l'element de tete
+		{
+			if(head==queue) // un seul element dans la liste
+			{
+				free(ptr);
+				queue = head = NULL;
+				return;
+			}
+			head = ptr->suivant;
+			//printf("tete\n");
+			free(ptr);
+		}
+	}
+	else
+	{
+		ptr = findPrevlinkedINFO(ptrNick); // ptr pointe sur l'element precedent de celui a supprimer
+
+		//Item  trouve
+		if (ptr!=NULL)
+		{
+			if (queue==ptr->suivant) // suppression de l'element de queue
+			{
+				queue=ptr;
+				free(ptr->suivant);
+				ptr->suivant=NULL;
+				//printf("queue\n");
+				return;
+			}
+			else // suppression d'un element dans la liste
+			{
+				optr = ptr->suivant;
+				ptr->suivant = ptr->suivant->suivant;
+				//printf("autre\n");
+				free(optr);
+			}
+		}
+	}
 }
 
 
@@ -210,15 +208,15 @@ void listItemsCompletlinkedINFO(const int start, const int end){
 		//L'item a un numero sequentiel dans l'interval defini
 		if ((noentree>=start)&&(noentree<=end)){
 			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
+				   ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
+				   ptr->membre.ptrFormation, ptr->membre.Experience);
+		}
 		if (noentree>end){
 			//L'ensemble des items potentiels sont maintenant passes
-			//Deplacement immediatement a� la FIN de la liste
+			//Deplacement immediatement aï¿½ la FIN de la liste
 			//Notez que le pointeur optr est toujours valide
 			ptr=NULL;
-			}
+		}
 		else{
 			ptr = ptr->suivant;
 			noentree++;
@@ -233,8 +231,8 @@ void listItemsCompletlinkedINFO(const int start, const int end){
 //#
 //# Affiche les informations des membres pour une specialite donnee
 void listItemsParSpecialitelinkedINFO(const char* ptrSpecialite){
-  
-  
+
+
 	int noentree=1;
 
 	//Affichage des entetes de colonnes
@@ -250,13 +248,13 @@ void listItemsParSpecialitelinkedINFO(const char* ptrSpecialite){
 		//L'item a un numero sequentiel dans l'interval defini
 		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0)){
 			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
+				   ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
+				   ptr->membre.ptrFormation, ptr->membre.Experience);
 		}
+
+		ptr = ptr->suivant;
+		noentree++;
+
 
 	}
 
@@ -266,9 +264,9 @@ void listItemsParSpecialitelinkedINFO(const char* ptrSpecialite){
 
 //#######################################
 //#
-//# Affiche les informations des membres pour une specialite et experience 
+//# Affiche les informations des membres pour une specialite et experience
 void listItemsParSpecialiteExperiencelinkedINFO(const char* ptrSpecialite, const int start, const int end){
-  
+
 	int noentree=1;
 
 
@@ -279,19 +277,16 @@ void listItemsParSpecialiteExperiencelinkedINFO(const char* ptrSpecialite, const
 
 	struct noeud * ptr = head;			//premier element
 
-
 	while (ptr!=NULL){
 
 		//L'item a un numero sequentiel dans l'interval defini
 		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0) && ((ptr->membre.Experience >= start) && (ptr->membre.Experience <= end))){
 			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
+				   ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
+				   ptr->membre.ptrFormation, ptr->membre.Experience);
 		}
+		ptr = ptr->suivant;
+		noentree++;
 
 	}
 
@@ -301,9 +296,9 @@ void listItemsParSpecialiteExperiencelinkedINFO(const char* ptrSpecialite, const
 
 //#######################################
 //#
-//# Affiche les informations des membres pour une specialite et formation 
+//# Affiche les informations des membres pour une specialite et formation
 void listItemsParSpecialiteFormationlinkedINFO(const char* ptrSpecialite, const char* ptrFormation){
-  
+
 	int noentree=1;
 
 	//Affichage des entetes de colonnes
@@ -319,13 +314,13 @@ void listItemsParSpecialiteFormationlinkedINFO(const char* ptrSpecialite, const 
 		//L'item a un numero sequentiel dans l'interval defini
 		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0) && (strcmp(ptr->membre.ptrFormation,ptrFormation) == 0)){
 			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
+				   ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
+				   ptr->membre.ptrFormation, ptr->membre.Experience);
 		}
+
+		ptr = ptr->suivant;
+		noentree++;
+
 
 	}
 
@@ -353,13 +348,13 @@ void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* ptrSpeciali
 		//L'item a un numero sequentiel dans l'interval defini
 		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0) && (strcmp(ptr->membre.ptrFormation,ptrFormation) == 0) && ((ptr->membre.Experience >= start) && (ptr->membre.Experience <= end))){
 			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
+				   ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
+				   ptr->membre.ptrFormation, ptr->membre.Experience);
 		}
+
+		ptr = ptr->suivant;
+		noentree++;
+
 
 	}
 
@@ -369,7 +364,7 @@ void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* ptrSpeciali
 
 //#######################################
 //#
-//# Transmission d'un message aux membres d'un groupe 
+//# Transmission d'un message aux membres d'un groupe
 //#
 void transTextGroupelinkedINFO(const char* ptrNick, const char* ptrGroupe, const char* ptrTexte){
 
@@ -381,11 +376,11 @@ void transTextGroupelinkedINFO(const char* ptrNick, const char* ptrGroupe, const
 	printf("TEXTE ENVOYE: %s\n",ptrTexte);
 
 	while (ptr!=NULL){
-		
+
 		if((strcmp(ptr->membre.ptrNick,ptrNick) != 0) && ((strcmp(ptr->membre.ptrSpecialite,ptrGroupe) == 0) || (strcmp(ptr->membre.ptrFormation,ptrGroupe) == 0)))
-		{						
-				printf("membre: %s \t transmet au groupe: %s",ptr->membre.ptrNick, ptr->membre.ptrSpecialite);
-				printf("   TEXTE ENVOYE/RECU: %s\n",ptrTexte);
+		{
+			printf("membre: %s \t transmet au groupe: %s",ptr->membre.ptrNick, ptr->membre.ptrSpecialite);
+			printf("   TEXTE ENVOYE/RECU: %s\n",ptrTexte);
 		}
 		ptr = ptr->suivant;
 
@@ -395,7 +390,7 @@ void transTextGroupelinkedINFO(const char* ptrNick, const char* ptrGroupe, const
 
 //#######################################
 //#
-//# Transmission d'un message personnel a un membre 
+//# Transmission d'un message personnel a un membre
 //#
 void transTextPersonnellinkedINFO(const char* ptrNick1, const char* ptrNick2, const char* ptrTexte){
 
@@ -407,11 +402,11 @@ void transTextPersonnellinkedINFO(const char* ptrNick1, const char* ptrNick2, co
 	printf("TEXTE ENVOYE: %s\n",ptrTexte);
 
 	while (ptr!=NULL){
-		
+
 		if((strcmp(ptr->membre.ptrNick,ptrNick1) != 0) && (strcmp(ptr->membre.ptrNick,ptrNick2) == 0))
-		{						
-				printf(" membre: %s \t transmet au membre: %s ",ptrNick1, ptrNick2);
-				printf("TEXTE ENVOYE/RECU: %s\n",ptrTexte);
+		{
+			printf(" membre: %s \t transmet au membre: %s ",ptrNick1, ptrNick2);
+			printf("TEXTE ENVOYE/RECU: %s\n",ptrTexte);
 		}
 		ptr = ptr->suivant;
 

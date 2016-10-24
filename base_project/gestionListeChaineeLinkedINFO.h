@@ -5,18 +5,18 @@
 #include <pthread.h>
 #include <unistd.h>
 
-struct infoMembre{						
+struct infoMembre{
 	char ptrNick[100];
 	char ptrSpecialite[100];
 	char ptrFormation[100];
 	int Experience;
-	};								 
+};
 
-struct noeud{			
-	struct infoMembre membre;		
-	struct noeud		*suivant;	
-	};	
-	
+struct noeud{
+	struct infoMembre membre;
+	struct noeud		*suivant;
+};
+
 void error(const int exitcode, const char * message);
 
 void* readTranslinkedINFO(char* nomFichier);
