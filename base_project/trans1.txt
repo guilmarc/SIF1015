@@ -19,7 +19,7 @@ E titi
 L C 1-15
 T PG ben AdminReseau Message aux admin reseau
 L C 1-15
-T PG fm AnalysteSysteme Message aux membres du meme groupe que Ben
+T PG fm AnalysteSysteme Message aux members du meme groupe que Ben
 L C 1-15
 T PP fm bb Message de fm a bb
 E rig

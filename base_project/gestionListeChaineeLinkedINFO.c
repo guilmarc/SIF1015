@@ -1,420 +1,280 @@
-//#########################################################
-//#
-//# Titre : 	Utilitaires Liste Chainee et CHAT LINUX Automne 16
-//#			SIF-1015 - Systeme d'exploitation
-//#			Universite du Quebec a Trois-Rivieres
-//#
-//# Auteur : 	Francois Meunier
-//#	Date :	Septembre 2016
-//#
-//# Langage : 	ANSI C on LINUX 
-//#
-//#######################################
-
 #include "gestionListeChaineeLinkedINFO.h"
 
-//Pointeur de tete de liste
-extern struct noeud* head;
-//Pointeur de queue de liste pour ajout rapide
-extern struct noeud* queue;
 
+extern Node* head;
+extern Node* queue;
 
-//#######################################
-//#
-//# Recherche le PREDECESSEUR d'un item dans la liste chainee
-//#
-//# RETOUR: Le pointeur vers le predecesseur est retourne
-//# 		
-//#			
-//# 		Retourne NULL dans le cas ou l'item est introuvable
-//#
-struct noeud * findPrevlinkedINFO(const char* ptrNick){
+Node * findPrev(const char* nickname) {
+    if ((head != NULL) || (queue != NULL)) {
+        Node * current = head;
+        while (current->next != NULL) {
 
-	//La liste est vide 
-	if ((head==NULL)&&(queue==NULL)) return NULL;
-
-	//Pointeur de navigation
-	struct noeud * ptr = head;
-
-	//Tant qu'un item suivant existe
-	while (ptr->suivant!=NULL){
-	  
-	  printf("\n dans findPrevlinkedINFO  nick suivant %s NICK %s COMPARAISON %d %d", ptr->suivant->membre.ptrNick,ptrNick, (int)(strlen(ptr->suivant->membre.ptrNick)), (int)(strlen(ptrNick)));
-
-		//Est-ce le predecesseur de l'item recherche?
-		if((strcmp(ptr->suivant->membre.ptrNick,ptrNick) == 0) ){
-		
-			//On retourne un pointeur sur l'item precedent
-			return ptr;
-		}
-
-		//Deplacement du pointeur de navigation
-		ptr=ptr->suivant;
-		}
-
-	//On retourne un pointeur NULL
-	return NULL;
-	}
-
-//#######################################
-//#
-//# Ajoute un item dans la liste chainee
-//#
-void addItemlinkedINFO(const char* ptrNick, const char* ptrSpecialite, const char* ptrFormation, const int Experience){
-
-	//Creation de l'enregistrement en memoire
-	struct noeud* ni = (struct noeud*)malloc(sizeof(struct noeud));
-
-
-	//Affectation des valeurs des champs
-	strcpy(ni->membre.ptrNick, ptrNick);
-	strcpy(ni->membre.ptrSpecialite, ptrSpecialite);
-	strcpy(ni->membre.ptrFormation, ptrFormation);
-	ni->membre.Experience = Experience;
-	
-
-	if(head == NULL) // ajout au debut de la liste vide
-	{
-		//  premier noeud 
-		ni->suivant= NULL;
-		queue = head = ni;
-
-	}
-	else  // ajout a la fin de la liste
-	{
-		struct noeud* tptr = queue;
-		ni->suivant= NULL;
-		queue = ni;
-		tptr->suivant = ni;
-	}
-	
-}
-
-//#######################################
-//#
-//# Modifie un item de la liste chainee
-//#
-void modifyItemlinkedINFO(const int noNoeud, const char* ptrNick, const char* ptrSpecialite, const char* ptrFormation, const int Experience){
-
-	int noentree=1;
-	//Verification sommaire (noNickGroupe>0 et liste non vide)
-
-	if ((noNoeud<1)||((head==NULL)&&(queue==NULL)))
-		return;
-
-
-	//Recherche de l'element a� modifier
-	
-
-	struct noeud * ptr = head;			//premier element
-
-
-	while (ptr!=NULL){
-
-		//Element a modifier
-		if (noentree==noNoeud){
-			//Affectation des valeurs des champs
-			strcpy(ptr->membre.ptrNick, ptrNick);
-			strcpy(ptr->membre.ptrSpecialite, ptrSpecialite);
-			strcpy(ptr->membre.ptrFormation, ptrFormation);
-			ptr->membre.Experience = Experience;
-			//printf("%d: %s \t  %s \t %s \t %s \t %d\n",noentree,ptr->membre.ptrNick,ptr->membre.ptrFormation, ptr->membre.ptrSpecialite, ptr->membre.experience );
-			return;
-			}
-		
-		else{
-			ptr = ptr->suivant;
-			noentree++;
-		}
-
-	}
-
-}
-
-
-//#######################################
-//#
-//# Retire un item de la liste chainee
-//#
-void removeItemlinkedINFO(const char* ptrNick){
-    struct noeud * ptr;
-    struct noeud * optr;
-
-    //Verification sommaire liste non vide
-    
-    if ((head==NULL)&&(queue==NULL)) 
-      return;
-    
-    if(strcmp(head->membre.ptrNick,ptrNick) == 0)
-    {
-        ptr = head; // suppression du premier element de la liste
-
-        if(head == ptr) // suppression de l'element de tete
-        {
-            if(head==queue) // un seul element dans la liste
-            {
-                free(ptr);
-                queue = head = NULL;
-                return;
+            printf("\n dans findPrev  nick suivant %s NICK %s COMPARAISON %d %d",
+                current->next->member.nickname,nickname,
+                (int)(strlen(current->next->member.nickname)),
+                (int)(strlen(nickname))
+            );
+            if ((strcmp(current->next->member.nickname, nickname) == 0) ) {
+                return current;
             }
-            head = ptr->suivant;
-            //printf("tete\n");
-            free(ptr);
+
+            current = current->next;
         }
     }
-    else
-    {
-        ptr = findPrevlinkedINFO(ptrNick); // ptr pointe sur l'element precedent de celui a supprimer
+    return NULL;
+}
 
-        //Item  trouve
-        if (ptr!=NULL)
-        {
-            if (queue==ptr->suivant) // suppression de l'element de queue
-            {
-                queue=ptr;
-                free(ptr->suivant);
-                ptr->suivant=NULL;
-                //printf("queue\n");
+void addMemberItem(const Member member) {
+
+    Node* node = (Node*)malloc(sizeof(Node));
+
+    node->member = member;
+
+    if (head == NULL) {
+        node->next = NULL;
+        queue = head = node;
+    } else {
+        Node* tempNode = queue;
+        node->next = NULL;
+        queue = node;
+        tempNode->next = node;
+    }
+}
+
+void addItem(const char* nickname, const char* speciality, const char* scholarships, const int experiences) {
+
+    Node* node = (Node*)malloc(sizeof(Node));
+
+    strcpy(node->member.nickname, nickname);
+    strcpy(node->member.speciality, speciality);
+    strcpy(node->member.scholarships, scholarships);
+    node->member.experiences = experiences;
+
+    if (head == NULL) {
+        node->next = NULL;
+        queue = head = node;
+    } else {
+        Node* tempNode = queue;
+        node->next = NULL;
+        queue = node;
+        tempNode->next = node;
+    }
+}
+
+void modifyMemberItem(const int nodeIndex, const Member member) {
+    int recordIndex = 1;
+
+    if ((nodeIndex >= 1) && ((head != NULL) || (queue != NULL))) {
+
+        Node * node = head;
+
+        while (node != NULL) {
+            if (recordIndex == nodeIndex) {
+                node->member = member;
                 return;
+            } else{
+                node = node->next;
+                recordIndex++;
             }
-            else // suppression d'un element dans la liste
-            {
-                optr = ptr->suivant;
-                ptr->suivant = ptr->suivant->suivant;
-                //printf("autre\n");
-                free(optr);
+        }
+    }
+}
+
+void modifyItem(const int nodeIndex, const char* nickname, const char* speciality, const char* scholarships, const int experiences) {
+    int recordIndex=1;
+
+    if ((nodeIndex >= 1) && ((head != NULL) || (queue != NULL))) {
+
+        Node * node = head;
+
+        while (node != NULL) {
+            if (recordIndex == nodeIndex) {
+                strcpy(node->member.nickname, nickname);
+                strcpy(node->member.speciality, speciality);
+                strcpy(node->member.scholarships, scholarships);
+                node->member.experiences = experiences;
+                //printf("%d: %s \t  %s \t %s \t %s \t %d\n",recordIndex,node->member.nickname,node->member.scholarships, node->member.speciality, node->member.experiences );
+                return;
+            } else{
+                node = node->next;
+                recordIndex++;
+            }
+        }
+    }
+}
+
+void removeItem(const char* nickname) {
+    if ((head != NULL) || (queue != NULL)) {
+        Node * node;
+        Node * otherNode;
+        if (strcmp(head->member.nickname, nickname) == 0) {
+
+            node = head;
+
+            if (head == node) {
+                if (head == queue) {
+                    free(node);
+                    queue = head = NULL;
+                    return;
+                }
+                head = node->next;
+                free(node);
+            }
+        } else {
+            node = findPrev(nickname);
+
+            if (node != NULL) {
+                if (queue == node->next) {
+                    queue = node;
+                    free(node->next);
+                    node->next = NULL;
+                    return;
+                } else {
+                    otherNode = node->next;
+                    node->next = node->next->next;
+                    free(otherNode);
+                }
             }
         }
     }
 }
 
 
-//#######################################
-//#
-//# Affiche les informations des membres dont le numero sequentiel est compris dans un intervalle
-//#
-void listItemsCompletlinkedINFO(const int start, const int end){
+void listAllItems(const int start, const int end) {
+    int recordIndex = 1;
+    Node * node = head;
 
-	int noentree=1;
+    printHeader();
+    while (node != NULL) {
 
-	//Affichage des entetes de colonnes
-	printf("\n======================================================\n");
-	printf("NICK		Specialite       Formation       Experience                                          \n");
-	printf("======================================================\n");
+        if ((recordIndex >= start) && (recordIndex <= end)) {
+            printMember(node->member, recordIndex);
+        }
 
-	struct noeud * ptr = head;			//premier element
+        if (recordIndex > end) {
+            node = NULL;
+        } else{
+            node = node->next;
+            recordIndex++;
+        }
 
-
-	while (ptr!=NULL){
-
-		//L'item a un numero sequentiel dans l'interval defini
-		if ((noentree>=start)&&(noentree<=end)){
-			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		if (noentree>end){
-			//L'ensemble des items potentiels sont maintenant passes
-			//Deplacement immediatement a� la FIN de la liste
-			//Notez que le pointeur optr est toujours valide
-			ptr=NULL;
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
-		}
-
-	}
-
-	//Affichage des pieds de colonnes
-	printf("======================================================\n\n");
-}
-//#######################################
-//#
-//# Affiche les informations des membres pour une specialite donnee
-void listItemsParSpecialitelinkedINFO(const char* ptrSpecialite){
-  
-  
-	int noentree=1;
-
-	//Affichage des entetes de colonnes
-	printf("\n======================================================\n");
-	printf("NICK		Specialite       Formation       Experience                                          \n");
-	printf("======================================================\n");
-
-	struct noeud * ptr = head;			//premier element
-
-
-	while (ptr!=NULL){
-
-		//L'item a un numero sequentiel dans l'interval defini
-		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0)){
-			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
-		}
-
-	}
-
-	//Affichage des pieds de colonnes
-	printf("======================================================\n\n");
+    }
+    printFooter();
 }
 
-//#######################################
-//#
-//# Affiche les informations des membres pour une specialite et experience 
-void listItemsParSpecialiteExperiencelinkedINFO(const char* ptrSpecialite, const int start, const int end){
-  
-	int noentree=1;
+void listItemsBySpecialities(const char* speciality) {
+    int recordIndex = 1;
+    printHeader();
 
+    Node * node = head;
 
-	//Affichage des entetes de colonnes
-	printf("\n======================================================\n");
-	printf("NICK		Specialite       Formation      Experience                                          \n");
-	printf("======================================================\n");
+    while (node != NULL) {
+        if ((strcmp(node->member.speciality,speciality) == 0)) {
+            printMember(node->member, recordIndex);
+        } else {
+            node = node->next;
+            recordIndex++;
+        }
 
-	struct noeud * ptr = head;			//premier element
-
-
-	while (ptr!=NULL){
-
-		//L'item a un numero sequentiel dans l'interval defini
-		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0) && ((ptr->membre.Experience >= start) && (ptr->membre.Experience <= end))){
-			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
-		}
-
-	}
-
-	//Affichage des pieds de colonnes
-	printf("======================================================\n\n");
+    }
+    printFooter();
 }
 
-//#######################################
-//#
-//# Affiche les informations des membres pour une specialite et formation 
-void listItemsParSpecialiteFormationlinkedINFO(const char* ptrSpecialite, const char* ptrFormation){
-  
-	int noentree=1;
+void listItemsBySpecialitiesExperiences(const char* speciality, const int start, const int end) {
+    int recordIndex = 1;
+    Node * node = head;
 
-	//Affichage des entetes de colonnes
-	printf("\n======================================================\n");
-	printf("NICK		Specialite       Formation       Experience                                          \n");
-	printf("======================================================\n");
+    printHeader();
+    while (node != NULL) {
+        if ((strcmp(node->member.speciality,speciality) == 0) && ((node->member.experiences >= start) && (node->member.experiences <= end))) {
+            printMember(node->member, recordIndex);
+        } else{
+            node = node->next;
+            recordIndex++;
+        }
 
-	struct noeud * ptr = head;			//premier element
-
-
-	while (ptr!=NULL){
-
-		//L'item a un numero sequentiel dans l'interval defini
-		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0) && (strcmp(ptr->membre.ptrFormation,ptrFormation) == 0)){
-			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
-		}
-
-	}
-
-	//Affichage des pieds de colonnes
-	printf("======================================================\n\n");
+    }
+    printFooter();
 }
 
-//#######################################
-//#
-//# Affiche les informations des membres pour une specialite formation et experience
-void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* ptrSpecialite, const char* ptrFormation, const int start, const int end ){
+void listItemsBySpecialitiesScholarships(const char* speciality, const char* scholarships) {
+    int recordIndex = 1;
+    Node * node = head;
 
-	int noentree=1;
+    printHeader();
+    while (node != NULL) {
+        if ((strcmp(node->member.speciality,speciality) == 0) && (strcmp(node->member.scholarships,scholarships) == 0)) {
+            printMember(node->member, recordIndex);
+        } else {
+            node = node->next;
+            recordIndex++;
+        }
 
-	//Affichage des entetes de colonnes
-	printf("\n======================================================\n");
-	printf("NICK		Specialite       Formation       Experience                                          \n");
-	printf("======================================================\n");
-
-	struct noeud * ptr = head;			//premier element
-
-
-	while (ptr!=NULL){
-
-		//L'item a un numero sequentiel dans l'interval defini
-		if ((strcmp(ptr->membre.ptrSpecialite,ptrSpecialite) == 0) && (strcmp(ptr->membre.ptrFormation,ptrFormation) == 0) && ((ptr->membre.Experience >= start) && (ptr->membre.Experience <= end))){
-			printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",noentree,
-				ptr->membre.ptrNick, ptr->membre.ptrSpecialite,
-				ptr->membre.ptrFormation, ptr->membre.Experience);
-			}
-		else{
-			ptr = ptr->suivant;
-			noentree++;
-		}
-
-	}
-
-	//Affichage des pieds de colonnes
-	printf("======================================================\n\n");
+    }
+    printFooter();
 }
 
-//#######################################
-//#
-//# Transmission d'un message aux membres d'un groupe 
-//#
-void transTextGroupelinkedINFO(const char* ptrNick, const char* ptrGroupe, const char* ptrTexte){
+void listItemsBySpecialitiesScholarshipsExperiences(const char* speciality, const char* scholarships, const int start, const int end ) {
+    int recordIndex = 1;
+    Node * node = head;
 
+    printHeader();
+    while (node != NULL) {
+        if ((strcmp(node->member.speciality,speciality) == 0) && (strcmp(node->member.scholarships,scholarships) == 0) && ((node->member.experiences >= start) && (node->member.experiences <= end))) {
+            printMember(node->member, recordIndex);
+        } else {
+            node = node->next;
+            recordIndex++;
+        }
 
-	struct noeud * ptr = head;			//premier element
-
-
-	printf("%s \t %s ",ptrNick, ptrGroupe);
-	printf("TEXTE ENVOYE: %s\n",ptrTexte);
-
-	while (ptr!=NULL){
-		
-		if((strcmp(ptr->membre.ptrNick,ptrNick) != 0) && ((strcmp(ptr->membre.ptrSpecialite,ptrGroupe) == 0) || (strcmp(ptr->membre.ptrFormation,ptrGroupe) == 0)))
-		{						
-				printf("membre: %s \t transmet au groupe: %s",ptr->membre.ptrNick, ptr->membre.ptrSpecialite);
-				printf("   TEXTE ENVOYE/RECU: %s\n",ptrTexte);
-		}
-		ptr = ptr->suivant;
-
-	}
-
+    }
+    printFooter();
 }
 
-//#######################################
-//#
-//# Transmission d'un message personnel a un membre 
-//#
-void transTextPersonnellinkedINFO(const char* ptrNick1, const char* ptrNick2, const char* ptrTexte){
+void transTextGroupe(const char* nickname, const char* group, const char* text) {
+    Node * node = head;
 
+    printf("%s \t %s ",nickname, group);
+    printf("TEXTE ENVOYE: %s\n",text);
 
-	struct noeud * ptr = head;			//premier element
+    while (node != NULL) {
+        if ((strcmp(node->member.nickname,nickname) != 0) && ((strcmp(node->member.speciality, group) == 0) || (strcmp(node->member.scholarships, group) == 0))) {
+            printf("member: %s \t transmet au groupe: %s",node->member.nickname, node->member.speciality);
+            printf("\tTEXTE ENVOYE/RECU: %s\n",text);
+        }
+        node = node->next;
+    }
+}
 
+void transTextPersonnel(const char* sender, const char* receiver, const char* sentText) {
+    Node * node = head;
 
-	printf("%s \t %s ",ptrNick1, ptrNick2);
-	printf("TEXTE ENVOYE: %s\n",ptrTexte);
+    printf("%s \t %s ",sender, receiver);
+    printf("TEXTE ENVOYE: %s\n", sentText);
 
-	while (ptr!=NULL){
-		
-		if((strcmp(ptr->membre.ptrNick,ptrNick1) != 0) && (strcmp(ptr->membre.ptrNick,ptrNick2) == 0))
-		{						
-				printf(" membre: %s \t transmet au membre: %s ",ptrNick1, ptrNick2);
-				printf("TEXTE ENVOYE/RECU: %s\n",ptrTexte);
-		}
-		ptr = ptr->suivant;
+    while (node != NULL) {
+        if ((strcmp(node->member.nickname, sender) != 0) && (strcmp(node->member.nickname, receiver) == 0)) {
+            printf(" member: %s \t transmet au member: %s ", sender, receiver);
+            printf("\tTEXTE ENVOYE/RECU: %s\n", sentText);
+        }
+        node = node->next;
+    }
+}
 
-	}
+void printMember(Member member, int recordIndex) {
+    printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
+        recordIndex,
+        member.nickname, member.speciality,
+        member.scholarships, member.experiences
+    );
+}
 
+void printHeader() {
+    printf("\n======================================================\n");
+    printf("Nickname\t\tSpecialities\t\tScholarships\t\tExperiences\n");
+    printf("======================================================\n");
+}
+
+void printFooter() {
+    printf("======================================================\n\n");
 }

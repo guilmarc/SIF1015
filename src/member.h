@@ -2,9 +2,9 @@
 #define member_H
 
 typedef struct {
-	/*char nickname[100];
+	char nickname[100];
 	char speciality[100];
-	char scholarships[100];*/
+	char scholarships[100];
 	int experiences;
 } Member;
 

@@ -3,15 +3,16 @@
 #include "linked_list.h"
 
 
-Node* createNode(Member* member) {
+Node* createNode() {
     Node* node = malloc(sizeof(Node));
-    node->member = member;
+    node->member = NULL;
     node->next = NULL;
     return node;
 }
 
 void appendNode(Node* headNode, Member* member) {
-    Node* node = createNode(member);
+    Node* node = createNode();
+    node->member = member;
     Node* lastNode = getLastNode(headNode);
     lastNode->next = node;
 }
