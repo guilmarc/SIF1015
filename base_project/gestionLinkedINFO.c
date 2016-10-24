@@ -11,124 +11,169 @@
 //#
 //#######################################
 
-
 #include "gestionListeChaineeLinkedINFO.h"
-#include <ctype.h>
-#define MAX_BUFFER_SIZE 100
 
+//Pointeur de tete de liste
 extern Node* head;
+//Pointeur de queue de liste pour ajout rapide
 extern Node* queue;
 
-void error(const int exitcode, const char * message) {
-    printf("\nERREUR : \n->\t%s\n", message);
+//#######################################
+//#
+//# Affiche un message et quitte le programme
+//#
+void error(const int exitcode, const char * message){
+    printf("\n-------------------------\n%s\n", message);
     exit(exitcode);
 }
 
-void parseCommand(char* commandString) {
-    printf("COMMAND : %s", commandString);
-}
 
-void* readTrans(char* filename) {
+
+
+//#######################################
+//#
+//# fonction utilisee par les threads de transactions
+//#
+void* readTranslinkedINFO(char* nomFichier){
     FILE *file;
-    char buffer[MAX_BUFFER_SIZE];
-    char *tok, *splitPointer;
+    char buffer[100];
+    char *tok, *sp;
 
-    file = fopen(filename, "rt");
-    if (file == NULL) {
+    //Ouverture du fichier en mode "r" (equiv. "rt") : [r]ead [t]ext
+    file = fopen(nomFichier, "rt");
+    if (file==NULL) {
         error(2, "readTrans: Erreur lors de l'ouverture du fichier.");
     }
 
-    fgets(buffer, MAX_BUFFER_SIZE, file);
+    //Lecture (tentative) d'une ligne de texte
+    fgets(buffer, 100, file);
 
-    while (!feof(file)) {
-        tok = strtok_r(buffer, " ", &splitPointer);
+    //Pour chacune des lignes lues
+    while(!feof(file)){
 
-        switch(tok[0]) {
+        //Extraction du type de transaction
+        tok = strtok_r(buffer, " ", &sp);
+
+        //Branchement selon le type de transaction
+        switch(tok[0]){
             case 'A':
             case 'a':{
-                Member member;
-                strcpy(member.nickname, strtok_r(NULL, " ", &splitPointer));
-                strcpy(member.speciality, strtok_r(NULL, " ", &splitPointer));
-                strcpy(member.scholarships, strtok_r(NULL, " ", &splitPointer));
-                member.experiences = atoi(strtok_r(NULL, "\n", &splitPointer));
-                addMemberItem(member);
+                //Extraction des parametres
+                char *nickname = strtok_r(NULL, " ", &sp);
+                char *speciality = strtok_r(NULL, " ", &sp);
+                char *scholarships = strtok_r(NULL, " ", &sp);
+                int experience = atoi(strtok_r(NULL, "\n", &sp));
+
+                Member* membre = (Member*)malloc(sizeof(Member));
+                membre->Experience = experience;
+                strcpy(membre->nickname, nickname);
+                strcpy(membre->speciality, speciality);
+                strcpy(membre->scholarships, scholarships);
+                //Appel de la fonction associee
+                pthread_t threadId;
+                pthread_create(&threadId, NULL, addItemlinkedINFO, membre);
+
                 break;
             }
             case 'M':
             case 'm':{
-                int nodeIndex = atoi(strtok_r(NULL, " ", &splitPointer));
-                Member member;
-                strcpy(member.nickname, strtok_r(NULL, " ", &splitPointer));
-                strcpy(member.speciality, strtok_r(NULL, " ", &splitPointer));
-                strcpy(member.scholarships, strtok_r(NULL, " ", &splitPointer));
-                member.experiences = atoi(strtok_r(NULL, "\n", &splitPointer));
-                modifyMemberItem(nodeIndex, member);
+                //Extraction des parametres
+                int noNoeud = atoi(strtok_r(NULL, " ", &sp));
+                char *nickname = strtok_r(NULL, " ", &sp);
+                char *speciality = strtok_r(NULL, " ", &sp);
+                char *scholarships = strtok_r(NULL, " ", &sp);
+                int experience = atoi(strtok_r(NULL, "\n", &sp));
+                //Appel de la fonction associee
+                modifyItemlinkedINFO(noNoeud, nickname, speciality, scholarships, experience);
                 break;
             }
             case 'E':
             case 'e':{
-                char *nickname = strtok_r(NULL, "\n", &splitPointer);
-                removeItem(nickname);
+                //Extraction du parametre
+                char *nickname = strtok_r(NULL, "\n", &sp);
+
+                //Appel de la fonction associee
+                removeItemlinkedINFO(nickname);
                 break;
             }
             case 'L':
             case 'l':{
-                char *type = strtok_r(NULL, " ", &splitPointer);
+                //Extraction des parametres
+                char *ptrType = strtok_r(NULL, " ", &sp);
 
-                if (type[0] == 'C') {
-                    int startIndex = atoi(strtok_r(NULL, "-", &splitPointer));
-                    int endIndex = atoi(strtok_r(NULL, "\n", &splitPointer));
-
-                    listAllItems(startIndex, endIndex);
-                }else if (type[0] == 'S') {
-                    char* speciality = strtok_r(NULL, "^M", &splitPointer);
-
-                    listItemsBySpecialities(speciality);
-                } else if (strcmp(type, "SE") == 0) {
-                    char* speciality = strtok_r(NULL, " ", &splitPointer);
-                    int startIndex = atoi(strtok_r(NULL, "-", &splitPointer));
-                    int endIndex = atoi(strtok_r(NULL, "\n", &splitPointer));
-
-                    listItemsBySpecialitiesExperiences(speciality, startIndex, endIndex);
-                } else if (strcmp(type, "SF") == 0) {
-                    char* speciality = strtok_r(NULL, " ", &splitPointer);
-                    char* scholarships = strtok_r(NULL, "\n", &splitPointer);
-
-                    listItemsBySpecialitiesScholarships(speciality, scholarships);
-                } else if (strcmp(type, "SFE") == 0) {
-                    char* speciality = strtok_r(NULL, " ", &splitPointer);
-                    char* scholarships = strtok_r(NULL, " ", &splitPointer);
-                    int startIndex = atoi(strtok_r(NULL, "-", &splitPointer));
-                    int endIndex = atoi(strtok_r(NULL, "\n", &splitPointer));
-
-                    listItemsBySpecialitiesScholarshipsExperiences(speciality, scholarships, startIndex, endIndex);
+                if(strcmp(ptrType, "C") == 0) // affichage complet
+                {
+                    int nstart = atoi(strtok_r(NULL, "-", &sp));
+                    int nend = atoi(strtok_r(NULL, "\n", &sp));
+                    //Appel de la fonction associee
+                    listItemsCompletlinkedINFO(nstart, nend);
+                }
+                else if(strcmp(ptrType, "S") == 0) // affichage par specialite
+                {
+                    char* speciality = strtok_r(NULL, "\n", &sp);
+                    //Appel de la fonction associee
+                    listItemsParSpecialitelinkedINFO(speciality);
+                }
+                else if(strcmp(ptrType, "SE") == 0) // affichage par specialite et experience
+                {
+                    char* speciality = strtok_r(NULL, " ", &sp);
+                    int nstart = atoi(strtok_r(NULL, "-", &sp));
+                    int nend = atoi(strtok_r(NULL, "\n", &sp));
+                    //Appel de la fonction associee
+                    listItemsParSpecialiteExperiencelinkedINFO(speciality, nstart, nend);
+                }
+                else if(strcmp(ptrType, "SF") == 0) // affichage par specialite et formation
+                {
+                    char* speciality = strtok_r(NULL, " ", &sp);
+                    char* scholarships = strtok_r(NULL, "\n", &sp);
+                    //Appel de la fonction associee
+                    listItemsParSpecialiteFormationlinkedINFO(speciality, scholarships);
+                }
+                else if(strcmp(ptrType, "SFE") == 0) // affichage par specialite formation et experience
+                {
+                    char* speciality = strtok_r(NULL, " ", &sp);
+                    char* scholarships = strtok_r(NULL, " ", &sp);
+                    int nstart = atoi(strtok_r(NULL, "-", &sp));
+                    int nend = atoi(strtok_r(NULL, "\n", &sp));
+                    //Appel de la fonction associee
+                    listItemsParSpecialiteFormationExperiencelinkedINFO(speciality, scholarships, nstart, nend);
                 }
                 break;
             }
             case 'T':
             case 't':{
-                char *type = strtok_r(NULL, " ", &splitPointer);
 
-                if (strcmp(type, "PG") == 0) {
-                    char *nickname = strtok_r(NULL, " ", &splitPointer);
-                    char *group = strtok_r(NULL, " ", &splitPointer);
-                    char *text = strtok_r(NULL, "\n", &splitPointer);
+                //Extraction des parametres
+                char *ptrType = strtok_r(NULL, " ", &sp);
 
-                    transTextGroupe(nickname, group, text);
+                if(strcmp(ptrType, "PG") == 0) // affichage complet
+                {
+                    char *nickname = strtok_r(NULL, " ", &sp);
+                    char *group = strtok_r(NULL, " ", &sp);
+                    char *text = strtok_r(NULL, "\n", &sp);
 
-                } else if (strcmp(type, "PP") == 0)  {
-                    char *sender = strtok_r(NULL, " ", &splitPointer);
-                    char *receiver = strtok_r(NULL, " ", &splitPointer);
-                    char *text = strtok_r(NULL, "\n", &splitPointer);
+                    //Appel de la fonction associee
+                    transTextGroupelinkedINFO(nickname, group,text);
+                }
+                else if(strcmp(ptrType, "PP") == 0) // affichage complet
+                {
+                    char *nickname1 = strtok_r(NULL, " ", &sp);
+                    char *nickname2 = strtok_r(NULL, " ", &sp);
+                    char *text = strtok_r(NULL, "\n", &sp);
 
-                    transTextPersonnel(sender, receiver, text);
+                    //Appel de la fonction associee
+                    transTextPersonnellinkedINFO(nickname1, nickname2,text);
                 }
                 break;
             }
 
         }
-        fgets(buffer, MAX_BUFFER_SIZE, file);
+
+        //Lecture (tentative) de la prochaine ligne de texte
+        fgets(buffer, 100, file);
     }
+    //Fermeture du fichier
     fclose(file);
+    //Retour
     return NULL;
 }

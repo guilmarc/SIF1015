@@ -1,0 +1,32 @@
+A rog ProgrammeurC DEC 1
+A ben AnalysteSysteme BAC 5
+A joe AdminReseau DEC 10
+A jojo AnalysteSysteme BAC 6
+A gigi AnalysteSysteme BAC 15
+A jaja AdminReseau DEC 9
+A jiji GestionnaireTI BAC 20
+A fm AnalysteSysteme BAC 25
+A bb AnalysteSecurite BAC 25
+A mm ProgrammeurC DEC 4
+A kk GestionnaireTI BAC 25
+A titi AnalysteSecurite BAC 17
+A rig ProgrammeurC BAC 25
+L C 1-15
+M 2 tiben AnalysteSysteme BAC 5
+L C 1-15
+L S AnalysteSysteme
+L SE AnalysteSysteme 5-10
+L SF ProgrammeurC DEC
+L SFE AdminReseau DEC 5-10
+L S AnalysteSysteme
+T PP rog tiben je me cherche une job
+T PG fm ProgrammeurC je cherche un programmeur en C sur LINUX
+E rig
+L C 1-15
+
+
+
+
+
+
+

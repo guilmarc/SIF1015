@@ -12,7 +12,7 @@ A kk GestionnaireTI BAC 25
 A titi AnalysteSecurite BAC 17
 A rig ProgrammeurC BAC 25
 L C 1-15
-T PG ben AnalysteSysteme  Je cherche un analyste specialiste des structures de donnees avec au moins 15 ans d'experiences
+T PG ben AnalysteSysteme  Je cherche un analyste specialiste des structures de donnees avec au moins 15 ans d'experience
 L SE AnalysteSysteme 10-20
 L S GestionnaireTI
 T PP gigi ben Je vous transmet mon CV 

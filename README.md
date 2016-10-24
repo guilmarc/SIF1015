@@ -8,44 +8,6 @@
 
 # Manuel
 
-### Compiler
-**Assurez-vous d'avoir le compilateur `gcc` pour pouvoir compiler** et déplacez vous dans le dossier `./src`
-
-```
-make
-./linked_info
-```
-
-### Création de module
-L'usage de la commande crée un fichier `argument.h` et `argument.c` et écrit les en-têtes. Remplacez `argument` par le nom du module en question.
-```c
-make module I=argument
-
-//  Crée un fichier argument.c qui contient :
-#include <stdio.h>
-#include <stdlib.h>
-#include "argument.h"
-
-//  Crée un fichier argument.h qui contient :
-#ifndef ARGUMENT_H
-#define ARGUMENT_H
-
-
-#endif
-```
-
-Vous devez par la suite l'ajouter à votre `makefile` de la façon suivante
-```
-argument.o: argument.c argument.h
-    $(CC) -c argument.c $(CFLAGS) -I.
-```
-
-Et ajoutez a la compilation du programme principal
-```
-$(TARGET): main.o linked_list.o member.o argment.o
-	$(CC) $(CFLAGS) -o $(TARGET) main.o linked_list.o member.o argment.o
-```
-
 ### Néttoyer le dossier de Travail
 La commande suivante supprimera tous les fichiers compilé dans le dossier courant.
 ```
@@ -141,3 +103,8 @@ Programmes (code du `main()`, codes des procédures, fichier en-tête, makefile)
 
 ### Documents à remettre :
 Vous devez déposer un manuel d’utilisateur de votre application sur le portail de cours, incluant votre Username, Password sur le serveur DMILinux ainsi que le chemin pour accéder à votre dossier TP1, le nom du fichier exécutable et le nom du fichier de transactions utilisé pour tester votre application.
+
+
+# Références
+
+`pthread_mutex_lock` : [https://docs.oracle.com/cd/E19683-01/806-6867/sync-12/index.html](https://docs.oracle.com/cd/E19683-01/806-6867/sync-12/index.html)

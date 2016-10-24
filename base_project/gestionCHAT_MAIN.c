@@ -1,29 +1,30 @@
 //#########################################################
 //#
-//# Titre : 	UTILITAIRES (MAIN) TP1 LINUX Automne 16
+//# Titre : 	UTILITAIRES (MAIN) TP1 LINUX Automne 13
 //#			SIF-1015 - Systeme d'exploitation
 //#			Universite du Quebec a� Trois-Rivieres
 //#
 //# Auteur : 	Francois Meunier
-//#	Date :	Septembre 2016
+//#	Date :	Septembre 2013
 //#
-//# Langage : 	ANSI C on LINUX
+//# Langage : 	ANSI C on LINUX 
 //#
 //#######################################
 
-#include "gestionListeChaineeLinkedINFO.h"
+#include "gestionListeChaineeCHAT.h"
 
 //Pointeur de tete de liste
-Node* head;
+struct noeud* head;
 //Pointeur de queue de liste pour ajout rapide
-Node* queue;
+struct noeud* queue;
 
 
 int main(int argc, char* argv[]){
 	//Initialisation des pointeurs
 	head = NULL;
 	queue = NULL;
-	readTranslinkedINFO(argv[1]);
+	readTransCHAT(argv[1]);
 	//Fin du programme
 	exit(0);
 }
+
