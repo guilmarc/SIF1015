@@ -42,7 +42,7 @@ Node * findPrevlinkedINFO(const char* nickname){
     while (ptr->next != NULL){
 
         //Est-ce le predecesseur de l'item recherche?
-        if((strcmp(ptr->next->membre.nickname, nickname) == 0) ){
+        if((strcmp(ptr->next->member.nickname, nickname) == 0) ){
 
             //On retourne un pointeur sur l'item precedent
             return ptr;
@@ -69,7 +69,7 @@ void* addItemlinkedINFO(void* data) {
     Member *member;
     member = (Member *) data;
 
-    ni->membre = *member;
+    ni->member = *member;
 
     if(head == NULL) // ajout au debut de la liste vide
     {
@@ -106,10 +106,10 @@ void modifyItemlinkedINFO(const int nodeId, const char* nickname, const char* sp
         //Element a modifier
         if (entryId == nodeId){
             //Affectation des valeurs des champs
-            strcpy(ptr->membre.nickname, nickname);
-            strcpy(ptr->membre.speciality, speciality);
-            strcpy(ptr->membre.scholarships, scholarships);
-            ptr->membre.Experience = Experience;
+            strcpy(ptr->member.nickname, nickname);
+            strcpy(ptr->member.speciality, speciality);
+            strcpy(ptr->member.scholarships, scholarships);
+            ptr->member.experience = Experience;
             //printf("%d: %s \t  %s \t %s \t %s \t %d\n",entryId,ptr->membre.nickname,ptr->membre.scholarships, ptr->membre.speciality, ptr->membre.experience );
             return;
         }
@@ -135,7 +135,7 @@ void removeItemlinkedINFO(const char* nickname){
         return;
     }
 
-    if(strcmp(head->membre.nickname,nickname) == 0)
+    if(strcmp(head->member.nickname,nickname) == 0)
     {
         ptr = head; // suppression du premier element de la liste
 
@@ -197,8 +197,8 @@ void listItemsCompletlinkedINFO(const int start, const int end){
         if ((entryId >= start) && (entryId <= end)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
-                ptr->membre.nickname, ptr->membre.speciality,
-                ptr->membre.scholarships, ptr->membre.Experience
+                ptr->member.nickname, ptr->member.speciality,
+                ptr->member.scholarships, ptr->member.experience
             );
         }
         if (entryId > end){
@@ -229,11 +229,11 @@ void listItemsParSpecialitelinkedINFO(const char* speciality){
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->membre.speciality, speciality) == 0)){
+        if ((strcmp(ptr->member.speciality, speciality) == 0)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
-                ptr->membre.nickname, ptr->membre.speciality,
-                ptr->membre.scholarships, ptr->membre.Experience
+                ptr->member.nickname, ptr->member.speciality,
+                ptr->member.scholarships, ptr->member.experience
             );
         }
 
@@ -255,11 +255,11 @@ void listItemsParSpecialiteExperiencelinkedINFO(const char* speciality, const in
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->membre.speciality, speciality) == 0) && ((ptr->membre.Experience >= start) && (ptr->membre.Experience <= end))){
+        if ((strcmp(ptr->member.speciality, speciality) == 0) && ((ptr->member.experience >= start) && (ptr->member.experience <= end))){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
-                ptr->membre.nickname, ptr->membre.speciality,
-                ptr->membre.scholarships, ptr->membre.Experience
+                ptr->member.nickname, ptr->member.speciality,
+                ptr->member.scholarships, ptr->member.experience
             );
         }
         ptr = ptr->next;
@@ -283,11 +283,11 @@ void listItemsParSpecialiteFormationlinkedINFO(const char* speciality, const cha
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->membre.speciality,speciality) == 0) && (strcmp(ptr->membre.scholarships,scholarships) == 0)){
+        if ((strcmp(ptr->member.speciality,speciality) == 0) && (strcmp(ptr->member.scholarships,scholarships) == 0)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
-                ptr->membre.nickname, ptr->membre.speciality,
-                ptr->membre.scholarships, ptr->membre.Experience
+                ptr->member.nickname, ptr->member.speciality,
+                ptr->member.scholarships, ptr->member.experience
             );
         }
 
@@ -312,11 +312,11 @@ void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* speciality,
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->membre.speciality, speciality) == 0) && (strcmp(ptr->membre.scholarships, scholarships) == 0) && ((ptr->membre.Experience >= start) && (ptr->membre.Experience <= end))){
+        if ((strcmp(ptr->member.speciality, speciality) == 0) && (strcmp(ptr->member.scholarships, scholarships) == 0) && ((ptr->member.experience >= start) && (ptr->member.experience <= end))){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
-                ptr->membre.nickname, ptr->membre.speciality,
-                ptr->membre.scholarships, ptr->membre.Experience
+                ptr->member.nickname, ptr->member.speciality,
+                ptr->member.scholarships, ptr->member.experience
             );
         }
 
@@ -340,9 +340,9 @@ void transTextGroupelinkedINFO(const char* nickname, const char* group, const ch
     printf("TEXTE ENVOYE: %s\n", text);
 
     while (ptr != NULL){
-        if((strcmp(ptr->membre.nickname, nickname) != 0) && ((strcmp(ptr->membre.speciality, group) == 0) || (strcmp(ptr->membre.scholarships, group) == 0)))
+        if((strcmp(ptr->member.nickname, nickname) != 0) && ((strcmp(ptr->member.speciality, group) == 0) || (strcmp(ptr->member.scholarships, group) == 0)))
         {
-            printf("membre: %s \t transmet au groupe: %s",ptr->membre.nickname, ptr->membre.speciality);
+            printf("membre: %s \t transmet au groupe: %s",ptr->member.nickname, ptr->member.speciality);
             printf("   TEXTE ENVOYE/RECU: %s\n", text);
         }
         ptr = ptr->next;
@@ -361,7 +361,7 @@ void transTextPersonnellinkedINFO(const char* nickname1, const char* nickname2, 
     printf("TEXTE ENVOYE: %s\n", text);
 
     while (ptr != NULL){
-        if((strcmp(ptr->membre.nickname, nickname1) != 0) && (strcmp(ptr->membre.nickname, nickname2) == 0))
+        if((strcmp(ptr->member.nickname, nickname1) != 0) && (strcmp(ptr->member.nickname, nickname2) == 0))
         {
             printf(" membre: %s \t transmet au membre: %s ", nickname1, nickname2);
             printf("TEXTE ENVOYE/RECU: %s\n", text);

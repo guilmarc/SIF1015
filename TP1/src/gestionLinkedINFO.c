@@ -62,16 +62,18 @@ void* readTranslinkedINFO(char* nomFichier){
                 char *nickname = strtok_r(NULL, " ", &sp);
                 char *speciality = strtok_r(NULL, " ", &sp);
                 char *scholarships = strtok_r(NULL, " ", &sp);
-                int experience = atoi(strtok_r(NULL, "\n", &sp));
+                int experience = atoi(strtok_r(NULL, "\n", &sp));   //atoi = AsciiToInteger
 
-                Member* membre = (Member*)malloc(sizeof(Member));
-                membre->Experience = experience;
-                strcpy(membre->nickname, nickname);
-                strcpy(membre->speciality, speciality);
-                strcpy(membre->scholarships, scholarships);
+                Member* member = (Member*)malloc(sizeof(Member));
+                strcpy(member->nickname, nickname);
+                strcpy(member->speciality, speciality);
+                strcpy(member->scholarships, scholarships);
+                member->experience = experience;
+
                 //Appel de la fonction associee
                 pthread_t threadId;
-                pthread_create(&threadId, NULL, addItemlinkedINFO, membre);
+                pthread_create(&threadId, NULL, addItemlinkedINFO, member);
+                pthread_join(threadId, NULL);
 
                 break;
             }

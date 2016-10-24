@@ -9,11 +9,11 @@ typedef struct member {
     char nickname[100];
     char speciality[100];
     char scholarships[100];
-    int Experience;
+    int experience;
 } Member;
 
 struct node {
-    Member membre;
+    Member member;
     struct node *next;
 };
 
