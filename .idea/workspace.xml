@@ -15,24 +15,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7454ce42-5faa-4c50-9506-c6a8cd3a1ae8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/SIF1015.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionCHAT.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionCHAT_MAIN.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO_MAIN" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO_MAIN.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeCHAT.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeCHAT.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeLinkedINFO.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeLinkedINFO.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1-A16Copy.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1COPY.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans3.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/transTest.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/TP1/bin/TP1" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GoodCounter/.idea/GoodCounter.iml" afterPath="$PROJECT_DIR$/GoodCounter/.idea/GoodCounter.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GoodCounter/.idea/workspace.xml" afterPath="$PROJECT_DIR$/GoodCounter/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TP1/.idea/workspace.xml" afterPath="$PROJECT_DIR$/TP1/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TP1/src/gestionLinkedINFO.c" afterPath="$PROJECT_DIR$/TP1/src/gestionLinkedINFO.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TP1/src/gestionListeChaineeLinkedINFO.c" afterPath="$PROJECT_DIR$/TP1/src/gestionListeChaineeLinkedINFO.c" />
     </list>
     <ignored path="SIF1015.iws" />
     <ignored path=".idea/workspace.xml" />

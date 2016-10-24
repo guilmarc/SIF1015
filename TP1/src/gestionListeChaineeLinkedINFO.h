@@ -5,6 +5,8 @@
 #include <pthread.h>
 #include <unistd.h>
 
+extern sem_t mutex;
+
 typedef struct member {
     char nickname[100];
     char speciality[100];

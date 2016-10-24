@@ -18,6 +18,7 @@ extern Node* head;
 //Pointeur de queue de liste pour ajout rapide
 extern Node* queue;
 
+sem_t mutex;      /* semaphore that protects counter */
 
 //#######################################
 //#
@@ -73,17 +74,21 @@ void* addItemlinkedINFO(void* data) {
 
     if(head == NULL) // ajout au debut de la liste vide
     {
+
+        sem_wait(&mutex);
         //  premier noeud
         ni->next= NULL;
         queue = head = ni;
-
+        sem_post(&mutex);
     }
     else  // ajout a la fin de la liste
     {
+        sem_wait(&mutex);
         Node* tptr = queue;
         ni->next= NULL;
         queue = ni;
         tptr->next = ni;
+        sem_post(&mutex);
     }
     pthread_exit(0);
 }

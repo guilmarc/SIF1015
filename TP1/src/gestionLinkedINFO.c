@@ -64,11 +64,14 @@ void* readTranslinkedINFO(char* nomFichier){
                 char *scholarships = strtok_r(NULL, " ", &sp);
                 int experience = atoi(strtok_r(NULL, "\n", &sp));   //atoi = AsciiToInteger
 
-                Member* member = (Member*)malloc(sizeof(Member));
+                Member *member = (Member*)malloc(sizeof(Member));
                 strcpy(member->nickname, nickname);
                 strcpy(member->speciality, speciality);
                 strcpy(member->scholarships, scholarships);
                 member->experience = experience;
+
+                //TODO: Trouver pourquoi ce type d'initialisation ne peut fonctionner
+                //Member member = {nickname, speciality, scholarships, experience};
 
                 //Appel de la fonction associee
                 pthread_t threadId;

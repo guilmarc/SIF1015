@@ -18,11 +18,15 @@ Node* head;
 //Pointeur de queue de liste pour ajout rapide
 Node* queue;
 
+sem_t mutex;      /* semaphore that protects counter */
 
 int main(int argc, char* argv[]){
 	//Initialisation des pointeurs
 	head = NULL;
 	queue = NULL;
+
+	sem_init(&mutex, 0, 1);
+
 	readTranslinkedINFO(argv[1]);
 	//Fin du programme
 	exit(0);
