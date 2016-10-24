@@ -19,7 +19,6 @@ struct node {
 
 typedef struct node Node;
 
-
 void error(const int exitcode, const char * message);
 
 void* readTranslinkedINFO(char* nomFichier);
@@ -28,7 +27,7 @@ Node * findPrevlinkedINFO(const char* nickname);
 void printHeader();
 void printFooter();
 void* addItemlinkedINFO(void* data);
-void modifyItemlinkedINFO(const int noNoeud, const char* nickname, const char* speciality, const char* scholarships, const int Experience);
+void modifyItemlinkedINFO(const int nodeId, const char* nickname, const char* speciality, const char* scholarships, const int Experience);
 void removeItemlinkedINFO(const char* nickname);
 void listItemsCompletlinkedINFO(const int start, const int end);
 void listItemsParSpecialitelinkedINFO(const char* speciality);

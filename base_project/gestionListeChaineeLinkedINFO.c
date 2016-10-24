@@ -91,12 +91,12 @@ void* addItemlinkedINFO(void* data) {
 //#
 //# Modifie un item de la liste chainee
 //#
-void modifyItemlinkedINFO(const int noNoeud, const char* nickname, const char* speciality, const char* scholarships, const int Experience){
+void modifyItemlinkedINFO(const int nodeId, const char* nickname, const char* speciality, const char* scholarships, const int Experience){
 
     int entryId=1;
     //Verification sommaire (groupIde>0 et liste non vide)
 
-    if ((noNoeud<1) || ((head==NULL) && (queue==NULL))) {
+    if ((nodeId<1) || ((head==NULL) && (queue==NULL))) {
         return;
     }
     //Recherche de l'element a� modifier
@@ -104,7 +104,7 @@ void modifyItemlinkedINFO(const int noNoeud, const char* nickname, const char* s
     while (ptr != NULL){
 
         //Element a modifier
-        if (entryId == noNoeud){
+        if (entryId == nodeId){
             //Affectation des valeurs des champs
             strcpy(ptr->membre.nickname, nickname);
             strcpy(ptr->membre.speciality, speciality);

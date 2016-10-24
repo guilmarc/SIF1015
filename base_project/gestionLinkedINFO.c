@@ -78,13 +78,13 @@ void* readTranslinkedINFO(char* nomFichier){
             case 'M':
             case 'm':{
                 //Extraction des parametres
-                int noNoeud = atoi(strtok_r(NULL, " ", &sp));
+                int nodeId = atoi(strtok_r(NULL, " ", &sp));
                 char *nickname = strtok_r(NULL, " ", &sp);
                 char *speciality = strtok_r(NULL, " ", &sp);
                 char *scholarships = strtok_r(NULL, " ", &sp);
                 int experience = atoi(strtok_r(NULL, "\n", &sp));
                 //Appel de la fonction associee
-                modifyItemlinkedINFO(noNoeud, nickname, speciality, scholarships, experience);
+                modifyItemlinkedINFO(nodeId, nickname, speciality, scholarships, experience);
                 break;
             }
             case 'E':
