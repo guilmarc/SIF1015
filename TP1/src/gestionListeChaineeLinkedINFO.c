@@ -12,6 +12,8 @@
 //#######################################
 
 #include "gestionListeChaineeLinkedINFO.h"
+#include <semaphore.h>
+#include <pthread.h>
 
 //Pointeur de tete de liste
 extern Node* head;

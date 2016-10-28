@@ -12,6 +12,8 @@
 //#######################################
 
 #include "gestionListeChaineeLinkedINFO.h"
+#include <semaphore.h>
+#include <pthread.h>
 
 //Pointeur de tete de liste
 Node* head;
@@ -21,13 +23,13 @@ Node* queue;
 sem_t mutex;      /* semaphore that protects counter */
 
 int main(int argc, char* argv[]){
-	//Initialisation des pointeurs
-	head = NULL;
-	queue = NULL;
+    //Initialisation des pointeurs
+    head = NULL;
+    queue = NULL;
 
-	sem_init(&mutex, 0, 1);
+    sem_init(&mutex, 0, 1);
 
     readTransactionsFile(argv[1]);
-	//Fin du programme
-	exit(0);
+    //Fin du programme
+    exit(0);
 }
