@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
 
 	sem_init(&mutex, 0, 1);
 
-	readTranslinkedINFO(argv[1]);
+    readTransactionsFile(argv[1]);
 	//Fin du programme
 	exit(0);
 }

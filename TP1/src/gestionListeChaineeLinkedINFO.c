@@ -29,7 +29,7 @@ sem_t mutex;      /* semaphore that protects counter */
 //#
 //# 		Retourne NULL dans le cas ou l'item est introuvable
 //#
-Node * findPrevlinkedINFO(const char* nickname){
+Node * findPrevious(const char* nickname){
 
     //La liste est vide
     if ((head == NULL) && (queue == NULL)) {
@@ -62,15 +62,14 @@ Node * findPrevlinkedINFO(const char* nickname){
 //# Ajoute un item dans la liste chainee
 //#
 //
-void* addItemlinkedINFO(void* data) {
+void* addItem(void* data) {
 
     //Creation de l'enregistrement en memoire
     Node* ni = (Node*)malloc(sizeof(Node));
 
-    Member *member;
-    member = (Member *) data;
+    AddItemParams* params = (AddItemParams *) data;
 
-    ni->member = *member;
+    ni->member = params->member;
 
     if(head == NULL) // ajout au debut de la liste vide
     {
@@ -96,33 +95,36 @@ void* addItemlinkedINFO(void* data) {
 //#
 //# Modifie un item de la liste chainee
 //#
-void modifyItemlinkedINFO(const int nodeId, const char* nickname, const char* speciality, const char* scholarships, const int Experience){
+void* modifyItem(void* data){
+
+    ModifyItemParams* params = (ModifyItemParams *) data;
 
     int entryId=1;
     //Verification sommaire (groupIde>0 et liste non vide)
 
-    if ((nodeId<1) || ((head==NULL) && (queue==NULL))) {
-        return;
+    if ((params->nodeId<1) || ((head==NULL) && (queue==NULL))) {
+        return NULL;
     }
     //Recherche de l'element a� modifier
-    Node * ptr = head;			//premier element
+    Node *ptr = head;			//premier element
     while (ptr != NULL){
 
         //Element a modifier
-        if (entryId == nodeId){
+        if (entryId == params->nodeId){
             //Affectation des valeurs des champs
-            strcpy(ptr->member.nickname, nickname);
-            strcpy(ptr->member.speciality, speciality);
-            strcpy(ptr->member.scholarships, scholarships);
-            ptr->member.experience = Experience;
+            strcpy(ptr->member.nickname, params->member.nickname);
+            strcpy(ptr->member.speciality, params->member.speciality);
+            strcpy(ptr->member.scholarships, params->member.scholarships);
+            ptr->member.experience = params->member.experience;
             //printf("%d: %s \t  %s \t %s \t %s \t %d\n",entryId,ptr->membre.nickname,ptr->membre.scholarships, ptr->membre.speciality, ptr->membre.experience );
-            return;
+            return NULL;
         }
         else{
             ptr = ptr->next;
             entryId++;
         }
     }
+    return NULL;
 }
 
 
@@ -130,7 +132,7 @@ void modifyItemlinkedINFO(const int nodeId, const char* nickname, const char* sp
 //#
 //# Retire un item de la liste chainee
 //#
-void removeItemlinkedINFO(const char* nickname){
+void removeItem(const char* nickname){
     Node * ptr;
     Node * optr;
 
@@ -159,7 +161,7 @@ void removeItemlinkedINFO(const char* nickname){
     }
     else
     {
-        ptr = findPrevlinkedINFO(nickname); // ptr pointe sur l'element precedent de celui a supprimer
+        ptr = findPrevious(nickname); // ptr pointe sur l'element precedent de celui a supprimer
 
         //Item  trouve
         if (ptr != NULL)
@@ -188,7 +190,7 @@ void removeItemlinkedINFO(const char* nickname){
 //#
 //# Affiche les informations des membres dont le numero sequentiel est compris dans un intervalle
 //#
-void listItemsCompletlinkedINFO(const int start, const int end){
+void listItemsWithinInterval(const int start, const int end){
 
     int entryId=1;
     printHeader();
@@ -223,7 +225,7 @@ void listItemsCompletlinkedINFO(const int start, const int end){
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite donnee
-void listItemsParSpecialitelinkedINFO(const char* speciality){
+void listItemsPerSpeciality(const char* speciality){
 
 
     int entryId = 1;
@@ -251,7 +253,7 @@ void listItemsParSpecialitelinkedINFO(const char* speciality){
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite et experience
-void listItemsParSpecialiteExperiencelinkedINFO(const char* speciality, const int start, const int end){
+void listItemsPerSpecialityAndExperienceInterval(const char* speciality, const int start, const int end){
 
     int entryId = 1;
     printHeader();
@@ -277,7 +279,7 @@ void listItemsParSpecialiteExperiencelinkedINFO(const char* speciality, const in
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite et formation
-void listItemsParSpecialiteFormationlinkedINFO(const char* speciality, const char* scholarships){
+void listItemsPerSpecialityAndScolarships(const char* speciality, const char* scholarships){
 
     int entryId = 1;
     printHeader();
@@ -307,7 +309,7 @@ void listItemsParSpecialiteFormationlinkedINFO(const char* speciality, const cha
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite formation et experience
-void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* speciality, const char* scholarships, const int start, const int end ){
+void listItemsPerSpecialityScolarshipsAndExperienceInverval(const char* speciality, const char* scholarships, const int start, const int end ){
 
     int entryId = 1;
     printHeader();
@@ -337,7 +339,7 @@ void listItemsParSpecialiteFormationExperiencelinkedINFO(const char* speciality,
 //#
 //# Transmission d'un message aux membres d'un groupe
 //#
-void transTextGroupelinkedINFO(const char* nickname, const char* group, const char* text){
+void sendTextToGroup(const char* nickname, const char* group, const char* text){
 
     Node * ptr = head;			//premier element
 
@@ -358,7 +360,7 @@ void transTextGroupelinkedINFO(const char* nickname, const char* group, const ch
 //#
 //# Transmission d'un message personnel a un membre
 //#
-void transTextPersonnellinkedINFO(const char* nickname1, const char* nickname2, const char* text){
+void sendTextBetweenMembers(const char* nickname1, const char* nickname2, const char* text){
 
     Node * ptr = head;			//premier element
 

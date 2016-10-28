@@ -34,15 +34,15 @@ void error(const int exitcode, const char * message){
 //#
 //# fonction utilisee par les threads de transactions
 //#
-void* readTranslinkedINFO(char* nomFichier){
+void* readTransactionsFile(char* filename){
     FILE *file;
     char buffer[100];
     char *tok, *sp;
 
     //Ouverture du fichier en mode "r" (equiv. "rt") : [r]ead [t]ext
-    file = fopen(nomFichier, "rt");
+    file = fopen(filename, "rt");
     if (file==NULL) {
-        error(2, "readTrans: Erreur lors de l'ouverture du fichier.");
+        error(2, "readTransactionsFile: Erreur lors de l'ouverture du fichier.");
     }
 
     //Lecture (tentative) d'une ligne de texte
@@ -70,13 +70,19 @@ void* readTranslinkedINFO(char* nomFichier){
                 strcpy(member->scholarships, scholarships);
                 member->experience = experience;
 
+                AddItemParams *params = (AddItemParams*)malloc(sizeof(AddItemParams));
+                params->member  = *member;
+
                 //TODO: Trouver pourquoi ce type d'initialisation ne peut fonctionner
                 //Member member = {nickname, speciality, scholarships, experience};
 
                 //Appel de la fonction associee
                 pthread_t threadId;
-                pthread_create(&threadId, NULL, addItemlinkedINFO, member);
-                pthread_join(threadId, NULL);
+                pthread_create(&threadId, NULL, addItem, params);
+
+                //TODO: Infaudra créer un tableau au début du main pour conserver les pthread_t
+                //et boucler pour faire des join
+                //pthread_join(threadId, NULL);
 
                 break;
             }
@@ -88,8 +94,19 @@ void* readTranslinkedINFO(char* nomFichier){
                 char *speciality = strtok_r(NULL, " ", &sp);
                 char *scholarships = strtok_r(NULL, " ", &sp);
                 int experience = atoi(strtok_r(NULL, "\n", &sp));
-                //Appel de la fonction associee
-                modifyItemlinkedINFO(nodeId, nickname, speciality, scholarships, experience);
+
+                //Remplissage de la structure Modify
+                ModifyItemParams* params = (ModifyItemParams*)malloc(sizeof(ModifyItemParams));
+                params->nodeId = nodeId;
+                strcpy(params->member.nickname, nickname);
+                strcpy(params->member.speciality, speciality);
+                strcpy(params->member.scholarships, scholarships);
+                params->member.experience = experience;
+
+                pthread_t threadId;
+                pthread_create(&threadId, NULL, modifyItem, params);
+                pthread_join(threadId, NULL);
+
                 break;
             }
             case 'E':
@@ -98,7 +115,7 @@ void* readTranslinkedINFO(char* nomFichier){
                 char *nickname = strtok_r(NULL, "\n", &sp);
 
                 //Appel de la fonction associee
-                removeItemlinkedINFO(nickname);
+                removeItem(nickname);
                 break;
             }
             case 'L':
@@ -111,13 +128,13 @@ void* readTranslinkedINFO(char* nomFichier){
                     int nstart = atoi(strtok_r(NULL, "-", &sp));
                     int nend = atoi(strtok_r(NULL, "\n", &sp));
                     //Appel de la fonction associee
-                    listItemsCompletlinkedINFO(nstart, nend);
+                    listItemsWithinInterval(nstart, nend);
                 }
                 else if(strcmp(ptrType, "S") == 0) // affichage par specialite
                 {
                     char* speciality = strtok_r(NULL, "\n", &sp);
                     //Appel de la fonction associee
-                    listItemsParSpecialitelinkedINFO(speciality);
+                    listItemsPerSpeciality(speciality);
                 }
                 else if(strcmp(ptrType, "SE") == 0) // affichage par specialite et experience
                 {
@@ -125,14 +142,14 @@ void* readTranslinkedINFO(char* nomFichier){
                     int nstart = atoi(strtok_r(NULL, "-", &sp));
                     int nend = atoi(strtok_r(NULL, "\n", &sp));
                     //Appel de la fonction associee
-                    listItemsParSpecialiteExperiencelinkedINFO(speciality, nstart, nend);
+                    listItemsPerSpecialityAndExperienceInterval(speciality, nstart, nend);
                 }
                 else if(strcmp(ptrType, "SF") == 0) // affichage par specialite et formation
                 {
                     char* speciality = strtok_r(NULL, " ", &sp);
                     char* scholarships = strtok_r(NULL, "\n", &sp);
                     //Appel de la fonction associee
-                    listItemsParSpecialiteFormationlinkedINFO(speciality, scholarships);
+                    listItemsPerSpecialityAndScolarships(speciality, scholarships);
                 }
                 else if(strcmp(ptrType, "SFE") == 0) // affichage par specialite formation et experience
                 {
@@ -141,7 +158,7 @@ void* readTranslinkedINFO(char* nomFichier){
                     int nstart = atoi(strtok_r(NULL, "-", &sp));
                     int nend = atoi(strtok_r(NULL, "\n", &sp));
                     //Appel de la fonction associee
-                    listItemsParSpecialiteFormationExperiencelinkedINFO(speciality, scholarships, nstart, nend);
+                    listItemsPerSpecialityScolarshipsAndExperienceInverval(speciality, scholarships, nstart, nend);
                 }
                 break;
             }
@@ -158,7 +175,7 @@ void* readTranslinkedINFO(char* nomFichier){
                     char *text = strtok_r(NULL, "\n", &sp);
 
                     //Appel de la fonction associee
-                    transTextGroupelinkedINFO(nickname, group,text);
+                    sendTextToGroup(nickname, group,text);
                 }
                 else if(strcmp(ptrType, "PP") == 0) // affichage complet
                 {
@@ -167,7 +184,7 @@ void* readTranslinkedINFO(char* nomFichier){
                     char *text = strtok_r(NULL, "\n", &sp);
 
                     //Appel de la fonction associee
-                    transTextPersonnellinkedINFO(nickname1, nickname2,text);
+                    sendTextBetweenMembers(nickname1, nickname2,text);
                 }
                 break;
             }
