@@ -12,8 +12,6 @@
 //#######################################
 
 #include "gestionListeChaineeLinkedINFO.h"
-#include <semaphore.h>
-#include <pthread.h>
 
 #define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
 
