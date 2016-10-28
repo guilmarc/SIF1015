@@ -269,7 +269,8 @@ void* readTransactionsFile(char* filename){
 
     //On s'assure que tous les threads seront terminés avant la fermeture du programme
     //Ici on utilise la variable counter et non numberOfLine car il peut y avoir des lignes vides.
-    for(int i = 0; i< counter; i++) {
+    int i = 0;
+    for(i = 0; i< counter; i++) {
         pthread_join(threads[i], NULL);
     }
 
