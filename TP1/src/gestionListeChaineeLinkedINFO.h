@@ -83,11 +83,11 @@ void printHeader();
 void printFooter();
 void* addItem(void* data);
 void* modifyItem(void* data);
-void removeItem(const char* nickname);
-void listItemsWithinInterval(const int start, const int end);
-void listItemsPerSpeciality(const char* speciality);
-void listItemsPerSpecialityAndExperienceInterval(const char* speciality, const int start, const int end);
-void listItemsPerSpecialityAndScolarships(const char* speciality, const char* scholarships);
-void listItemsPerSpecialityScolarshipsAndExperienceInverval(const char* speciality, const char* scholarships, const int start, const int end );
-void sendTextToGroup(const char* nickname, const char* group, const char* text); // groupes possibles: Formation ou Specialite
-void sendTextBetweenMembers(const char* nickname1, const char* nickname2, const char* text);
+void* removeItem(void* data);
+void* listItemsWithinInterval(void* data);
+void* listItemsPerSpeciality(void* data);
+void* listItemsPerSpecialityAndExperienceInterval(void* data);
+void* listItemsPerSpecialityAndScolarships(void* data);
+void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data);
+void* sendTextToGroup(void* data); // groupes possibles: Formation ou Specialite
+void* sendTextBetweenMembers(void* data);

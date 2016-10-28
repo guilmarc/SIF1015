@@ -82,7 +82,7 @@ void* readTransactionsFile(char* filename){
 
                 //TODO: Infaudra créer un tableau au début du main pour conserver les pthread_t
                 //et boucler pour faire des join
-                //pthread_join(threadId, NULL);
+                pthread_join(threadId, NULL);
 
                 break;
             }
@@ -95,7 +95,7 @@ void* readTransactionsFile(char* filename){
                 char *scholarships = strtok_r(NULL, " ", &sp);
                 int experience = atoi(strtok_r(NULL, "\n", &sp));
 
-                //Remplissage de la structure Modify
+                //Remplissage de la structure de paramètres
                 ModifyItemParams* params = (ModifyItemParams*)malloc(sizeof(ModifyItemParams));
                 params->nodeId = nodeId;
                 strcpy(params->member.nickname, nickname);
@@ -114,8 +114,14 @@ void* readTransactionsFile(char* filename){
                 //Extraction du parametre
                 char *nickname = strtok_r(NULL, "\n", &sp);
 
-                //Appel de la fonction associee
-                removeItem(nickname);
+                //Remplissage de la structure de paramètres
+                RemoveItemParams* params = (RemoveItemParams*)malloc(sizeof(RemoveItemParams));
+                params->nickname = nickname;
+
+                pthread_t threadId;
+                pthread_create(&threadId, NULL, removeItem, params);
+                pthread_join(threadId, NULL);
+
                 break;
             }
             case 'L':
@@ -127,29 +133,61 @@ void* readTransactionsFile(char* filename){
                 {
                     int nstart = atoi(strtok_r(NULL, "-", &sp));
                     int nend = atoi(strtok_r(NULL, "\n", &sp));
+
+                    //Remplissage de la structure de paramètres
+                    ListItemsWithinIntervalParams* params = (ListItemsWithinIntervalParams*)malloc(sizeof(ListItemsWithinIntervalParams));
+                    params->start = nstart;
+                    params->end = nend;
+
                     //Appel de la fonction associee
-                    listItemsWithinInterval(nstart, nend);
+                    pthread_t threadId;
+                    pthread_create(&threadId, NULL, listItemsWithinInterval, params);
+                    pthread_join(threadId, NULL);
                 }
                 else if(strcmp(ptrType, "S") == 0) // affichage par specialite
                 {
                     char* speciality = strtok_r(NULL, "\n", &sp);
+
+                    //Remplissage de la structure de paramètres
+                    ListItemsPerSpecialityParams* params = (ListItemsPerSpecialityParams*)malloc(sizeof(ListItemsPerSpecialityParams));
+                    params->speciality = speciality;
+
                     //Appel de la fonction associee
-                    listItemsPerSpeciality(speciality);
+                    pthread_t threadId;
+                    pthread_create(&threadId, NULL, listItemsPerSpeciality, params);
+                    pthread_join(threadId, NULL);
                 }
                 else if(strcmp(ptrType, "SE") == 0) // affichage par specialite et experience
                 {
                     char* speciality = strtok_r(NULL, " ", &sp);
                     int nstart = atoi(strtok_r(NULL, "-", &sp));
                     int nend = atoi(strtok_r(NULL, "\n", &sp));
+
+                    //Remplissage de la structure de paramètres
+                    ListItemsPerSpecialityAndExperienceIntervalParams* params = (ListItemsPerSpecialityAndExperienceIntervalParams*)malloc(sizeof(ListItemsPerSpecialityAndExperienceIntervalParams));
+                    params->speciality = speciality;
+                    params->start = nstart;
+                    params->end = nend;
+
                     //Appel de la fonction associee
-                    listItemsPerSpecialityAndExperienceInterval(speciality, nstart, nend);
+                    pthread_t threadId;
+                    pthread_create(&threadId, NULL, listItemsPerSpecialityAndExperienceInterval, params);
+                    pthread_join(threadId, NULL);
                 }
                 else if(strcmp(ptrType, "SF") == 0) // affichage par specialite et formation
                 {
                     char* speciality = strtok_r(NULL, " ", &sp);
                     char* scholarships = strtok_r(NULL, "\n", &sp);
+
+                    //Remplissage de la structure de paramètres
+                    ListItemsPerSpecialityAndScolarshipsParams* params = (ListItemsPerSpecialityAndScolarshipsParams*)malloc(sizeof(ListItemsPerSpecialityAndScolarshipsParams));
+                    params->speciality = speciality;
+                    params->scholarships = scholarships;
+
                     //Appel de la fonction associee
-                    listItemsPerSpecialityAndScolarships(speciality, scholarships);
+                    pthread_t threadId;
+                    pthread_create(&threadId, NULL, listItemsPerSpecialityAndScolarships, params);
+                    pthread_join(threadId, NULL);
                 }
                 else if(strcmp(ptrType, "SFE") == 0) // affichage par specialite formation et experience
                 {
@@ -157,8 +195,18 @@ void* readTransactionsFile(char* filename){
                     char* scholarships = strtok_r(NULL, " ", &sp);
                     int nstart = atoi(strtok_r(NULL, "-", &sp));
                     int nend = atoi(strtok_r(NULL, "\n", &sp));
+
+                    //Remplissage de la structure de paramètres
+                    ListItemsPerSpecialityScolarshipsAndExperienceInvervalParams* params = (ListItemsPerSpecialityScolarshipsAndExperienceInvervalParams*)malloc(sizeof(ListItemsPerSpecialityScolarshipsAndExperienceInvervalParams));
+                    params->speciality = speciality;
+                    params->scholarships = scholarships;
+                    params->start = nstart;
+                    params->end = nend;
+
                     //Appel de la fonction associee
-                    listItemsPerSpecialityScolarshipsAndExperienceInverval(speciality, scholarships, nstart, nend);
+                    pthread_t threadId;
+                    pthread_create(&threadId, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    pthread_join(threadId, NULL);
                 }
                 break;
             }
@@ -174,8 +222,16 @@ void* readTransactionsFile(char* filename){
                     char *group = strtok_r(NULL, " ", &sp);
                     char *text = strtok_r(NULL, "\n", &sp);
 
+                    //Remplissage de la structure de paramètres
+                    SendTextToGroupParams* params = (SendTextToGroupParams*)malloc(sizeof(SendTextToGroupParams));
+                    params->nickname = nickname;
+                    params->group = group;
+                    params->text = text;
+
                     //Appel de la fonction associee
-                    sendTextToGroup(nickname, group,text);
+                    pthread_t threadId;
+                    pthread_create(&threadId, NULL, sendTextToGroup, params);
+                    pthread_join(threadId, NULL);
                 }
                 else if(strcmp(ptrType, "PP") == 0) // affichage complet
                 {
@@ -183,8 +239,16 @@ void* readTransactionsFile(char* filename){
                     char *nickname2 = strtok_r(NULL, " ", &sp);
                     char *text = strtok_r(NULL, "\n", &sp);
 
+                    //Remplissage de la structure de paramètres
+                    SendTextBetweenMembersParams* params = (SendTextBetweenMembersParams*)malloc(sizeof(SendTextBetweenMembersParams));
+                    params->nickname1 = nickname1;
+                    params->nickname2 = nickname2;
+                    params->text = text;
+
                     //Appel de la fonction associee
-                    sendTextBetweenMembers(nickname1, nickname2,text);
+                    pthread_t threadId;
+                    pthread_create(&threadId, NULL, sendTextBetweenMembers, params);
+                    pthread_join(threadId, NULL);
                 }
                 break;
             }

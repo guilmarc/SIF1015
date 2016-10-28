@@ -132,17 +132,19 @@ void* modifyItem(void* data){
 //#
 //# Retire un item de la liste chainee
 //#
-void removeItem(const char* nickname){
+void* removeItem(void* data){
     Node * ptr;
     Node * optr;
+
+    RemoveItemParams* params = (RemoveItemParams *) data;
 
     //Verification sommaire liste non vide
 
     if ((head == NULL) && (queue == NULL)) {
-        return;
+        return NULL;
     }
 
-    if(strcmp(head->member.nickname,nickname) == 0)
+    if(strcmp(head->member.nickname,params->nickname) == 0)
     {
         ptr = head; // suppression du premier element de la liste
 
@@ -152,7 +154,7 @@ void removeItem(const char* nickname){
             {
                 free(ptr);
                 queue = head = NULL;
-                return;
+                return NULL;
             }
             head = ptr->next;
             //printf("tete\n");
@@ -161,7 +163,7 @@ void removeItem(const char* nickname){
     }
     else
     {
-        ptr = findPrevious(nickname); // ptr pointe sur l'element precedent de celui a supprimer
+        ptr = findPrevious(params->nickname); // ptr pointe sur l'element precedent de celui a supprimer
 
         //Item  trouve
         if (ptr != NULL)
@@ -172,7 +174,7 @@ void removeItem(const char* nickname){
                 free(ptr->next);
                 ptr->next = NULL;
                 //printf("queue\n");
-                return;
+                return NULL;
             }
             else // suppression d'un element dans la liste
             {
@@ -183,6 +185,7 @@ void removeItem(const char* nickname){
             }
         }
     }
+    return NULL;
 }
 
 
@@ -190,25 +193,26 @@ void removeItem(const char* nickname){
 //#
 //# Affiche les informations des membres dont le numero sequentiel est compris dans un intervalle
 //#
-void listItemsWithinInterval(const int start, const int end){
+void* listItemsWithinInterval(void* data){
 
     int entryId=1;
     printHeader();
 
     Node * ptr = head;			//premier element
 
+    ListItemsWithinIntervalParams* params = (ListItemsWithinIntervalParams *) data;
 
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((entryId >= start) && (entryId <= end)){
+        if ((entryId >= params->start) && (entryId <= params->end)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
                 ptr->member.nickname, ptr->member.speciality,
                 ptr->member.scholarships, ptr->member.experience
             );
         }
-        if (entryId > end){
+        if (entryId > params->end){
             //L'ensemble des items potentiels sont maintenant passes
             //Deplacement immediatement a� la FIN de la liste
             //Notez que le pointeur optr est toujours valide
@@ -221,11 +225,12 @@ void listItemsWithinInterval(const int start, const int end){
 
     }
     printFooter();
+    return NULL;
 }
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite donnee
-void listItemsPerSpeciality(const char* speciality){
+void* listItemsPerSpeciality(void* data){
 
 
     int entryId = 1;
@@ -233,10 +238,12 @@ void listItemsPerSpeciality(const char* speciality){
 
     Node * ptr = head;			//premier element
 
+    ListItemsPerSpecialityParams* params = (ListItemsPerSpecialityParams *) data;
+
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->member.speciality, speciality) == 0)){
+        if ((strcmp(ptr->member.speciality, params->speciality) == 0)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
                 ptr->member.nickname, ptr->member.speciality,
@@ -248,21 +255,24 @@ void listItemsPerSpeciality(const char* speciality){
         entryId++;
     }
     printFooter();
+    return NULL;
 }
 
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite et experience
-void listItemsPerSpecialityAndExperienceInterval(const char* speciality, const int start, const int end){
+void* listItemsPerSpecialityAndExperienceInterval(void* data){
 
     int entryId = 1;
     printHeader();
     Node * ptr = head;			//premier element
 
+    ListItemsPerSpecialityAndExperienceIntervalParams* params = (ListItemsPerSpecialityAndExperienceIntervalParams *) data;
+
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->member.speciality, speciality) == 0) && ((ptr->member.experience >= start) && (ptr->member.experience <= end))){
+        if ((strcmp(ptr->member.speciality, params->speciality) == 0) && ((ptr->member.experience >= params->start) && (ptr->member.experience <= params->end))){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
                 ptr->member.nickname, ptr->member.speciality,
@@ -274,23 +284,25 @@ void listItemsPerSpecialityAndExperienceInterval(const char* speciality, const i
 
     }
     printFooter();
+    return NULL;
 }
 
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite et formation
-void listItemsPerSpecialityAndScolarships(const char* speciality, const char* scholarships){
+void* listItemsPerSpecialityAndScolarships(void* data){
 
     int entryId = 1;
     printHeader();
 
     Node * ptr = head;			//premier element
 
+    ListItemsPerSpecialityAndScolarshipsParams* params = (ListItemsPerSpecialityAndScolarshipsParams *) data;
 
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->member.speciality,speciality) == 0) && (strcmp(ptr->member.scholarships,scholarships) == 0)){
+        if ((strcmp(ptr->member.speciality,params->speciality) == 0) && (strcmp(ptr->member.scholarships,params->scholarships) == 0)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
                 ptr->member.nickname, ptr->member.speciality,
@@ -304,22 +316,24 @@ void listItemsPerSpecialityAndScolarships(const char* speciality, const char* sc
 
     }
     printFooter();
+    return NULL;
 }
 
 //#######################################
 //#
 //# Affiche les informations des membres pour une specialite formation et experience
-void listItemsPerSpecialityScolarshipsAndExperienceInverval(const char* speciality, const char* scholarships, const int start, const int end ){
+void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data){
 
     int entryId = 1;
     printHeader();
     Node * ptr = head;			//premier element
 
+    ListItemsPerSpecialityScolarshipsAndExperienceInvervalParams* params = (ListItemsPerSpecialityScolarshipsAndExperienceInvervalParams *) data;
 
     while (ptr != NULL){
 
         //L'item a un numero sequentiel dans l'interval defini
-        if ((strcmp(ptr->member.speciality, speciality) == 0) && (strcmp(ptr->member.scholarships, scholarships) == 0) && ((ptr->member.experience >= start) && (ptr->member.experience <= end))){
+        if ((strcmp(ptr->member.speciality, params->speciality) == 0) && (strcmp(ptr->member.scholarships, params->scholarships) == 0) && ((ptr->member.experience >= params->start) && (ptr->member.experience <= params->end))){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
                 ptr->member.nickname, ptr->member.speciality,
@@ -333,48 +347,58 @@ void listItemsPerSpecialityScolarshipsAndExperienceInverval(const char* speciali
 
     }
     printFooter();
+    return NULL;
 }
 
 //#######################################
 //#
 //# Transmission d'un message aux membres d'un groupe
 //#
-void sendTextToGroup(const char* nickname, const char* group, const char* text){
+void* sendTextToGroup(void* data){
 
     Node * ptr = head;			//premier element
 
-    printf("%s \t %s ",nickname, group);
-    printf("TEXTE ENVOYE: %s\n", text);
+    SendTextToGroupParams* params = (SendTextToGroupParams *) data;
+
+
+    printf("%s \t %s ",params->nickname, params->group);
+    printf("TEXTE ENVOYE: %s\n", params->text);
 
     while (ptr != NULL){
-        if((strcmp(ptr->member.nickname, nickname) != 0) && ((strcmp(ptr->member.speciality, group) == 0) || (strcmp(ptr->member.scholarships, group) == 0)))
+        if((strcmp(ptr->member.nickname, params->nickname) != 0) && ((strcmp(ptr->member.speciality, params->group) == 0) || (strcmp(ptr->member.scholarships, params->group) == 0)))
         {
             printf("membre: %s \t transmet au groupe: %s",ptr->member.nickname, ptr->member.speciality);
-            printf("   TEXTE ENVOYE/RECU: %s\n", text);
+            printf("   TEXTE ENVOYE/RECU: %s\n", params->text);
         }
         ptr = ptr->next;
     }
+
+    return NULL;
 }
 
 //#######################################
 //#
 //# Transmission d'un message personnel a un membre
 //#
-void sendTextBetweenMembers(const char* nickname1, const char* nickname2, const char* text){
+void* sendTextBetweenMembers(void* data){
 
     Node * ptr = head;			//premier element
 
-    printf("%s \t %s ", nickname1, nickname2);
-    printf("TEXTE ENVOYE: %s\n", text);
+    SendTextBetweenMembersParams* params = (SendTextBetweenMembersParams *) data;
+
+    printf("%s \t %s ", params->nickname1, params->nickname2);
+    printf("TEXTE ENVOYE: %s\n", params->text);
 
     while (ptr != NULL){
-        if((strcmp(ptr->member.nickname, nickname1) != 0) && (strcmp(ptr->member.nickname, nickname2) == 0))
+        if((strcmp(ptr->member.nickname, params->nickname1) != 0) && (strcmp(ptr->member.nickname, params->nickname2) == 0))
         {
-            printf(" membre: %s \t transmet au membre: %s ", nickname1, nickname2);
-            printf("TEXTE ENVOYE/RECU: %s\n", text);
+            printf(" membre: %s \t transmet au membre: %s ", params->nickname1, params->nickname2);
+            printf("TEXTE ENVOYE/RECU: %s\n", params->text);
         }
         ptr = ptr->next;
     }
+
+    return NULL;
 }
 
 void printHeader() {
