@@ -23,10 +23,3 @@ T PP rog tiben je me cherche une job
 T PG fm ProgrammeurC je cherche un programmeur en C sur LINUX
 E rig
 L C 1-15
-
-
-
-
-
-
-

@@ -77,6 +77,7 @@ typedef struct sendTextBetweenMembersParams{
 void error(const int exitcode, const char * message);
 
 void* readTransactionsFile(char* filename);
+int getNumberOfLines(char* filename);
 
 Node * findPrevious(const char* nickname);
 void printHeader();
