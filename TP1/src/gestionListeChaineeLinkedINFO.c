@@ -41,6 +41,7 @@ Node * findPrevious(const char* nickname){
 
     //Tant qu'un item next existe
     while (ptr->next != NULL){
+        sem_wait(&mutex);
 
         //Est-ce le predecesseur de l'item recherche?
         if((strcmp(ptr->next->member.nickname, nickname) == 0) ){
@@ -51,6 +52,7 @@ Node * findPrevious(const char* nickname){
 
         //Deplacement du pointeur de navigation
         ptr = ptr->next;
+        sem_post(&mutex);
     }
 
     //On retourne un pointeur NULL
@@ -109,6 +111,7 @@ void* modifyItem(void* data){
     Node *ptr = head;			//premier element
     while (ptr != NULL){
 
+        sem_wait(&mutex);
         //Element a modifier
         if (entryId == params->nodeId){
             //Affectation des valeurs des champs
@@ -123,6 +126,7 @@ void* modifyItem(void* data){
             ptr = ptr->next;
             entryId++;
         }
+        sem_post(&mutex);
     }
     return NULL;
 }
@@ -150,6 +154,7 @@ void* removeItem(void* data){
 
         if(head == ptr) // suppression de l'element de tete
         {
+            sem_wait(&mutex);
             if(head == queue) // un seul element dans la liste
             {
                 free(ptr);
@@ -159,6 +164,7 @@ void* removeItem(void* data){
             head = ptr->next;
             //printf("tete\n");
             free(ptr);
+            sem_post(&mutex);
         }
     }
     else
@@ -170,18 +176,22 @@ void* removeItem(void* data){
         {
             if (queue == ptr->next) // suppression de l'element de queue
             {
+                sem_wait(&mutex);
                 queue = ptr;
                 free(ptr->next);
                 ptr->next = NULL;
                 //printf("queue\n");
+                sem_post(&mutex);
                 return NULL;
             }
             else // suppression d'un element dans la liste
             {
+                sem_wait(&mutex);
                 optr = ptr->next;
                 ptr->next = ptr->next->next;
                 //printf("autre\n");
                 free(optr);
+                sem_post(&mutex);
             }
         }
     }
@@ -204,6 +214,7 @@ void* listItemsWithinInterval(void* data){
 
     while (ptr != NULL){
 
+        sem_wait(&mutex);
         //L'item a un numero sequentiel dans l'interval defini
         if ((entryId >= params->start) && (entryId <= params->end)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
@@ -222,6 +233,7 @@ void* listItemsWithinInterval(void* data){
             ptr = ptr->next;
             entryId++;
         }
+        sem_post(&mutex);
 
     }
     printFooter();
@@ -241,6 +253,7 @@ void* listItemsPerSpeciality(void* data){
     ListItemsPerSpecialityParams* params = (ListItemsPerSpecialityParams *) data;
 
     while (ptr != NULL){
+        sem_wait(&mutex);
 
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality, params->speciality) == 0)){
@@ -253,6 +266,7 @@ void* listItemsPerSpeciality(void* data){
 
         ptr = ptr->next;
         entryId++;
+        sem_post(&mutex);
     }
     printFooter();
     return NULL;
@@ -270,6 +284,7 @@ void* listItemsPerSpecialityAndExperienceInterval(void* data){
     ListItemsPerSpecialityAndExperienceIntervalParams* params = (ListItemsPerSpecialityAndExperienceIntervalParams *) data;
 
     while (ptr != NULL){
+        sem_wait(&mutex);
 
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality, params->speciality) == 0) && ((ptr->member.experience >= params->start) && (ptr->member.experience <= params->end))){
@@ -282,6 +297,7 @@ void* listItemsPerSpecialityAndExperienceInterval(void* data){
         ptr = ptr->next;
         entryId++;
 
+        sem_post(&mutex);
     }
     printFooter();
     return NULL;
@@ -301,6 +317,7 @@ void* listItemsPerSpecialityAndScolarships(void* data){
 
     while (ptr != NULL){
 
+        sem_wait(&mutex);
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality,params->speciality) == 0) && (strcmp(ptr->member.scholarships,params->scholarships) == 0)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
@@ -313,6 +330,7 @@ void* listItemsPerSpecialityAndScolarships(void* data){
         ptr = ptr->next;
         entryId++;
 
+        sem_post(&mutex);
 
     }
     printFooter();
@@ -332,6 +350,7 @@ void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data){
 
     while (ptr != NULL){
 
+        sem_wait(&mutex);
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality, params->speciality) == 0) && (strcmp(ptr->member.scholarships, params->scholarships) == 0) && ((ptr->member.experience >= params->start) && (ptr->member.experience <= params->end))){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
@@ -344,6 +363,7 @@ void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data){
         ptr = ptr->next;
         entryId++;
 
+        sem_post(&mutex);
 
     }
     printFooter();
@@ -365,12 +385,14 @@ void* sendTextToGroup(void* data){
     printf("TEXTE ENVOYE: %s\n", params->text);
 
     while (ptr != NULL){
+        sem_wait(&mutex);
         if((strcmp(ptr->member.nickname, params->nickname) != 0) && ((strcmp(ptr->member.speciality, params->group) == 0) || (strcmp(ptr->member.scholarships, params->group) == 0)))
         {
             printf("membre: %s \t transmet au groupe: %s",ptr->member.nickname, ptr->member.speciality);
             printf("   TEXTE ENVOYE/RECU: %s\n", params->text);
         }
         ptr = ptr->next;
+        sem_post(&mutex);
     }
 
     return NULL;
@@ -390,12 +412,14 @@ void* sendTextBetweenMembers(void* data){
     printf("TEXTE ENVOYE: %s\n", params->text);
 
     while (ptr != NULL){
+        sem_wait(&mutex);
         if((strcmp(ptr->member.nickname, params->nickname1) != 0) && (strcmp(ptr->member.nickname, params->nickname2) == 0))
         {
             printf(" membre: %s \t transmet au membre: %s ", params->nickname1, params->nickname2);
             printf("TEXTE ENVOYE/RECU: %s\n", params->text);
         }
         ptr = ptr->next;
+        sem_post(&mutex);
     }
 
     return NULL;
