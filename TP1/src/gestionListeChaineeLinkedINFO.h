@@ -5,7 +5,10 @@
 #include <pthread.h>
 #include <unistd.h>
 
-extern sem_t mutex;
+//extern sem_t mutex;
+extern sem_t head_semaphore;
+extern sem_t queue_semaphore;
+extern sem_t print_semaphore;
 
 typedef struct member {
     char nickname[100];
@@ -15,6 +18,7 @@ typedef struct member {
 } Member;
 
 struct node {
+    sem_t semaphore;
     Member member;
     struct node *next;
 };

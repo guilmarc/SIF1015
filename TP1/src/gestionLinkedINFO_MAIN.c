@@ -18,14 +18,20 @@ Node* head;
 //Pointeur de queue de liste pour ajout rapide
 Node* queue;
 
-sem_t mutex;      /* semaphore that protects counter */
+sem_t head_semaphore;
+sem_t queue_semaphore;
+
+//sem_t mutex;      /* semaphore that protects counter */
 
 int main(int argc, char* argv[]){
     //Initialisation des pointeurs
     head = NULL;
     queue = NULL;
 
-    sem_init(&mutex, 0, 1);
+    //Initialisation des semaphores de tête, de queue et d'affichage
+    sem_init(&head_semaphore, 0, 1);
+    sem_init(&queue_semaphore, 0, 1);
+    sem_init(&print_semaphore, 0, 1);
 
     readTransactionsFile(argv[1]);
     //Fin du programme

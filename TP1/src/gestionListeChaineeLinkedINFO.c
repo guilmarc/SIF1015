@@ -18,7 +18,10 @@ extern Node* head;
 //Pointeur de queue de liste pour ajout rapide
 extern Node* queue;
 
-sem_t mutex;      /* semaphore that protects counter */
+sem_t head_semaphore;
+sem_t queue_semaphore;
+sem_t print_semaphore;
+
 
 //#######################################
 //#
@@ -41,18 +44,19 @@ Node * findPrevious(const char* nickname){
 
     //Tant qu'un item next existe
     while (ptr->next != NULL){
-        sem_wait(&mutex);
 
         //Est-ce le predecesseur de l'item recherche?
+        //Empêcher à un thread de modifier le champ nickname pendant que l'on compare
+        sem_wait(&ptr->semaphore);
         if((strcmp(ptr->next->member.nickname, nickname) == 0) ){
-
+            sem_post(&ptr->semaphore);
             //On retourne un pointeur sur l'item precedent
             return ptr;
         }
+        sem_post(&ptr->semaphore);
 
-        //Deplacement du pointeur de navigation
+        //Déplacement du pointeur de navigation
         ptr = ptr->next;
-        sem_post(&mutex);
     }
 
     //On retourne un pointeur NULL
@@ -66,31 +70,45 @@ Node * findPrevious(const char* nickname){
 //
 void* addItem(void* data) {
 
-    //Creation de l'enregistrement en memoire
+    //Creation de l'enregistrement en mémoire
     Node* ni = (Node*)malloc(sizeof(Node));
 
     AddItemParams* params = (AddItemParams *) data;
 
     ni->member = params->member;
 
+    //Initialisation du sémaphore de noeud
+    sem_init(&ni->semaphore, 0, 1);
+
+
+    //Comme il est possible que deux ajouts se fassent en "meme" temps, il faut que le premier qui demande la lecture
+    //de la variable head bloque cette variable sinon le code ni->next = NULL sera exécuté plusieurs fois
+
+    sem_wait(&head_semaphore);
     if(head == NULL) // ajout au debut de la liste vide
     {
-
-        sem_wait(&mutex);
         //  premier noeud
+        printf("LA HEAD EST NULLE : %s\n", ni->member.nickname);
+
         ni->next= NULL;
         queue = head = ni;
-        sem_post(&mutex);
+        sem_post(&head_semaphore);
     }
     else  // ajout a la fin de la liste
     {
-        sem_wait(&mutex);
+        //On libère le sémaphore de tête car nous savons maintenant qu'il existe un noeud de tête
+        sem_post(&head_semaphore);
+        printf("ON CONTINUE : %s\n", ni->member.nickname);
+
+        //On sécurise l'accès à la queue de la liste
+        sem_wait(&queue_semaphore);
         Node* tptr = queue;
         ni->next= NULL;
         queue = ni;
         tptr->next = ni;
-        sem_post(&mutex);
+        sem_post(&queue_semaphore);
     }
+
     pthread_exit(0);
 }
 //#######################################
@@ -111,22 +129,23 @@ void* modifyItem(void* data){
     Node *ptr = head;			//premier element
     while (ptr != NULL){
 
-        sem_wait(&mutex);
         //Element a modifier
         if (entryId == params->nodeId){
-            //Affectation des valeurs des champs
+
+            //On bloque ce noeud seulement en utilisant son sémaphore propre
+            sem_wait(&ptr->semaphore);
             strcpy(ptr->member.nickname, params->member.nickname);
             strcpy(ptr->member.speciality, params->member.speciality);
             strcpy(ptr->member.scholarships, params->member.scholarships);
             ptr->member.experience = params->member.experience;
-            //printf("%d: %s \t  %s \t %s \t %s \t %d\n",entryId,ptr->membre.nickname,ptr->membre.scholarships, ptr->membre.speciality, ptr->membre.experience );
+            //On libère le noeud
+            sem_post(&ptr->semaphore);
             return NULL;
         }
         else{
             ptr = ptr->next;
             entryId++;
         }
-        sem_post(&mutex);
     }
     return NULL;
 }
@@ -154,7 +173,6 @@ void* removeItem(void* data){
 
         if(head == ptr) // suppression de l'element de tete
         {
-            sem_wait(&mutex);
             if(head == queue) // un seul element dans la liste
             {
                 free(ptr);
@@ -164,7 +182,6 @@ void* removeItem(void* data){
             head = ptr->next;
             //printf("tete\n");
             free(ptr);
-            sem_post(&mutex);
         }
     }
     else
@@ -176,22 +193,18 @@ void* removeItem(void* data){
         {
             if (queue == ptr->next) // suppression de l'element de queue
             {
-                sem_wait(&mutex);
                 queue = ptr;
                 free(ptr->next);
                 ptr->next = NULL;
                 //printf("queue\n");
-                sem_post(&mutex);
                 return NULL;
             }
             else // suppression d'un element dans la liste
             {
-                sem_wait(&mutex);
                 optr = ptr->next;
                 ptr->next = ptr->next->next;
                 //printf("autre\n");
                 free(optr);
-                sem_post(&mutex);
             }
         }
     }
@@ -204,7 +217,7 @@ void* removeItem(void* data){
 //# Affiche les informations des membres dont le numero sequentiel est compris dans un intervalle
 //#
 void* listItemsWithinInterval(void* data){
-
+    sem_wait(&print_semaphore);
     int entryId=1;
     printHeader();
 
@@ -214,7 +227,6 @@ void* listItemsWithinInterval(void* data){
 
     while (ptr != NULL){
 
-        sem_wait(&mutex);
         //L'item a un numero sequentiel dans l'interval defini
         if ((entryId >= params->start) && (entryId <= params->end)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
@@ -233,10 +245,10 @@ void* listItemsWithinInterval(void* data){
             ptr = ptr->next;
             entryId++;
         }
-        sem_post(&mutex);
 
     }
     printFooter();
+    sem_post(&print_semaphore);
     return NULL;
 }
 //#######################################
@@ -244,6 +256,7 @@ void* listItemsWithinInterval(void* data){
 //# Affiche les informations des membres pour une specialite donnee
 void* listItemsPerSpeciality(void* data){
 
+    sem_wait(&print_semaphore);
 
     int entryId = 1;
     printHeader();
@@ -253,7 +266,6 @@ void* listItemsPerSpeciality(void* data){
     ListItemsPerSpecialityParams* params = (ListItemsPerSpecialityParams *) data;
 
     while (ptr != NULL){
-        sem_wait(&mutex);
 
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality, params->speciality) == 0)){
@@ -266,9 +278,9 @@ void* listItemsPerSpeciality(void* data){
 
         ptr = ptr->next;
         entryId++;
-        sem_post(&mutex);
     }
     printFooter();
+    sem_post(&print_semaphore);
     return NULL;
 }
 
@@ -276,7 +288,7 @@ void* listItemsPerSpeciality(void* data){
 //#
 //# Affiche les informations des membres pour une specialite et experience
 void* listItemsPerSpecialityAndExperienceInterval(void* data){
-
+    sem_wait(&print_semaphore);
     int entryId = 1;
     printHeader();
     Node * ptr = head;			//premier element
@@ -284,7 +296,6 @@ void* listItemsPerSpecialityAndExperienceInterval(void* data){
     ListItemsPerSpecialityAndExperienceIntervalParams* params = (ListItemsPerSpecialityAndExperienceIntervalParams *) data;
 
     while (ptr != NULL){
-        sem_wait(&mutex);
 
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality, params->speciality) == 0) && ((ptr->member.experience >= params->start) && (ptr->member.experience <= params->end))){
@@ -297,9 +308,9 @@ void* listItemsPerSpecialityAndExperienceInterval(void* data){
         ptr = ptr->next;
         entryId++;
 
-        sem_post(&mutex);
     }
     printFooter();
+    sem_post(&print_semaphore);
     return NULL;
 }
 
@@ -307,7 +318,7 @@ void* listItemsPerSpecialityAndExperienceInterval(void* data){
 //#
 //# Affiche les informations des membres pour une specialite et formation
 void* listItemsPerSpecialityAndScolarships(void* data){
-
+    sem_wait(&print_semaphore);
     int entryId = 1;
     printHeader();
 
@@ -317,7 +328,6 @@ void* listItemsPerSpecialityAndScolarships(void* data){
 
     while (ptr != NULL){
 
-        sem_wait(&mutex);
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality,params->speciality) == 0) && (strcmp(ptr->member.scholarships,params->scholarships) == 0)){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
@@ -330,10 +340,9 @@ void* listItemsPerSpecialityAndScolarships(void* data){
         ptr = ptr->next;
         entryId++;
 
-        sem_post(&mutex);
-
     }
     printFooter();
+    sem_post(&print_semaphore);
     return NULL;
 }
 
@@ -341,6 +350,7 @@ void* listItemsPerSpecialityAndScolarships(void* data){
 //#
 //# Affiche les informations des membres pour une specialite formation et experience
 void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data){
+    sem_wait(&print_semaphore);
 
     int entryId = 1;
     printHeader();
@@ -350,7 +360,6 @@ void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data){
 
     while (ptr != NULL){
 
-        sem_wait(&mutex);
         //L'item a un numero sequentiel dans l'interval defini
         if ((strcmp(ptr->member.speciality, params->speciality) == 0) && (strcmp(ptr->member.scholarships, params->scholarships) == 0) && ((ptr->member.experience >= params->start) && (ptr->member.experience <= params->end))){
             printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
@@ -363,10 +372,10 @@ void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data){
         ptr = ptr->next;
         entryId++;
 
-        sem_post(&mutex);
 
     }
     printFooter();
+    sem_post(&print_semaphore);
     return NULL;
 }
 
@@ -376,6 +385,7 @@ void* listItemsPerSpecialityScolarshipsAndExperienceInverval(void* data){
 //#
 void* sendTextToGroup(void* data){
 
+    sem_wait(&print_semaphore);
     Node * ptr = head;			//premier element
 
     SendTextToGroupParams* params = (SendTextToGroupParams *) data;
@@ -385,16 +395,15 @@ void* sendTextToGroup(void* data){
     printf("TEXTE ENVOYE: %s\n", params->text);
 
     while (ptr != NULL){
-        sem_wait(&mutex);
         if((strcmp(ptr->member.nickname, params->nickname) != 0) && ((strcmp(ptr->member.speciality, params->group) == 0) || (strcmp(ptr->member.scholarships, params->group) == 0)))
         {
             printf("membre: %s \t transmet au groupe: %s",ptr->member.nickname, ptr->member.speciality);
             printf("   TEXTE ENVOYE/RECU: %s\n", params->text);
         }
         ptr = ptr->next;
-        sem_post(&mutex);
     }
 
+    sem_post(&print_semaphore);
     return NULL;
 }
 
@@ -404,6 +413,7 @@ void* sendTextToGroup(void* data){
 //#
 void* sendTextBetweenMembers(void* data){
 
+    sem_wait(&print_semaphore);
     Node * ptr = head;			//premier element
 
     SendTextBetweenMembersParams* params = (SendTextBetweenMembersParams *) data;
@@ -412,16 +422,15 @@ void* sendTextBetweenMembers(void* data){
     printf("TEXTE ENVOYE: %s\n", params->text);
 
     while (ptr != NULL){
-        sem_wait(&mutex);
         if((strcmp(ptr->member.nickname, params->nickname1) != 0) && (strcmp(ptr->member.nickname, params->nickname2) == 0))
         {
             printf(" membre: %s \t transmet au membre: %s ", params->nickname1, params->nickname2);
             printf("TEXTE ENVOYE/RECU: %s\n", params->text);
         }
         ptr = ptr->next;
-        sem_post(&mutex);
     }
 
+    sem_post(&print_semaphore);
     return NULL;
 }
 

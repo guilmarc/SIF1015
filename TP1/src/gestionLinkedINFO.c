@@ -13,8 +13,6 @@
 
 #include "gestionListeChaineeLinkedINFO.h"
 
-#define LENGTH(x)  (sizeof(x) / sizeof((x)[0]))
-
 //Pointeur de tete de liste
 extern Node* head;
 //Pointeur de queue de liste pour ajout rapide
@@ -31,6 +29,10 @@ void error(const int exitcode, const char * message){
 
 int getNumberOfLines(char* filename) {
     FILE* file = fopen(filename, "rt");
+    if (file==NULL) {
+        error(2, "readTransactionsFile: Erreur lors de l'ouverture du fichier.");
+    }
+
     int ch, number_of_lines = 0;
 
     do
@@ -70,7 +72,6 @@ void* readTransactionsFile(char* filename){
     }
 
 
-
     //Lecture (tentative) d'une ligne de texte
     fgets(buffer, 100, file);
 
@@ -99,14 +100,17 @@ void* readTransactionsFile(char* filename){
                 AddItemParams *params = (AddItemParams*)malloc(sizeof(AddItemParams));
                 params->member  = *member;
 
-                //TODO: Trouver pourquoi ce type d'initialisation ne peut fonctionner
-                //Member member = {nickname, speciality, scholarships, experience};
-
                 //Appel de la fonction associee
-                pthread_create(&threads[counter++], NULL, addItem, params);
+                //pthread_create(&threads[counter++], NULL, addItem, params);
 
-                //TODO: Infaudra créer un tableau au début du main pour conserver les pthread_t
-                //et boucler pour faire des join
+                //******************  AVIS AU CORRECTEUR: ***************************
+                //Afin d'éviter toute incohérence dans ce TP il faudrait en fait exécuter les fonctions d'ajout en
+                //série car sinon on affiche (et modifie) parfois des Membres avant même leur ajout.
+                //Pour ce faire il suffit de commenter le pthread_create plus haut et décommenter le code suivant
+                pthread_t thread;
+                pthread_create(&thread, NULL, addItem, params);
+                pthread_join(thread, NULL);
+                //******************  AVIS AU CORRECTEUR: ***************************
 
                 break;
             }
