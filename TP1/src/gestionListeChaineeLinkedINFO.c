@@ -80,10 +80,10 @@ void* addItem(void* data) {
     //Initialisation du sémaphore de noeud
     sem_init(&ni->semaphore, 0, 1);
 
-
     //Comme il est possible que deux ajouts se fassent en "meme" temps, il faut que le premier qui demande la lecture
     //de la variable head bloque cette variable sinon le code ni->next = NULL sera exécuté plusieurs fois
 
+    //On bloque l'accès à ce noeud qui deviendra soit la head soit la queue de la liste (ou les deux)
     sem_wait(&head_semaphore);
     if(head == NULL) // ajout au debut de la liste vide
     {
@@ -96,11 +96,8 @@ void* addItem(void* data) {
     }
     else  // ajout a la fin de la liste
     {
-        //On libère le sémaphore de tête car nous savons maintenant qu'il existe un noeud de tête
-        sem_post(&head_semaphore);
-        printf("ON CONTINUE : %s\n", ni->member.nickname);
 
-        //On sécurise l'accès à la queue de la liste
+        printf("ON CONTINUE : %s\n", ni->member.nickname);
         sem_wait(&queue_semaphore);
         Node* tptr = queue;
         ni->next= NULL;
@@ -167,8 +164,13 @@ void* removeItem(void* data){
         return NULL;
     }
 
+    //On bloque la tête de la liste le temps de la comparaison pour pas qu'un autre thread lo modifie.
+    sem_wait(&head->semaphore);
     if(strcmp(head->member.nickname,params->nickname) == 0)
     {
+        //3head->semaphore
+
+
         ptr = head; // suppression du premier element de la liste
 
         if(head == ptr) // suppression de l'element de tete
@@ -183,30 +185,41 @@ void* removeItem(void* data){
             //printf("tete\n");
             free(ptr);
         }
+
+        sem_post(&head->semaphore);
     }
     else
     {
+        //On libère le node head
+        sem_post(&head->semaphore);
+
         ptr = findPrevious(params->nickname); // ptr pointe sur l'element precedent de celui a supprimer
 
         //Item  trouve
         if (ptr != NULL)
         {
+            sem_wait(&ptr->semaphore);
             if (queue == ptr->next) // suppression de l'element de queue
             {
+                sem_wait(&queue->semaphore);
                 queue = ptr;
                 free(ptr->next);
                 ptr->next = NULL;
+                sem_post(&queue->semaphore);
                 //printf("queue\n");
                 return NULL;
             }
             else // suppression d'un element dans la liste
             {
+                sem_wait(&ptr->next->semaphore);
                 optr = ptr->next;
                 ptr->next = ptr->next->next;
-                //printf("autre\n");
+
                 free(optr);
             }
+            sem_post(&ptr->semaphore);
         }
+
     }
     return NULL;
 }

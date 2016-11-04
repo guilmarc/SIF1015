@@ -18,8 +18,8 @@ Node* head;
 //Pointeur de queue de liste pour ajout rapide
 Node* queue;
 
-sem_t head_semaphore;
-sem_t queue_semaphore;
+//sem_t head_semaphore;
+//sem_t queue_semaphore;
 
 //sem_t mutex;      /* semaphore that protects counter */
 

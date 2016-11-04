@@ -101,15 +101,15 @@ void* readTransactionsFile(char* filename){
                 params->member  = *member;
 
                 //Appel de la fonction associee
-                //pthread_create(&threads[counter++], NULL, addItem, params);
+                pthread_create(&threads[counter++], NULL, addItem, params);
 
                 //******************  AVIS AU CORRECTEUR: ***************************
                 //Afin d'éviter toute incohérence dans ce TP il faudrait en fait exécuter les fonctions d'ajout en
                 //série car sinon on affiche (et modifie) parfois des Membres avant même leur ajout.
                 //Pour ce faire il suffit de commenter le pthread_create plus haut et décommenter le code suivant
-                pthread_t thread;
-                pthread_create(&thread, NULL, addItem, params);
-                pthread_join(thread, NULL);
+                //pthread_t thread;
+                //pthread_create(&thread, NULL, addItem, params);
+                //pthread_join(thread, NULL);
                 //******************  AVIS AU CORRECTEUR: ***************************
 
                 break;
@@ -131,7 +131,7 @@ void* readTransactionsFile(char* filename){
                 strcpy(params->member.scholarships, scholarships);
                 params->member.experience = experience;
 
-                pthread_create(&threads[counter++], NULL, modifyItem, params);
+                //pthread_create(&threads[counter++], NULL, modifyItem, params);
 
                 break;
             }
@@ -144,7 +144,7 @@ void* readTransactionsFile(char* filename){
                 RemoveItemParams* params = (RemoveItemParams*)malloc(sizeof(RemoveItemParams));
                 params->nickname = nickname;
 
-                pthread_create(&threads[counter++], NULL, removeItem, params);
+                //pthread_create(&threads[counter++], NULL, removeItem, params);
 
                 break;
             }
