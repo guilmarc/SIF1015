@@ -26,7 +26,7 @@ void* sendTransaction(void* data){
 void startServer()
 {
     int server_fifo_fd, client_fifo_fd;
-    int read_res;
+    ssize_t read_res;
     Info_FIFO_Transaction transaction;
     char client_fifo[100];
     char *tmp_char_ptr;
@@ -56,7 +56,7 @@ void startServer()
             //Après la lecture d’une structure Info_FIFO_Transaction provenant d’un client,
             //le serveur démarre un thread qui traite chaque transaction provenant des clients
 
-            void* result = handleTransaction(transaction.transaction, client_fifo);
+            void* result = parseTransaction(transaction.transaction, client_fifo);
 
             //Les threads du côté serveur qui traitent chaque requête des clients doivent alors ouvrir une FIFO en écriture
             //(bloquante) pour permettre de répondre à chaque client, cette FIFO étant créée au préalable par le client lors de son démarrage.
@@ -68,7 +68,7 @@ void startServer()
             //déposées ensuite dans la FIFO (client_fifo)  reliant le serveur et un client particulier qui sont à afficher du côté client.
 
 
-            //Création d'ue nouvele struct
+            //Création d'ue nouvelle struct
             SendTransactionParams* params = (SendTransactionParams*)malloc(sizeof(SendTransactionParams));
             params->client_fifo = client_fifo;
             params->data = result;

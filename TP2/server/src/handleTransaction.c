@@ -25,7 +25,7 @@ extern Node* queue;
 //# fonction utilisee par les threads de transactions
 //#
 
-void* handleTransaction(char* transaction, char* client_fifo){
+void* parseTransaction(char* transaction, char* client_fifo){
 
     char *tok, *sp;
 
@@ -70,7 +70,8 @@ void* handleTransaction(char* transaction, char* client_fifo){
                 RemoveItemParams* params = (RemoveItemParams*)malloc(sizeof(RemoveItemParams));
                 params->nickname = nickname;
 
-                pthread_create(&thread, NULL, removeItem, params);
+                //pthread_create(&thread, NULL, removeItem, params);
+                return removeItem(params);
 
                 break;
             }
@@ -90,7 +91,8 @@ void* handleTransaction(char* transaction, char* client_fifo){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsWithinInterval, params);
+                    //pthread_create(&thread, NULL, listItemsWithinInterval, params);
+                    return listItemsWithinInterval(params);
                 }
                 else if(strcmp(ptrType, "S") == 0) // affichage par specialite
                 {
@@ -101,7 +103,8 @@ void* handleTransaction(char* transaction, char* client_fifo){
                     params->speciality = speciality;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpeciality, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpeciality, params);
+                    return listItemsPerSpeciality(params);
                 }
                 else if(strcmp(ptrType, "SE") == 0) // affichage par specialite et experience
                 {
@@ -116,7 +119,8 @@ void* handleTransaction(char* transaction, char* client_fifo){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityAndExperienceInterval, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityAndExperienceInterval, params);
+                    return listItemsPerSpecialityAndExperienceInterval(params);
                 }
                 else if(strcmp(ptrType, "SF") == 0) // affichage par specialite et formation
                 {
@@ -129,7 +133,10 @@ void* handleTransaction(char* transaction, char* client_fifo){
                     params->scholarships = scholarships;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityAndScolarships, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityAndScolarships, params);
+                    return listItemsPerSpecialityAndScolarships(params);
+
+
                 }
                 else if(strcmp(ptrType, "SFE") == 0) // affichage par specialite formation et experience
                 {
@@ -146,7 +153,8 @@ void* handleTransaction(char* transaction, char* client_fifo){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    return listItemsPerSpecialityScolarshipsAndExperienceInverval(params);
                 }
                 break;
             }
@@ -169,7 +177,8 @@ void* handleTransaction(char* transaction, char* client_fifo){
                     params->text = text;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    return listItemsPerSpecialityScolarshipsAndExperienceInverval(params);
                 }
                 else if(strcmp(ptrType, "PP") == 0) // affichage complet
                 {
@@ -184,7 +193,8 @@ void* handleTransaction(char* transaction, char* client_fifo){
                     params->text = text;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, sendTextBetweenMembers, params);
+                    //pthread_create(&thread, NULL, sendTextBetweenMembers, params);
+                    return sendTextBetweenMembers(params);
                 }
                 break;
             }

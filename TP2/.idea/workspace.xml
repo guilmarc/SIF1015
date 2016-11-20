@@ -31,16 +31,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="58" selection-start-line="6" selection-start-column="58" selection-end-line="6" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="server.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/server.h">
           <provider selected="true" editor-type-id="text-editor">
@@ -64,21 +54,20 @@
       <file leaf-file-name="server.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/server.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+            <state relative-caret-position="795">
+              <caret line="53" column="39" selection-start-line="53" selection-start-column="39" selection-end-line="53" selection-end-column="39" />
               <folding>
                 <element signature="e#54#73#0" expanded="true" />
-                <marker date="1479671700000" expanded="true" signature="218:508" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="handleTransaction.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/src/handleTransaction.h">
+      <file leaf-file-name="client.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/client.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -87,18 +76,28 @@
       <file leaf-file-name="client.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/client.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="handleTransaction.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/src/handleTransaction.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="300">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="e#2#21#0" expanded="true" />
               </folding>
@@ -131,11 +130,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="handleTransaction.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="handleTransaction.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/src/handleTransaction.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="62" />
+            <state relative-caret-position="390">
+              <caret line="27" column="22" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -153,11 +152,12 @@
         <option value="$PROJECT_DIR$/server/src/gestionLinkedINFO.c" />
         <option value="$PROJECT_DIR$/server/src/gestionListeChaineeLinkedINFO.h" />
         <option value="$PROJECT_DIR$/server/src/gestionLinkedINFO_MAIN.c" />
-        <option value="$PROJECT_DIR$/server/src/handleTransaction.c" />
-        <option value="$PROJECT_DIR$/server/src/handleTransaction.h" />
         <option value="$PROJECT_DIR$/server/src/server.h" />
-        <option value="$PROJECT_DIR$/server/src/server.c" />
         <option value="$PROJECT_DIR$/server/src/main.c" />
+        <option value="$PROJECT_DIR$/client/src/client.h" />
+        <option value="$PROJECT_DIR$/server/src/handleTransaction.h" />
+        <option value="$PROJECT_DIR$/server/src/server.c" />
+        <option value="$PROJECT_DIR$/server/src/handleTransaction.c" />
       </list>
     </option>
   </component>
@@ -510,12 +510,12 @@
       <option name="presentableId" value="Default" />
       <updated>1479665614824</updated>
       <workItem from="1479665616045" duration="941000" />
-      <workItem from="1479666774688" duration="4761000" />
+      <workItem from="1479666774688" duration="5450000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5702000" />
+    <option name="totallyTimeSpent" value="6391000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="36" y="23" width="1634" height="1027" extended-state="6" />
@@ -607,22 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/client.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/client.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -681,22 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/handleTransaction.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/handleTransaction.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/src/server.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -705,24 +673,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/server.c">
+    <entry file="file://$PROJECT_DIR$/client/src/client.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding>
-            <element signature="e#54#73#0" expanded="true" />
-            <marker date="1479671700000" expanded="true" signature="218:508" ph="{...}" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/client.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="300">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#2#21#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/server.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="53" column="39" selection-start-line="53" selection-start-column="39" selection-end-line="53" selection-end-column="39" />
+          <folding>
+            <element signature="e#54#73#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/handleTransaction.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/handleTransaction.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
