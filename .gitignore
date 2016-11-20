@@ -29,4 +29,7 @@
 *.out
 *.app
 
-.idea/workspace.xml
+.idea/
+TP2/.idea/
+
+.DS_Store
