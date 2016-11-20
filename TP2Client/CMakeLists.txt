@@ -16,5 +16,5 @@ include_directories(src)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 #find_package( Threads REQUIRED )
-add_executable(TP1Client ${SOURCES})
+add_executable(TP2Client ${SOURCES})
 #target_link_libraries( TP1 Threads::Threads )

@@ -57,29 +57,15 @@ int getNumberOfLines(char* filename) {
 //#
 //# fonction utilisee par les threads de transactions
 //#
-void* readTransactionsFile(char* filename){
-    FILE *file;
-    char buffer[100];
+
+void* handleTransaction(char* transaction){
+
     char *tok, *sp;
-    int counter = 0;
-    int numberOfLines = getNumberOfLines(filename);
-    pthread_t threads[numberOfLines];
 
-    //Ouverture du fichier en mode "r" (equiv. "rt") : [r]ead [t]ext
-    file = fopen(filename, "rt");
-    if (file==NULL) {
-        error(2, "readTransactionsFile: Erreur lors de l'ouverture du fichier.");
-    }
-
-
-    //Lecture (tentative) d'une ligne de texte
-    fgets(buffer, 100, file);
-
-    //Pour chacune des lignes lues
-    while(!feof(file)){
+    pthread_t thread;
 
         //Extraction du type de transaction
-        tok = strtok_r(buffer, " ", &sp);
+        tok = strtok_r(transaction, " ", &sp);
 
         //Branchement selon le type de transaction
         switch(tok[0]){
@@ -101,37 +87,7 @@ void* readTransactionsFile(char* filename){
                 params->member  = *member;
 
                 //Appel de la fonction associee
-                pthread_create(&threads[counter++], NULL, addItem, params);
-
-                //******************  AVIS AU CORRECTEUR: ***************************
-                //Afin d'éviter toute incohérence dans ce TP il faudrait en fait exécuter les fonctions d'ajout en
-                //série car sinon on affiche (et modifie) parfois des Membres avant même leur ajout.
-                //Pour ce faire il suffit de commenter le pthread_create plus haut et décommenter le code suivant
-                //pthread_t thread;
-                //pthread_create(&thread, NULL, addItem, params);
-                //pthread_join(thread, NULL);
-                //******************  AVIS AU CORRECTEUR: ***************************
-
-                break;
-            }
-            case 'M':
-            case 'm':{
-                //Extraction des parametres
-                int nodeId = atoi(strtok_r(NULL, " ", &sp));
-                char *nickname = strtok_r(NULL, " ", &sp);
-                char *speciality = strtok_r(NULL, " ", &sp);
-                char *scholarships = strtok_r(NULL, " ", &sp);
-                int experience = atoi(strtok_r(NULL, "\n", &sp));
-
-                //Remplissage de la structure de paramètres
-                ModifyItemParams* params = (ModifyItemParams*)malloc(sizeof(ModifyItemParams));
-                params->nodeId = nodeId;
-                strcpy(params->member.nickname, nickname);
-                strcpy(params->member.speciality, speciality);
-                strcpy(params->member.scholarships, scholarships);
-                params->member.experience = experience;
-
-                //pthread_create(&threads[counter++], NULL, modifyItem, params);
+                pthread_create(&thread, NULL, addItem, params);
 
                 break;
             }
@@ -144,7 +100,7 @@ void* readTransactionsFile(char* filename){
                 RemoveItemParams* params = (RemoveItemParams*)malloc(sizeof(RemoveItemParams));
                 params->nickname = nickname;
 
-                //pthread_create(&threads[counter++], NULL, removeItem, params);
+                pthread_create(&thread, NULL, removeItem, params);
 
                 break;
             }
@@ -164,7 +120,7 @@ void* readTransactionsFile(char* filename){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&threads[counter++], NULL, listItemsWithinInterval, params);
+                    pthread_create(&thread, NULL, listItemsWithinInterval, params);
                 }
                 else if(strcmp(ptrType, "S") == 0) // affichage par specialite
                 {
@@ -175,7 +131,7 @@ void* readTransactionsFile(char* filename){
                     params->speciality = speciality;
 
                     //Appel de la fonction associee
-                    pthread_create(&threads[counter++], NULL, listItemsPerSpeciality, params);
+                    pthread_create(&thread, NULL, listItemsPerSpeciality, params);
                 }
                 else if(strcmp(ptrType, "SE") == 0) // affichage par specialite et experience
                 {
@@ -190,7 +146,7 @@ void* readTransactionsFile(char* filename){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&threads[counter++], NULL, listItemsPerSpecialityAndExperienceInterval, params);
+                    pthread_create(&thread, NULL, listItemsPerSpecialityAndExperienceInterval, params);
                 }
                 else if(strcmp(ptrType, "SF") == 0) // affichage par specialite et formation
                 {
@@ -203,7 +159,7 @@ void* readTransactionsFile(char* filename){
                     params->scholarships = scholarships;
 
                     //Appel de la fonction associee
-                    pthread_create(&threads[counter++], NULL, listItemsPerSpecialityAndScolarships, params);
+                    pthread_create(&thread, NULL, listItemsPerSpecialityAndScolarships, params);
                 }
                 else if(strcmp(ptrType, "SFE") == 0) // affichage par specialite formation et experience
                 {
@@ -220,7 +176,7 @@ void* readTransactionsFile(char* filename){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&threads[counter++], NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
                 }
                 break;
             }
@@ -243,7 +199,7 @@ void* readTransactionsFile(char* filename){
                     params->text = text;
 
                     //Appel de la fonction associee
-                    pthread_create(&threads[counter++], NULL, sendTextToGroup, params);
+                    pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
                 }
                 else if(strcmp(ptrType, "PP") == 0) // affichage complet
                 {
@@ -258,26 +214,13 @@ void* readTransactionsFile(char* filename){
                     params->text = text;
 
                     //Appel de la fonction associee
-                    pthread_create(&threads[counter++], NULL, sendTextBetweenMembers, params);
+                    pthread_create(&thread, NULL, sendTextBetweenMembers, params);
                 }
                 break;
             }
 
         }
 
-        //Lecture (tentative) de la prochaine ligne de texte
-        fgets(buffer, 100, file);
-    }
-    //Fermeture du fichier
-    fclose(file);
-
-    //On s'assure que tous les threads seront terminés avant la fermeture du programme
-    //Ici on utilise la variable counter et non numberOfLine car il peut y avoir des lignes vides.
-    int i = 0;
-    for(i = 0; i< counter; i++) {
-        pthread_join(threads[i], NULL);
-    }
-
-    //Retour
     return NULL;
-}
+
+    }
