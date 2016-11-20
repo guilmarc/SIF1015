@@ -8,7 +8,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pthread")
 file(GLOB SOURCES "src/*.c")
 
 #Bring the headers, such as Student.h into the project
-#include_directories(src)
+include_directories(src)
 
 #Can manually add the sources using the set command as follows:
 #set(SOURCES src/mainapp.cpp src/Student.cpp)
@@ -16,5 +16,5 @@ file(GLOB SOURCES "src/*.c")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 #find_package( Threads REQUIRED )
-add_executable(TP2Server ${SOURCES})
+add_executable(server ${SOURCES})
 #target_link_libraries( TP1 Threads::Threads )
