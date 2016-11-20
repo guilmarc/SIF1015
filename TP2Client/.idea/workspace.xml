@@ -6,9 +6,10 @@
       <config projectName="SIF1015" targetName="TP1" />
       <config projectName="SIF1015" targetName="testStudent" />
       <config projectName="SIF1015" targetName="SIF1015" />
+      <config projectName="SIF1015" targetName="TP1Client" />
     </generated>
   </component>
-  <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
+  <component name="CMakeSettings" AUTO_RELOAD="true" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
     <ADDITIONAL_GENERATION_ENVIRONMENT>
       <envs />
     </ADDITIONAL_GENERATION_ENVIRONMENT>
@@ -16,22 +17,22 @@
   <component name="ChangeListManager">
     <list default="true" id="7454ce42-5faa-4c50-9506-c6a8cd3a1ae8" name="Default" comment="">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/SIF1015.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1-A16Copy.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/transTest.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeLinkedINFO.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeLinkedINFO.c" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionCHAT.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeCHAT.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeCHAT.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionCHAT_MAIN.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO_MAIN" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO_MAIN.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1COPY.txt" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans3.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/Makefile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeLinkedINFO.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans2.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO_MAIN" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeLinkedINFO.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1-A16Copy.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/trans1COPY.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO_MAIN.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionCHAT_MAIN.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionLinkedINFO.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeCHAT.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/transTest.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/base_project/gestionListeChaineeCHAT.h" afterPath="" />
     </list>
     <ignored path="SIF1015.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,16 +52,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="gestionLinkedINFO.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5022">
-              <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="transTest.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/transTest.txt">
           <provider selected="true" editor-type-id="text-editor">
@@ -71,42 +62,66 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pthread.h" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/include/pthread.h">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="249" column="11" selection-start-line="249" selection-start-column="11" selection-end-line="249" selection-end-column="11" />
+            <state relative-caret-position="230">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gestionLinkedINFO_MAIN.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO_MAIN.c">
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state relative-caret-position="555">
+              <caret line="56" column="48" selection-start-line="56" selection-start-column="48" selection-end-line="56" selection-end-column="48" />
+              <folding>
+                <element signature="e#51#70#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/User.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gestionListeChaineeLinkedINFO.c" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.c">
+      <file leaf-file-name="User.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/User.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="172" column="18" selection-start-line="172" selection-start-column="18" selection-end-line="172" selection-end-column="32" />
+            <state relative-caret-position="322">
+              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="15" selection-end-column="86" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gestionListeChaineeLinkedINFO.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.h">
+      <file leaf-file-name="ScreenDimensions.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ScreenDimensions.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="29" />
+            <state relative-caret-position="115">
+              <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScreenDimensions.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ScreenDimensions.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+              <folding>
+                <element signature="e#51#69#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -120,7 +135,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/main.c" />
-        <option value="$PROJECT_DIR$/src/main.c" />
         <option value="$PROJECT_DIR$/base_project/gestionLinkedINFO_MAIN.c" />
         <option value="$PROJECT_DIR$/base_project/gestionListeChaineeLinkedINFO.h" />
         <option value="$PROJECT_DIR$/base_project/trans1.txt" />
@@ -128,11 +142,18 @@
         <option value="$PROJECT_DIR$/base_project/gestionLinkedINFO.c" />
         <option value="$PROJECT_DIR$/src/gestionListeChaineeCHAT.c" />
         <option value="$PROJECT_DIR$/src/Makefile" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.h" />
         <option value="$PROJECT_DIR$/src/gestionLinkedINFO_MAIN.c" />
         <option value="$PROJECT_DIR$/src/gestionLinkedINFO.c" />
         <option value="$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.c" />
+        <option value="$PROJECT_DIR$/src/Screen.h" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/ScreenDimensions.c" />
+        <option value="$PROJECT_DIR$/src/ScreenDimensions.h" />
+        <option value="$PROJECT_DIR$/src/User.h" />
+        <option value="$PROJECT_DIR$/src/User.c" />
+        <option value="$PROJECT_DIR$/src/main.c" />
+        <option value="$PROJECT_DIR$/src/main.c" />
       </list>
     </option>
   </component>
@@ -144,10 +165,8 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="1615" />
-    <option name="height" value="1026" />
+    <option name="width" value="1112" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -178,31 +197,45 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TP1" />
+              <option name="myItemId" value="TP2Client" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TP1" />
+              <option name="myItemId" value="TP2Client" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TP1" />
+              <option name="myItemId" value="TP2Client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TP1" />
+              <option name="myItemId" value="TP2Client" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TP1" />
+              <option name="myItemId" value="TP2Client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TP2Client" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TP2Client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -212,8 +245,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="FullScreen" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Application.TP1">
+  <component name="RunManager" selected="Application.TP1Client">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SIF1015_TP1" TARGET_NAME="SIF1015_TP1" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
       <envs />
       <method />
@@ -375,7 +413,7 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="TP1" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../src/transTest.txt" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SIF1015" TARGET_NAME="TP1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SIF1015" RUN_TARGET_NAME="TP1">
+    <configuration default="false" name="TP1" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../src/transTest.txt" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SIF1015" TARGET_NAME="TP1Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SIF1015" RUN_TARGET_NAME="TP1Client">
       <envs />
       <method />
     </configuration>
@@ -383,9 +421,14 @@
       <envs />
       <method />
     </configuration>
-    <list size="2">
+    <configuration default="false" name="TP1Client" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SIF1015" TARGET_NAME="TP1Client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SIF1015" RUN_TARGET_NAME="TP1Client">
+      <envs />
+      <method />
+    </configuration>
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.TP1" />
       <item index="1" class="java.lang.String" itemvalue="Application.Build All" />
+      <item index="2" class="java.lang.String" itemvalue="Application.TP1Client" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -401,35 +444,57 @@
       <workItem from="1477261090082" duration="12829000" />
       <workItem from="1477346499170" duration="17448000" />
       <workItem from="1478104193318" duration="19857000" />
+      <workItem from="1479656965193" duration="258000" />
+      <workItem from="1479657225214" duration="6331000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50134000" />
+    <option name="totallyTimeSpent" value="56723000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1615" height="1026" extended-state="6" />
+    <frame x="0" y="0" width="1112" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22848298" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16816546" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843652" sideWeight="0.4978328" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32897604" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32701895" sideWeight="0.4978328" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32790446" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843652" sideWeight="0.50216717" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32843652" sideWeight="0.4978328" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3010967" sideWeight="0.4978328" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39874083" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39780658" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32701895" sideWeight="0.4978328" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32790446" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843652" sideWeight="0.50216717" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3010967" sideWeight="0.4978328" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21964286" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39874083" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -444,36 +509,42 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.h</url>
-          <line>89</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/gestionLinkedINFO.c</url>
-          <line>278</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/gestionLinkedINFO.c</url>
-          <line>277</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="14" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c">
+    <entry file="file://$PROJECT_DIR$/src/transTest.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="24" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#51#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c" />
+    <entry file="file://$PROJECT_DIR$/src/transTest.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="24" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO_MAIN.c" />
+    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.c" />
+    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.h" />
+    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c" />
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -481,30 +552,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO_MAIN.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="3" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO_MAIN.c" />
+    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.c" />
+    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c" />
     <entry file="file://$PROJECT_DIR$/src/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -538,46 +588,12 @@
       </provider>
     </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/string.h" />
-    <entry file="file://$PROJECT_DIR$/src/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/x86_64-linux-gnu/bits/semaphore.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
-          <folding>
-            <element signature="e#1041#1067#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/pthread.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="249" column="11" selection-start-line="249" selection-start-column="11" selection-end-line="249" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file:///usr/include/x86_64-linux-gnu/bits/semaphore.h" />
+    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.h" />
+    <entry file="file:///usr/include/pthread.h" />
+    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c" />
+    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO_MAIN.c" />
+    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.c" />
     <entry file="file://$PROJECT_DIR$/src/transTest.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -586,27 +602,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO.c">
+    <entry file="file://$PROJECT_DIR$/src/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5022">
-          <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
+        <state relative-caret-position="184">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gestionLinkedINFO_MAIN.c">
+    <entry file="file://$PROJECT_DIR$/src/ScreenDimensions.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state relative-caret-position="115">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gestionListeChaineeLinkedINFO.c">
+    <entry file="file://$PROJECT_DIR$/src/User.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="172" column="18" selection-start-line="172" selection-start-column="18" selection-end-line="172" selection-end-column="32" />
+        <state relative-caret-position="115">
+          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ScreenDimensions.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+          <folding>
+            <element signature="e#51#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/User.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="15" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="56" column="48" selection-start-line="56" selection-start-column="48" selection-end-line="56" selection-end-column="48" />
+          <folding>
+            <element signature="e#51#70#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
