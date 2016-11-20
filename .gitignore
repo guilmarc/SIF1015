@@ -33,3 +33,12 @@
 TP2/.idea/
 
 .DS_Store
+
+*.xml
+
+TP2/server/bin
+TP2/client/bin
+
+TP2/server/bin/server
+
+TP2/.idea/workspace.xml
