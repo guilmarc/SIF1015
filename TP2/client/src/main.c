@@ -6,10 +6,12 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <string.h>
+#include <ctype.h>
 #include <panel.h>
 #include "ScreenDimensions.h"
 #include "User.h"
 #include "Screen.h"
+#include "client.h"
 
 #define SPLITTED_WINDOWS 2
 #define GREEN_WINDOW 1
@@ -23,9 +25,6 @@ User *user;
 
 int main() {
     initialize();
-    char* str;
-    userAddCommand(*user, str);
-    printf(str);
     /*Screen* screens[2];
     char inputChar;
     printw("Logged as %s, press F1 to exit", user->nickname);
@@ -42,11 +41,39 @@ int main() {
 }
 
 void transmitLogin() {
-
+    int clientPid = getpid(),
+        serverFifoFd,
+        clientFifoFd;
+    char clientFifo[256];
+    Info_FIFO_Transaction transaction;
+    transaction.pid_client = clientPid;
+    serverFifoFd = open(SERVER_FIFO_NAME, O_WRONLY);
+    if (serverFifoFd == -1) {
+        fprintf(stderr, "Sorry, no server\n");
+        exit(EXIT_FAILURE);
+    }
+    userAddCommand(*user, transaction.transaction);
+    sprintf(clientFifo, CLIENT_FIFO_NAME, transaction.pid_client);
+    if (mkfifo(clientFifo, 0777) == -1) {
+        fprintf(stderr, "Sorry, can't make %s\n", clientFifo);
+        exit(EXIT_FAILURE);
+    }
+    write(serverFifoFd, &transaction, sizeof(transaction));
+    clientFifoFd = open(clientFifo, O_RDONLY);
+    if (clientFifoFd != -1) {
+        if (read(clientFifoFd, &transaction, sizeof(transaction)) > 0) {
+            printf("received: %s\n", transaction.transaction);
+        }
+        close(clientFifoFd);
+    }
+    close(serverFifoFd);
+    unlink(clientFifo);
+    exit(EXIT_SUCCESS);
 }
 
 void initialize() {
     login();
+    transmitLogin();
     initscr();
     cbreak();
     keypad(stdscr, TRUE);
