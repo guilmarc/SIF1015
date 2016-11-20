@@ -2,8 +2,8 @@
 // Created by Nicolas Boisvert on 16-11-20.
 //
 
-#ifndef SIF1015_SCREEN_H
-#define SIF1015_SCREEN_H
+#ifndef SIF1015_SCREEN_DIMENSION_H
+#define SIF1015_SCREEN_DIMENSION_H
 
 typedef struct {
     int width;

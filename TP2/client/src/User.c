@@ -18,3 +18,8 @@ User createUser(char* nickname, char* speciality, char* scholarships, int experi
     user.experiences = experiences;
     return user;
 }
+
+char* userAddCommand(User user, char* refString) {
+    char* template = "A %s %s %s %i";
+    sprintf(refString, template, user.nickname, user.speciality, user.scholarships, user.experiences);
+}
