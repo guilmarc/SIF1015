@@ -11,46 +11,13 @@
 //#
 //#######################################
 
-#include "gestionListeChaineeLinkedINFO.h"
+#include "linkedList.h"
 
 //Pointeur de tete de liste
 extern Node* head;
 //Pointeur de queue de liste pour ajout rapide
 extern Node* queue;
 
-//#######################################
-//#
-//# Affiche un message et quitte le programme
-//#
-void error(const int exitcode, const char * message){
-    printf("\n-------------------------\n%s\n", message);
-    exit(exitcode);
-}
-
-int getNumberOfLines(char* filename) {
-    FILE* file = fopen(filename, "rt");
-    if (file==NULL) {
-        error(2, "readTransactionsFile: Erreur lors de l'ouverture du fichier.");
-    }
-
-    int ch, number_of_lines = 0;
-
-    do
-    {
-        ch = fgetc(file);
-        if(ch == '\n')
-            number_of_lines++;
-    } while (ch != EOF);
-
-// last line doesn't end with a new line!
-// but there has to be a line at least before the last line
-    if(ch != '\n' && number_of_lines != 0)
-        number_of_lines++;
-
-    fclose(file);
-
-    return number_of_lines;
-}
 
 
 //#######################################
@@ -58,7 +25,7 @@ int getNumberOfLines(char* filename) {
 //# fonction utilisee par les threads de transactions
 //#
 
-void* handleTransaction(char* transaction){
+void* parseTransaction(char* transaction, char* client_fifo){
 
     char *tok, *sp;
 
@@ -84,10 +51,13 @@ void* handleTransaction(char* transaction){
                 member->experience = experience;
 
                 AddItemParams *params = (AddItemParams*)malloc(sizeof(AddItemParams));
+                strcpy(params->client_fifo, client_fifo);
                 params->member  = *member;
 
                 //Appel de la fonction associee
-                pthread_create(&thread, NULL, addItem, params);
+                //pthread_create(&thread, NULL, addItem, params);
+
+                return addItem(params);
 
                 break;
             }
@@ -100,7 +70,8 @@ void* handleTransaction(char* transaction){
                 RemoveItemParams* params = (RemoveItemParams*)malloc(sizeof(RemoveItemParams));
                 params->nickname = nickname;
 
-                pthread_create(&thread, NULL, removeItem, params);
+                //pthread_create(&thread, NULL, removeItem, params);
+                return removeItem(params);
 
                 break;
             }
@@ -120,7 +91,8 @@ void* handleTransaction(char* transaction){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsWithinInterval, params);
+                    //pthread_create(&thread, NULL, listItemsWithinInterval, params);
+                    return listItemsWithinInterval(params);
                 }
                 else if(strcmp(ptrType, "S") == 0) // affichage par specialite
                 {
@@ -131,7 +103,8 @@ void* handleTransaction(char* transaction){
                     params->speciality = speciality;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpeciality, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpeciality, params);
+                    return listItemsPerSpeciality(params);
                 }
                 else if(strcmp(ptrType, "SE") == 0) // affichage par specialite et experience
                 {
@@ -146,7 +119,8 @@ void* handleTransaction(char* transaction){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityAndExperienceInterval, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityAndExperienceInterval, params);
+                    return listItemsPerSpecialityAndExperienceInterval(params);
                 }
                 else if(strcmp(ptrType, "SF") == 0) // affichage par specialite et formation
                 {
@@ -159,7 +133,10 @@ void* handleTransaction(char* transaction){
                     params->scholarships = scholarships;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityAndScolarships, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityAndScolarships, params);
+                    return listItemsPerSpecialityAndScolarships(params);
+
+
                 }
                 else if(strcmp(ptrType, "SFE") == 0) // affichage par specialite formation et experience
                 {
@@ -176,7 +153,8 @@ void* handleTransaction(char* transaction){
                     params->end = nend;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    return listItemsPerSpecialityScolarshipsAndExperienceInverval(params);
                 }
                 break;
             }
@@ -199,7 +177,8 @@ void* handleTransaction(char* transaction){
                     params->text = text;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    //pthread_create(&thread, NULL, listItemsPerSpecialityScolarshipsAndExperienceInverval, params);
+                    return listItemsPerSpecialityScolarshipsAndExperienceInverval(params);
                 }
                 else if(strcmp(ptrType, "PP") == 0) // affichage complet
                 {
@@ -214,7 +193,8 @@ void* handleTransaction(char* transaction){
                     params->text = text;
 
                     //Appel de la fonction associee
-                    pthread_create(&thread, NULL, sendTextBetweenMembers, params);
+                    //pthread_create(&thread, NULL, sendTextBetweenMembers, params);
+                    return sendTextBetweenMembers(params);
                 }
                 break;
             }

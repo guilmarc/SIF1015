@@ -5,6 +5,13 @@
 #ifndef SIF1015_SERVER_H
 #define SIF1015_SERVER_H
 
-void run();
+typedef struct {
+    char* client_fifo;
+    void* data;
+} SendTransactionParams;
+
+void startServeur();
+
+void* sendTransaction(void* data);
 
 #endif //SIF1015_SERVER_H
