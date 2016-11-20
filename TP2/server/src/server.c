@@ -30,18 +30,30 @@ void startServer()
     Info_FIFO_Transaction transaction;
     char client_fifo[100];
     char *tmp_char_ptr;
-
+    int mkfifo_return;
 
     //La FIFO de transmission de transactions devra s’appeler FIFO_TRANSACTIONS.
     //Cette FIFO est créée par le programme serveur lors de son démarrage et est ouverte par le serveur en lecture (bloquante).
-    mkfifo(SERVER_FIFO_NAME, 0777);
-    server_fifo_fd = open(SERVER_FIFO_NAME, O_RDONLY);
+    mkfifo_return = mkfifo(SERVER_FIFO_NAME, 0777);
+    printf("MKFifo Return = %i", mkfifo_return);
 
+    server_fifo_fd = open(SERVER_FIFO_NAME, O_RDONLY);
+    printf("server_fifo_fd = %i", server_fifo_fd);
 
     //Ensuite, le serveur boucle en lecture sur la FIFO FIFO_TRANSACTIONS pour lire les informations provenant des clients.
     //À chaque lecture, le serveur lit une structure Info_FIFO_Transaction
-    do {
+    //do {
+
+    printf("Yo Buddy, je roule !!!");
+    int i = 3;
+
+    while( i > 1) {
+
+        printf("read_res\n");
         read_res = read(server_fifo_fd, &transaction, sizeof(transaction));
+
+        sleep(1);
+        printf("OK : %d\n", read_res);
 
         if (read_res > 0) {
 
@@ -56,7 +68,7 @@ void startServer()
             //Après la lecture d’une structure Info_FIFO_Transaction provenant d’un client,
             //le serveur démarre un thread qui traite chaque transaction provenant des clients
 
-            void* result = parseTransaction(transaction.transaction, client_fifo);
+            void *result = parseTransaction(transaction.transaction, client_fifo);
 
             //Les threads du côté serveur qui traitent chaque requête des clients doivent alors ouvrir une FIFO en écriture
             //(bloquante) pour permettre de répondre à chaque client, cette FIFO étant créée au préalable par le client lors de son démarrage.
@@ -69,7 +81,7 @@ void startServer()
 
 
             //Création d'ue nouvelle struct
-            SendTransactionParams* params = (SendTransactionParams*)malloc(sizeof(SendTransactionParams));
+            SendTransactionParams *params = (SendTransactionParams *) malloc(sizeof(SendTransactionParams));
             params->client_fifo = client_fifo;
             params->data = result;
 
@@ -78,5 +90,11 @@ void startServer()
 
         }
 
-    } while (read_res > 0);
+
+
+    }
+
+    printf("Je roule pu !!!");
+
+    //} while (read_res > 0);
 }
