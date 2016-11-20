@@ -6,61 +6,72 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <string.h>
+#include <panel.h>
 #include "ScreenDimensions.h"
 #include "User.h"
+#include "Screen.h"
+
 #define SPLITTED_WINDOWS 2
+#define GREEN_WINDOW 1
+#define CYAN_WINDOW 1
 
 int login();
-WINDOW *createWindow(ScreenDimensions dimensions);
+void initialize();
+void transmitLogin();
+char* promptForStringResponse(char* message, int index);
 User *user;
 
 int main() {
-    login();
-   /* WINDOW *transmissionWindow,
-        *receptionWindow;
+    initialize();
+    char* str;
+    userAddCommand(*user, str);
+    printf(str);
+    /*Screen* screens[2];
     char inputChar;
-    initscr();
-    cbreak();
-    keypad(stdscr, TRUE);
-    printw("Press F1 to exit");
+    printw("Logged as %s, press F1 to exit", user->nickname);
     refresh();
-    transmissionWindow = createWindow(getSplitScreenDimensions(SPLITTED_WINDOWS, 0));
-    receptionWindow = createWindow(getSplitScreenDimensions(SPLITTED_WINDOWS, 1));
+    screens[0] = createScreen(getSplitScreenDimensions(SPLITTED_WINDOWS, 0), "Transmission", GREEN_WINDOW);
+    screens[1] = createScreen(getSplitScreenDimensions(SPLITTED_WINDOWS, 1), "Reception", CYAN_WINDOW);
+    showScreen(screens[0]);
+    showScreen(screens[1]);
     while((inputChar = getch()) != KEY_F(1))
     {
-
     }
     endwin();*/
-    printUser(*user);
     return 0;
 }
 
-char* promptForStringResponse(char* message) {
+void transmitLogin() {
+
+}
+
+void initialize() {
+    login();
+    initscr();
+    cbreak();
+    keypad(stdscr, TRUE);
+    init_pair(GREEN_WINDOW, COLOR_GREEN, COLOR_BLACK);
+    init_pair(CYAN_WINDOW, COLOR_CYAN, COLOR_BLACK);
+}
+
+
+char* promptForStringResponse(char* message, int index) {
     char* response = malloc(sizeof(char[100]));
     int row,col;
-
-    initscr();
     getmaxyx(stdscr,row,col);
-    mvprintw(row/2,(col-strlen(message))/2,"%s",message);
+    mvprintw(row/2 + index, (col-strlen(message))/2,"%s", message);
     getstr(response);
-    mvprintw(LINES - 2, 0, "You Entered: %s", response);
-    getch();
-    endwin();
     return response;
 }
 
 int login() {
+    initscr();
     user = malloc(sizeof(User));
-    user->nickname = promptForStringResponse("Enter your nickname :");
-    user->speciality = promptForStringResponse("Enter your speciality :");
-    user->speciality = promptForStringResponse("Enter your scholarships :");
-    user->experiences = atoi(promptForStringResponse("Enter your experiences :"));
+    user->nickname = promptForStringResponse("Enter your nickname :", 0);
+    user->speciality = promptForStringResponse("Enter your speciality :", 1);
+    user->scholarships = promptForStringResponse("Enter your scholarships :", 2);
+    user->experiences = atoi(promptForStringResponse("Enter your experiences :", 3));
+    endwin();
+    return 0;
 }
 
-WINDOW *createWindow(ScreenDimensions dimensions)
-{
-    WINDOW *localWin = newwin(dimensions.height, dimensions.width, dimensions.y, dimensions.x);
-    box(localWin, 0 , 0);
-    wrefresh(localWin);
-    return localWin;
-}

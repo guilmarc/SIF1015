@@ -14,10 +14,10 @@ ScreenDimensions getSplitScreenDimensions(int number, int position) {
 
 ScreenDimensions createScreenDimensions(int height, int width, int x, int y) {
     ScreenDimensions dimensions;
-    dimensions.height = height;
+    dimensions.height = height - 1;
     dimensions.width = width;
     dimensions.x = x;
-    dimensions.y = y;
+    dimensions.y = y + 1;
     return dimensions;
 }
 
