@@ -2,23 +2,21 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/client/src/ScreenDimensions.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/client/src/User.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/client/src/ScreenDimensions.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/client/src/main.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/client/src/User.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/client/src/ScreenDimensions.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/client/src/client.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/client/src/main.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/client/src/ScreenDimensions.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/client/src/client.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/client/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/gestionListeChaineeLinkedINFO.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/src/main.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/src/linkedList.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/client.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/src/server.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/src/linkedList.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/client.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/gestionLinkedINFO_MAIN.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/gestionLinkedINFO.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/server/src/handleTransaction.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/src/server.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/server/src/gestionListeChaineeLinkedINFO.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/server/src/handleTransaction.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/server/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>

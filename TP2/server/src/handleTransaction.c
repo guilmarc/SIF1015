@@ -11,46 +11,13 @@
 //#
 //#######################################
 
-#include "gestionListeChaineeLinkedINFO.h"
+#include "linkedList.h"
 
 //Pointeur de tete de liste
 extern Node* head;
 //Pointeur de queue de liste pour ajout rapide
 extern Node* queue;
 
-//#######################################
-//#
-//# Affiche un message et quitte le programme
-//#
-void error(const int exitcode, const char * message){
-    printf("\n-------------------------\n%s\n", message);
-    exit(exitcode);
-}
-
-int getNumberOfLines(char* filename) {
-    FILE* file = fopen(filename, "rt");
-    if (file==NULL) {
-        error(2, "readTransactionsFile: Erreur lors de l'ouverture du fichier.");
-    }
-
-    int ch, number_of_lines = 0;
-
-    do
-    {
-        ch = fgetc(file);
-        if(ch == '\n')
-            number_of_lines++;
-    } while (ch != EOF);
-
-// last line doesn't end with a new line!
-// but there has to be a line at least before the last line
-    if(ch != '\n' && number_of_lines != 0)
-        number_of_lines++;
-
-    fclose(file);
-
-    return number_of_lines;
-}
 
 
 //#######################################
@@ -58,7 +25,7 @@ int getNumberOfLines(char* filename) {
 //# fonction utilisee par les threads de transactions
 //#
 
-void* handleTransaction(char* transaction){
+void* handleTransaction(char* transaction, char* client_fifo){
 
     char *tok, *sp;
 
@@ -84,10 +51,13 @@ void* handleTransaction(char* transaction){
                 member->experience = experience;
 
                 AddItemParams *params = (AddItemParams*)malloc(sizeof(AddItemParams));
+                strcpy(params->client_fifo, client_fifo);
                 params->member  = *member;
 
                 //Appel de la fonction associee
-                pthread_create(&thread, NULL, addItem, params);
+                //pthread_create(&thread, NULL, addItem, params);
+
+                return addItem(params);
 
                 break;
             }
