@@ -33,12 +33,8 @@ void startServer()
     Info_FIFO_Transaction transaction;
     char client_fifo[100];
     char *tmp_char_ptr;
-<<<<<<< HEAD
     printf("%i", initTmpDirectory());
-
-=======
     int mkfifo_return;
->>>>>>> 479ea159e9b2264b76b85b29e7b53f5bca3960db
 
     //La FIFO de transmission de transactions devra s’appeler FIFO_TRANSACTIONS.
     //Cette FIFO est créée par le programme serveur lors de son démarrage et est ouverte par le serveur en lecture (bloquante).
