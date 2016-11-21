@@ -4,7 +4,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
-#include "ScreenDimensions.h"
+#include "screen_dimensions.h"
 #include <ncurses.h>
 
 ScreenDimensions getSplitScreenDimensions(int number, int position) {

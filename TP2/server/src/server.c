@@ -22,6 +22,9 @@ void* sendTransaction(void* data){
     }
 }
 
+int initTmpDirectory() {
+    return mkdir("./tmp", 0777);
+}
 
 void startServer()
 {
@@ -30,6 +33,7 @@ void startServer()
     Info_FIFO_Transaction transaction;
     char client_fifo[100];
     char *tmp_char_ptr;
+    printf("%i", initTmpDirectory());
 
 
     //La FIFO de transmission de transactions devra s’appeler FIFO_TRANSACTIONS.
@@ -78,5 +82,5 @@ void startServer()
 
         }
 
-    } while (read_res > 0);
+    } while (1);
 }

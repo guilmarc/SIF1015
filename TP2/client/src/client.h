@@ -23,6 +23,7 @@ typedef struct { //Va s'appeler transaction dans le TP
     char   transaction[200];
 } Info_FIFO_Transaction;
 
+Info_FIFO_Transaction createTransaction(char* message);
 
 #endif //SIF1015_CLIENT_H
 

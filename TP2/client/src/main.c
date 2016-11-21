@@ -8,9 +8,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <panel.h>
-#include "ScreenDimensions.h"
-#include "User.h"
-#include "Screen.h"
+#include "screen_dimensions.h"
+#include "user.h"
+#include "screen.h"
 #include "client.h"
 
 #define SPLITTED_WINDOWS 2
@@ -19,8 +19,8 @@
 
 int login();
 void initialize();
-void transmitLogin();
-char* promptForStringResponse(char* message, int index);
+int transmitLogin();
+int sendTransaction(char* transactionContent);
 User *user;
 
 int main() {
@@ -35,28 +35,53 @@ int main() {
     showScreen(screens[1]);
     while((inputChar = getch()) != KEY_F(1))
     {
-    }
-    endwin();*/
+    }*/
+    endwin();
     return 0;
 }
 
-void transmitLogin() {
-    int clientPid = getpid(),
-        serverFifoFd,
-        clientFifoFd;
+int transmitLogin() {
+    char transaction[200] = "";
+    login();
+    userAddCommand(*user, transaction);
+    if (strcmp(transaction, "") == 0) {
+        printf("Transaction not created\n");
+        return -1;
+    }
+    return sendTransaction(transaction);
+}
+void initialize() {
+    if (transmitLogin() != 0) {
+        printf("Login was unsuccessful\n");
+        exit(EXIT_FAILURE);
+    };
+    printf("Login as %s\n", user->nickname);
+    char message[200] = "";
+    while(strcmp(message, "quit") != 0) {
+        printf("Command : ");
+        scanf("%s", message);
+        sendTransaction(message);
+    }
+    initscr();
+    cbreak();
+    keypad(stdscr, TRUE);
+}
+
+int sendTransaction(char* transactionContent) {
+    int serverFifoFd,
+            clientFifoFd;
     char clientFifo[256];
-    Info_FIFO_Transaction transaction;
-    transaction.pid_client = clientPid;
+    Info_FIFO_Transaction transaction = createTransaction(transactionContent);
+    printf("%s", transactionContent);
     serverFifoFd = open(SERVER_FIFO_NAME, O_WRONLY);
     if (serverFifoFd == -1) {
         fprintf(stderr, "Sorry, no server\n");
-        exit(EXIT_FAILURE);
+        return -1;
     }
-    userAddCommand(*user, transaction.transaction);
     sprintf(clientFifo, CLIENT_FIFO_NAME, transaction.pid_client);
     if (mkfifo(clientFifo, 0777) == -1) {
         fprintf(stderr, "Sorry, can't make %s\n", clientFifo);
-        exit(EXIT_FAILURE);
+        return -1;
     }
     write(serverFifoFd, &transaction, sizeof(transaction));
     clientFifoFd = open(clientFifo, O_RDONLY);
@@ -68,36 +93,18 @@ void transmitLogin() {
     }
     close(serverFifoFd);
     unlink(clientFifo);
-    exit(EXIT_SUCCESS);
-}
-
-void initialize() {
-    login();
-    transmitLogin();
-    initscr();
-    cbreak();
-    keypad(stdscr, TRUE);
-    init_pair(GREEN_WINDOW, COLOR_GREEN, COLOR_BLACK);
-    init_pair(CYAN_WINDOW, COLOR_CYAN, COLOR_BLACK);
-}
-
-
-char* promptForStringResponse(char* message, int index) {
-    char* response = malloc(sizeof(char[100]));
-    int row,col;
-    getmaxyx(stdscr,row,col);
-    mvprintw(row/2 + index, (col-strlen(message))/2,"%s", message);
-    getstr(response);
-    return response;
+    return 0;
 }
 
 int login() {
     initscr();
+    WINDOW* win = createScreen(getSplitScreenDimensions(1, 0), "Title", 1)->window;
     user = malloc(sizeof(User));
-    user->nickname = promptForStringResponse("Enter your nickname :", 0);
-    user->speciality = promptForStringResponse("Enter your speciality :", 1);
-    user->scholarships = promptForStringResponse("Enter your scholarships :", 2);
-    user->experiences = atoi(promptForStringResponse("Enter your experiences :", 3));
+    user->nickname = promptForStringResponse(win, "Enter your nickname :", 0);
+    user->speciality = promptForStringResponse(win, "Enter your speciality :", 1);
+    user->scholarships = promptForStringResponse(win, "Enter your scholarships :", 2);
+    user->experiences = atoi(promptForStringResponse(win, "Enter your experiences :", 3));
+    delwin(win);
     endwin();
     return 0;
 }

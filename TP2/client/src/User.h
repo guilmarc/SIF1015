@@ -14,6 +14,6 @@ typedef struct {
 
 void printUser(User user);
 User createUser(char* nickname, char* speciality, char* scholarships, int experiences);
-char* userAddCommand(User user, char* refString);
+void userAddCommand(User user, char* refString);
 
 #endif //SIF1015_USER_H

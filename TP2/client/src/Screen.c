@@ -3,9 +3,9 @@
 //
 
 #include <stdlib.h>
-#include "Screen.h"
+#include "screen.h"
 #include <string.h>
-#include "ScreenDimensions.h"
+#include "screen_dimensions.h"
 #include <ncurses.h>
 
 Screen* createScreen(ScreenDimensions dimensions, char* label, int colorSet) {
@@ -26,33 +26,13 @@ void showScreen(Screen* screen) {
     mvwaddch(screen->window, 2, 0, ACS_LTEE);
     mvwhline(screen->window, 2, 1, ACS_HLINE, screen->dimensions.width - 2);
     mvwaddch(screen->window, 2, screen->dimensions.width - 1, ACS_RTEE);
-
-    printTitle(screen);
 }
 
-void printTitle(Screen* screen) {
-    int length, x, y;
-    float temp;
-
-    if(screen->window == NULL) {
-        screen->window = stdscr;
-    }
-    getyx(screen->window, y, x);
-    if(screen->dimensions.x != 0) {
-        x = screen->dimensions.x;
-    }
-    if(screen->dimensions.y != 0) {
-        y = screen->dimensions.y;
-    }
-    if(screen->dimensions.width == 0) {
-        screen->dimensions.width = 80;
-    }
-
-    length = strlen(screen->label);
-    temp = (screen->dimensions.width - length)/ 2;
-    x = screen->dimensions.x + (int)temp;
-    wattron(screen->window, screen->colorSet);
-    mvwprintw(screen->window, y, x, "%s", screen->label);
-    wattroff(screen->window, screen->colorSet);
-    refresh();
+char* promptForStringResponse(WINDOW* window, char* message, int index) {
+    char* response = malloc(sizeof(char[100]));
+    int row,col;
+    getmaxyx(stdscr,row,col);
+    mvprintw(row/2 + index, (col-strlen(message))/2,"%s", message);
+    getstr(response);
+    return response;
 }

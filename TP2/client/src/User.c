@@ -2,7 +2,7 @@
 // Created by Nicolas Boisvert on 16-11-20.
 //
 
-#include "User.h"
+#include "user.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,7 +19,7 @@ User createUser(char* nickname, char* speciality, char* scholarships, int experi
     return user;
 }
 
-char* userAddCommand(User user, char* refString) {
+void userAddCommand(User user, char* refString) {
     char* template = "A %s %s %s %i";
     sprintf(refString, template, user.nickname, user.speciality, user.scholarships, user.experiences);
 }

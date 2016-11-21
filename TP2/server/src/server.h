@@ -10,7 +10,7 @@ typedef struct {
     void* data;
 } SendTransactionParams;
 
-void startServeur();
+void startServer();
 
 void* sendTransaction(void* data);
 

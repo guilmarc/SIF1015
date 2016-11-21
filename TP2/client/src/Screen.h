@@ -6,7 +6,7 @@
 #define SIF1015_SCREEN_H
 
 #include <ncurses.h>
-#include "ScreenDimensions.h"
+#include "screen_dimensions.h"
 
 typedef struct {
     WINDOW* window;
@@ -16,6 +16,6 @@ typedef struct {
 } Screen;
 
 Screen* createScreen(ScreenDimensions dimensions, char* label, int colorSet);
-void showScreen(Screen* screen);
-void printTitle(Screen* screen);
+char* promptForStringResponse(WINDOW* window, char* message, int index);
+
 #endif //SIF1015_SCREEN_H
