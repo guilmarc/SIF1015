@@ -14,8 +14,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#define SERVER_FIFO_NAME "/Users/nboisvert/Git/tp2/TP2/bin/Client.app/Contents/MacOS/tmp/FIFO_TRANSACTIONS"
-#define CLIENT_FIFO_NAME "/Users/nboisvert/Git/tp2/TP2/bin/Client.app/Contents/MacOS/tmp/cli_%d_fifo"
+#define SERVER_FIFO_NAME "./tmp/FIFO_TRANSACTIONS"
+#define CLIENT_FIFO_NAME "./tmp/cli_%d_fifo"
 
 
 typedef struct { //Va s'appeler transaction dans le TP

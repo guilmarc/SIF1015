@@ -12,7 +12,7 @@ int TransmissionController::getPid()
 
 int TransmissionController::send(char message[200])
 {
-    Transaction transaction = this->prepareTransaction(message);
+    Info_FIFO_Transaction transaction = this->prepareTransaction(message);
     int serverFifoFd,
         clientFifoFd;
     char clientFifo[256];
@@ -21,7 +21,7 @@ int TransmissionController::send(char message[200])
         fprintf(stderr, "Sorry, no server\n");
         return -1;
     }
-    sprintf(clientFifo, CLIENT_FIFO_NAME, transaction.clientPid);
+    sprintf(clientFifo, CLIENT_FIFO_NAME, transaction.pid_client);
     if (mkfifo(clientFifo, 0777) == -1) {
         fprintf(stderr, "Sorry, can't make %s\n", clientFifo);
         return -1;
@@ -39,10 +39,10 @@ int TransmissionController::send(char message[200])
     return 0;
 }
 
-Transaction TransmissionController::prepareTransaction(char message[200])
+Info_FIFO_Transaction TransmissionController::prepareTransaction(char message[200])
 {
-    Transaction transaction;
-    transaction.clientPid = this->getPid();
+    Info_FIFO_Transaction transaction;
+    transaction.pid_client = this->getPid();
     strcmp(transaction.transaction, message);
     return transaction;
 }

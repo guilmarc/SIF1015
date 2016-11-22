@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->displayPid();
     this->displayNickname();
     this->transmitLogin();
+    mkdir("./tmptest", 0777);
 }
 
 MainWindow::~MainWindow()

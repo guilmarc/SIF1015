@@ -28,36 +28,38 @@ int initTmpDirectory() {
 
 void startServer()
 {
-    int server_fifo_fd, client_fifo_fd;
+    int server_fifo_fd, return_code;
     ssize_t read_res;
     Info_FIFO_Transaction transaction;
     char client_fifo[100];
     char *tmp_char_ptr;
-    printf("%i", initTmpDirectory());
-    int mkfifo_return;
 
     //La FIFO de transmission de transactions devra s’appeler FIFO_TRANSACTIONS.
     //Cette FIFO est créée par le programme serveur lors de son démarrage et est ouverte par le serveur en lecture (bloquante).
-    mkfifo_return = mkfifo(SERVER_FIFO_NAME, 0777);
-    printf("MKFifo Return = %i", mkfifo_return);
 
-    server_fifo_fd = open(SERVER_FIFO_NAME, O_RDONLY);
-    printf("server_fifo_fd = %i", server_fifo_fd);
+    if((return_code =initTmpDirectory()) < 0) {
+        printf("\n%i : Unable to create ./tmp directory, maybe it already exists\n", return_code);
+    }
+
+    if ((return_code = mkfifo(SERVER_FIFO_NAME, 0777)) < 0) {
+        printf("\n%i : Unable to create FIFO, maybe it already exists\n", return_code);
+    }
+
+    if ((return_code = open(SERVER_FIFO_NAME, O_RDONLY)) < 0) {
+        printf("\n%i : Unable to open FIFO\n", return_code);
+        exit(EXIT_FAILURE);
+    }
 
     //Ensuite, le serveur boucle en lecture sur la FIFO FIFO_TRANSACTIONS pour lire les informations provenant des clients.
     //À chaque lecture, le serveur lit une structure Info_FIFO_Transaction
-    //do {
 
-    printf("Yo Buddy, je roule !!!");
-    int i = 3;
-
-    while( i > 1) {
+    while( read_res > -1) {
 
         printf("read_res\n");
         read_res = read(server_fifo_fd, &transaction, sizeof(transaction));
 
         sleep(1);
-        printf("OK : %d\n", read_res);
+        printf("OK : %zd\n", read_res);
 
         if (read_res > 0) {
 
@@ -93,7 +95,5 @@ void startServer()
             pthread_create(&thread, NULL, sendTransaction, params);
 
         }
-    } while (1);
-    printf("Je roule pu !!!");
-    //} while (read_res > 0);
+    }
 }
