@@ -5,7 +5,7 @@ project(SIF1015)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pthread")
 
 #However, the file(GLOB...) allows for wildcard additions:
-add_subdirectory("client")
+add_subdirectory("client_ncurses")
 add_subdirectory("server")
 
 #Bring the headers, such as Student.h into the project

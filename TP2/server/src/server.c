@@ -4,7 +4,7 @@
 
 #include "server.h"
 #include "handleTransaction.h"
-#include "../../client/src/client.h"
+#include "client.h"
 
 #include <ctype.h>
 #include <pthread.h>

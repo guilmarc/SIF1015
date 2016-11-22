@@ -11,7 +11,7 @@
 #include "screen_dimensions.h"
 #include "user.h"
 #include "screen.h"
-#include "client.h"
+#include "../../server/src/client.h"
 
 #define SPLITTED_WINDOWS 2
 #define GREEN_WINDOW 1

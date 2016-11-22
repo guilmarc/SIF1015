@@ -12,7 +12,7 @@
 //#######################################
 
 #include "linkedList.h"
-#include "../../client/src/client.h"
+#include "client.h"
 
 //Pointeur de tete de liste
 extern Node* head;
