@@ -11,8 +11,13 @@
 #include <limits.h>
 #include <sys/stat.h>
 
+#ifdef Q_OS_MAC
 #define SERVER_FIFO_NAME "../../../tmp/FIFO_TRANSACTIONS"
 #define CLIENT_FIFO_NAME "../../../tmp/cli_%d_fifo"
+#else
+#define SERVER_FIFO_NAME "./tmp/FIFO_TRANSACTIONS"
+#define CLIENT_FIFO_NAME "./tmp/cli_%d_fifo"
+#endif
 
 class BaseController
 {

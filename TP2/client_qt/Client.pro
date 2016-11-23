@@ -19,8 +19,7 @@ SOURCES += main.cpp\
     loginscreen.cpp \
     user.cpp \
     transaction.cpp \
-    basecontroller.cpp \
-    fifo.cpp
+    basecontroller.cpp
 
 HEADERS  += mainwindow.h \
     transmissioncontroller.h \
@@ -29,8 +28,7 @@ HEADERS  += mainwindow.h \
     user.h \
     messagableinterface.h \
     transaction.h \
-    basecontroller.h \
-    fifo.h
+    basecontroller.h
 
 FORMS    += mainwindow.ui \
     loginscreen.ui
