@@ -28,16 +28,18 @@ int initTmpDirectory() {
 
 void startServer()
 {
-    int server_fifo_fd, return_code;
+    int server_fifo_fd = 0,
+            return_code = 0;
     ssize_t read_res;
     Info_FIFO_Transaction transaction;
+    transaction.status_code = 0;
     char client_fifo[100];
     char *tmp_char_ptr;
 
     //La FIFO de transmission de transactions devra s’appeler FIFO_TRANSACTIONS.
     //Cette FIFO est créée par le programme serveur lors de son démarrage et est ouverte par le serveur en lecture (bloquante).
 
-    if((return_code =initTmpDirectory()) < 0) {
+    if((return_code = initTmpDirectory()) < 0) {
         printf("\n%i : Unable to create ./tmp directory, maybe it already exists\n", return_code);
     }
 
@@ -45,23 +47,20 @@ void startServer()
         printf("\n%i : Unable to create FIFO, maybe it already exists\n", return_code);
     }
 
-    if ((return_code = open(SERVER_FIFO_NAME, O_RDONLY)) < 0) {
-        printf("\n%i : Unable to open FIFO\n", return_code);
+
+    printf("Awaiting connections...\n");
+    if ((server_fifo_fd = open(SERVER_FIFO_NAME, O_RDONLY)) < 0) {
+        printf("\n%i : Unable to open FIFO\n", server_fifo_fd);
         exit(EXIT_FAILURE);
     }
 
+    printf("Protocol initialized...\n");
     //Ensuite, le serveur boucle en lecture sur la FIFO FIFO_TRANSACTIONS pour lire les informations provenant des clients.
     //À chaque lecture, le serveur lit une structure Info_FIFO_Transaction
-
-    while( read_res > -1) {
-
-        printf("read_res\n");
+    do {
         read_res = read(server_fifo_fd, &transaction, sizeof(transaction));
-
-        sleep(1);
-        printf("OK : %zd\n", read_res);
-
         if (read_res > 0) {
+            printf("Reading transactions...\n");
 
             tmp_char_ptr = transaction.transaction;
             while (*tmp_char_ptr) {
@@ -94,6 +93,7 @@ void startServer()
             pthread_t thread;
             pthread_create(&thread, NULL, sendTransaction, params);
 
+            printf("Transactions %s read!\n\n", transaction.transaction);
         }
-    }
+    } while( read_res > -1);
 }

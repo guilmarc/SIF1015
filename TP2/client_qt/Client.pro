@@ -23,7 +23,8 @@ HEADERS  += mainwindow.h \
     transmissioncontroller.h \
     receptioncontroller.h \
     loginscreen.h \
-    user.h
+    user.h \
+    messagableinterface.h
 
 FORMS    += mainwindow.ui \
     loginscreen.ui

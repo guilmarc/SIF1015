@@ -19,9 +19,8 @@
 
 
 typedef struct { //Va s'appeler transaction dans le TP
-    pid_t pid_client;
-    int status_code;
-    char transaction[200];
+    pid_t  pid_client;
+    char   transaction[200];
 } Info_FIFO_Transaction;
 
 Info_FIFO_Transaction createTransaction(char* message);

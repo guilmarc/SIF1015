@@ -11,7 +11,7 @@
 #include "screen_dimensions.h"
 #include "user.h"
 #include "screen.h"
-#include "../../server/src/client.h"
+#include "client.h"
 
 #define SPLITTED_WINDOWS 2
 #define GREEN_WINDOW 1
@@ -73,6 +73,7 @@ int sendTransaction(char* transactionContent) {
     char clientFifo[256];
     Info_FIFO_Transaction transaction = createTransaction(transactionContent);
     printf("%s", transactionContent);
+
     serverFifoFd = open(SERVER_FIFO_NAME, O_WRONLY);
     if (serverFifoFd == -1) {
         fprintf(stderr, "Sorry, no server\n");

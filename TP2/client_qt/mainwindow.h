@@ -5,12 +5,13 @@
 #include <QStringListModel>
 #include "transmissioncontroller.h"
 #include "receptioncontroller.h"
+#include "messagableinterface.h"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public MessagableInterface
 {
     Q_OBJECT
 
@@ -27,6 +28,8 @@ public:
     void transmitLogin();
     void sendCommand(QString command);
     void promptForLogin();
+    void pushTransmissionResponse(QString message);
+    void pushReceptionResponse(QString message);
     QString getCurrentTime();
     ~MainWindow();
 

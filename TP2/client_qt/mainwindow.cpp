@@ -3,7 +3,9 @@
 #include <QDateTime>
 #include <QDir>
 #include "loginscreen.h"
+#include "receptioncontroller.h"
 #include "user.h"
+#include <string.h>
 
 const QString MainWindow::TIME_FORMAT = "HH:mm:ss";
 
@@ -11,10 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    this->transmissionController->connectToFifo();
     this->promptForLogin();
     ui->setupUi(this);
-    this->transmissionController = new TransmissionController();
-    this->receptionController = new ReceptionController();
     this->transmissionListModel = new QStringListModel();
     this->receptionListModel = new QStringListModel();
     this->transmissionMessageList = new QStringList();
@@ -22,10 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->receptionView->setModel(this->receptionListModel);
     ui->transmissionView->setModel(this->transmissionListModel);
     connect(ui->commandInput, SIGNAL(returnPressed()), ui->sendButton, SIGNAL(clicked()));
+    this->receptionController = new ReceptionController(this);
+    this->transmissionController = new TransmissionController(this);
     this->displayPid();
     this->displayNickname();
     this->transmitLogin();
-    mkdir("./tmptest", 0777);
 }
 
 MainWindow::~MainWindow()
@@ -44,11 +46,23 @@ void MainWindow::promptForLogin()
 void MainWindow::refreshTransmissionList()
 {
     this->transmissionListModel->setStringList(*this->transmissionMessageList);
+    QModelIndex indexOfTheCellIWant = transmissionListModel->index(transmissionListModel->rowCount() - 1);
+    ui->transmissionView->setCurrentIndex(indexOfTheCellIWant);
 }
 
 void MainWindow::refreshReceptionList()
 {
     this->receptionListModel->setStringList(*this->receptionMessageList);
+}
+
+void MainWindow::pushTransmissionResponse(QString message)
+{
+    this->pushMessageToTransmissionList(message);
+}
+
+void MainWindow::pushReceptionResponse(QString message)
+{
+    this->pushMessageToReceptionList(message);
 }
 
 void MainWindow::pushMessageToTransmissionList(QString text)
@@ -89,17 +103,16 @@ void MainWindow::on_sendButton_clicked()
 
 void MainWindow::transmitLogin()
 {
-    char message[200] = "";
-    strcpy(message, User::getLoggedUser()->getAddCommand().c_str());
-    this->pushMessageToTransmissionList(QString(message));
-    this->transmissionController->send(message);
+    QString command = QString::fromStdString(User::getLoggedUser()->getAddCommand());
+    this->sendCommand(command);
 }
 
 void MainWindow::sendCommand(QString command)
 {
     QString message = this->getCurrentTime() + " > " + command;
+    char transactionMessage[200];
     this->pushMessageToTransmissionList(message);
-    this->pushMessageToTransmissionList("Sending...");
-    //  Do the transaction
-    this->pushMessageToTransmissionList("Sent");
+    QByteArray array = command.toLocal8Bit();
+    strcpy(transactionMessage, array.data());
+    this->transmissionController->send(transactionMessage);
 }
