@@ -13,26 +13,53 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
+    this->boot();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::boot()
+{
+    this->initControllers();
     this->transmissionController->connectToFifo();
     this->promptForLogin();
-    ui->setupUi(this);
+    this->initListModels();
+    connect(ui->commandInput, SIGNAL(returnPressed()), ui->sendButton, SIGNAL(clicked()));
+    this->pairControllers();
+    this->initLayout();
+    this->transmitLogin();
+}
+
+void MainWindow::initControllers()
+{
+    this->receptionController = new ReceptionController();
+    this->transmissionController = new TransmissionController();
+}
+
+void MainWindow::pairControllers()
+{
+    this->receptionController->setContext(this);
+    this->transmissionController->setContext(this);
+}
+
+void MainWindow::initLayout()
+{
+    this->displayPid();
+    this->displayNickname();
+}
+
+void MainWindow::initListModels()
+{
     this->transmissionListModel = new QStringListModel();
     this->receptionListModel = new QStringListModel();
     this->transmissionMessageList = new QStringList();
     this->receptionMessageList = new QStringList();
     ui->receptionView->setModel(this->receptionListModel);
     ui->transmissionView->setModel(this->transmissionListModel);
-    connect(ui->commandInput, SIGNAL(returnPressed()), ui->sendButton, SIGNAL(clicked()));
-    this->receptionController = new ReceptionController(this);
-    this->transmissionController = new TransmissionController(this);
-    this->displayPid();
-    this->displayNickname();
-    this->transmitLogin();
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
 
 void MainWindow::promptForLogin()

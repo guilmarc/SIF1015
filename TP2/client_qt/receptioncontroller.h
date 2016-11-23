@@ -3,14 +3,16 @@
 
 #include <pthread.h>
 #include "messagableinterface.h"
+#include "transmissioncontroller.h"
+#include "transaction.h"
+#include "basecontroller.h"
 
 #define CLIENT_FIFO_NAME "../../../tmp/cli_%d_fifo"
 
-class ReceptionController
+class ReceptionController : public BaseController
 {
-private:
-    MessagableInterface* context;
 public:
+    ReceptionController();
     ReceptionController(MessagableInterface* context);
     void initRead();
     void readMessages();

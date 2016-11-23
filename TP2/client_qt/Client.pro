@@ -17,14 +17,20 @@ SOURCES += main.cpp\
     transmissioncontroller.cpp \
     receptioncontroller.cpp \
     loginscreen.cpp \
-    user.cpp
+    user.cpp \
+    transaction.cpp \
+    basecontroller.cpp \
+    fifo.cpp
 
 HEADERS  += mainwindow.h \
     transmissioncontroller.h \
     receptioncontroller.h \
     loginscreen.h \
     user.h \
-    messagableinterface.h
+    messagableinterface.h \
+    transaction.h \
+    basecontroller.h \
+    fifo.h
 
 FORMS    += mainwindow.ui \
     loginscreen.ui

@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow, public MessagableInterface
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void initListModels();
     void refreshTransmissionList();
     void refreshReceptionList();
     void pushMessageToTransmissionList(QString text);
@@ -28,6 +29,10 @@ public:
     void transmitLogin();
     void sendCommand(QString command);
     void promptForLogin();
+    void initControllers();
+    void pairControllers();
+    void initLayout();
+    void boot();
     void pushTransmissionResponse(QString message);
     void pushReceptionResponse(QString message);
     QString getCurrentTime();
