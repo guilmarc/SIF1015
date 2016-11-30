@@ -1,52 +1,36 @@
 #include "receptioncontroller.h"
 
-ReceptionController::ReceptionController() {}
-
-ReceptionController::ReceptionController(MessagableInterface* context) : BaseController(context)
+ReceptionController::ReceptionController(std::string name) : BaseController(name)
 {
-    this->pushMessageToContext("Reception initialized");
+    this->getFifo()->create();
 }
 
-
-void ReceptionController::readMessages()
+void* ReceptionController::readMessages(void* controllerReference)
 {
-
+    ReceptionController* thisController = (ReceptionController*)controllerReference;
+    Transaction transaction;
+    thisController->pushMessageToContext("Initialized");
+    thisController->getFifo()->openInRead();
+    while(1) {
+        if (thisController->getFifo()->isOpen()) {
+            if (read(thisController->getFifo()->getDescriptor(), &transaction, sizeof(transaction)) > 0) {
+                thisController->pushMessageToContext(QString(transaction.transaction));
+            }
+        }
+    }
+    thisController->getFifo()->closeFifo();
+    thisController->getFifo()->destroy();
 }
 
 void ReceptionController::initRead()
 {
-    /*int clientFifoFd;
-    Info_FIFO_Transaction transaction;
-    char clientFifo[256];
-
-    transaction.pid_client = getpid();
-    sprintf(clientFifo, CLIENT_FIFO_NAME, my_data.client_pid);
-    if (mkfifo(clientFifo, 0777) == -1) {
-        fprintf(stderr, "Sorry, can't make %s\n", client_fifo);
-        exit(EXIT_FAILURE);
-    }
-
-// For each of the five loops, the client data is sent to the server.
-// Then the client FIFO is opened (read-only, blocking mode) and the data read back.
-// Finally, the server FIFO is closed and the client FIFO removed from memory.
-
-    for (times_to_send = 0; times_to_send < 5; times_to_send++) {
-        sprintf(my_data.some_data, "Hello from %d", my_data.client_pid);
-        printf("%d sent %s, ", my_data.client_pid, my_data.some_data);
-        write(server_fifo_fd, &my_data, sizeof(my_data));
-        clientFifoFd = open(clientFifo, O_RDONLY);
-        if (clientFifo_fd != -1) {
-            if (read(clientFifoFd, &my_data, sizeof(my_data)) > 0) {
-                printf("received: %s\n", my_data.some_data);
-            }
-            close(clientFifoFd);
-        }
-    }
-    unlink(clientFifo);
-    exit(EXIT_SUCCESS);*/
+    pthread_t thread;
+    pthread_create(&thread, NULL, &ReceptionController::readMessages, this);
 }
 
 void ReceptionController::pushMessageToContext(QString message)
 {
-    this->getContext()->pushReceptionResponse(message);
+    if (this->hasContext()) {
+        this->getContext()->pushReceptionResponse(message);
+    }
 }

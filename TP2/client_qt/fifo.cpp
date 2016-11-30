@@ -5,7 +5,7 @@ Fifo::Fifo()
     this->setDescriptor(-1);
 }
 
-Fifo::Fifo(char* name)
+Fifo::Fifo(std::string name)
 {
     this->setDescriptor(-1);
     this->setName(name);
@@ -13,7 +13,7 @@ Fifo::Fifo(char* name)
 
 int Fifo::openFifo(int permission)
 {
-    int returnCode = open(this->getName(), permission);
+    int returnCode = open(this->getName().c_str(), permission);
     this->setDescriptor(returnCode);
     return this->getDescriptor();
 }
@@ -40,12 +40,12 @@ bool Fifo::isOpen()
 
 int Fifo::create()
 {
-    return mkfifo(this->getName(), 0777);
+    return mkfifo(this->getName().c_str(), 0777);
 }
 
 int Fifo::destroy()
 {
-    return unlink(this->getName());
+    return unlink(this->getName().c_str());
 }
 
 int Fifo::getDescriptor()
@@ -53,14 +53,31 @@ int Fifo::getDescriptor()
     return this->descriptor;
 }
 
-char* Fifo::getName()
+std::string Fifo::getName()
 {
     return this->name;
 }
 
-void Fifo::setName(char* name)
+int Fifo::writeTransaction(Transaction transaction)
 {
-    strcpy(this->name, name);
+    return write(this->getDescriptor(), &transaction, sizeof(transaction)) < 0;
+}
+
+int Fifo::test()
+{
+    int returnCode = 0;
+    if (this->openInWrite() == -1) {
+        fprintf(stderr, "Sorry, no server_c\n");
+        returnCode = -1;
+        this->closeFifo();
+    }
+    this->closeFifo();
+    return returnCode;
+}
+
+void Fifo::setName(std::string name)
+{
+    this->name = name;
 }
 
 void Fifo::setDescriptor(int descriptor)

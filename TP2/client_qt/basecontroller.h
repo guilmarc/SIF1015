@@ -6,10 +6,11 @@
 #include <sys/types.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <fcntl.h>
 #include <limits.h>
 #include <sys/stat.h>
+#include "fifo.h"
 
 #define SERVER_FIFO_NAME "../../../tmp/FIFO_TRANSACTIONS"
 #define CLIENT_FIFO_NAME "../../../tmp/cli_%d_fifo"
@@ -17,29 +18,16 @@
 class BaseController
 {
 private:
-    int pid;
     MessagableInterface* context;
-    int serverFileDescriptor = -1;
-    int clientFileDescriptor = -1;
-    char* clientFifoName;
+    Fifo* fifo;
+    void setFifo(Fifo* fifo);
 public:
-    BaseController();
-    BaseController(MessagableInterface* context);
+    BaseController(std::string name);
+    Fifo* getFifo();
     void setContext(MessagableInterface* context);
-    int openServerDescriptor();
-    bool serverDescriptorIsOpen();
-    bool clientDescriptorIsOpen();
-    int openClientDescriptor();
-    int closeServerDescriptor();
-    int closeClientDescriptor();
-    int createClientFifo();
-    int removeClientFifo();
-    int getServerFileDescriptor();
-    int getClientFileDescriptor();
-    char* getClientFifoName();
-    int getPid();
-    int refreshPid();
     MessagableInterface* getContext();
+    bool hasContext();
+    static std::string getQualifiedClienFifoName(int pid);
 };
 
 #endif // BASECONTROLLER_H

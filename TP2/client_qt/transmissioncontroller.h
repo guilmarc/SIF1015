@@ -8,12 +8,8 @@
 class TransmissionController : public BaseController
 {
 public:
-    TransmissionController();
-    TransmissionController(MessagableInterface* context);
+    TransmissionController(std::string name);
     int send(char message[200]);
-    Info_FIFO_Transaction prepareTransaction(char message[200]);
-    void connectToFifo();
-    void printTransaction(Info_FIFO_Transaction transaction);
     void pushMessageToContext(QString message);
 };
 

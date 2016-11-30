@@ -12,10 +12,9 @@
 class ReceptionController : public BaseController
 {
 public:
-    ReceptionController();
-    ReceptionController(MessagableInterface* context);
+    ReceptionController(std::string name);
     void initRead();
-    void readMessages();
+    static void* readMessages(void* data);
     void pushMessageToContext(QString message);
 };
 

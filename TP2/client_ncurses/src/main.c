@@ -76,7 +76,7 @@ int sendTransaction(char* transactionContent) {
 
     serverFifoFd = open(SERVER_FIFO_NAME, O_WRONLY);
     if (serverFifoFd == -1) {
-        fprintf(stderr, "Sorry, no server\n");
+        fprintf(stderr, "Sorry, no server_c\n");
         return -1;
     }
     sprintf(clientFifo, CLIENT_FIFO_NAME, transaction.pid_client);

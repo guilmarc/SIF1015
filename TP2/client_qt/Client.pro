@@ -18,9 +18,9 @@ SOURCES += main.cpp\
     receptioncontroller.cpp \
     loginscreen.cpp \
     user.cpp \
-    transaction.cpp \
     basecontroller.cpp \
-    fifo.cpp
+    fifo.cpp \
+    transaction.cpp
 
 HEADERS  += mainwindow.h \
     transmissioncontroller.h \

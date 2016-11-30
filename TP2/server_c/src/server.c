@@ -15,9 +15,10 @@ void* sendTransaction(void* data){
 
     SendTransactionParams* params = (SendTransactionParams*)data;
 
+    Info_FIFO_Transaction transaction = *(Info_FIFO_Transaction*)params->data;
     client_fifo_fd = open(params->client_fifo, O_WRONLY);
     if (client_fifo_fd != -1) {
-        write(client_fifo_fd, &params->data, sizeof(params->data));
+        write(client_fifo_fd, &transaction, sizeof(transaction));
         close(client_fifo_fd);
     }
 }

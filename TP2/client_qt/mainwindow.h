@@ -6,6 +6,7 @@
 #include "transmissioncontroller.h"
 #include "receptioncontroller.h"
 #include "messagableinterface.h"
+#include <QCloseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -30,11 +31,12 @@ public:
     void sendCommand(QString command);
     void promptForLogin();
     void initControllers();
-    void pairControllers();
     void initLayout();
     void boot();
     void pushTransmissionResponse(QString message);
     void pushReceptionResponse(QString message);
+    std::string getRemoveCommand();
+    void closeEvent (QCloseEvent *event);
     QString getCurrentTime();
     ~MainWindow();
 

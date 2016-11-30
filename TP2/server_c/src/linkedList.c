@@ -125,7 +125,6 @@ void* removeItem(void* data){
     Node * optr;
 
     RemoveItemParams* params = (RemoveItemParams *) data;
-
     //Verification sommaire liste non vide
 
     if ((head == NULL) && (queue == NULL)) {
@@ -189,7 +188,9 @@ void* removeItem(void* data){
         }
 
     }
-    return NULL;
+    Info_FIFO_Transaction *structure = (Info_FIFO_Transaction*)malloc(sizeof(Info_FIFO_Transaction));
+    strcpy(structure->transaction, "Utilisateur retiré");
+    return structure;
 }
 
 
@@ -210,11 +211,18 @@ void* listItemsWithinInterval(void* data){
 
         //L'item a un numero sequentiel dans l'interval defini
         if ((entryId >= params->start) && (entryId <= params->end)){
-            printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
+            char message[255];
+            strcpy(message, "");
+            sprintf(message, "%d: %s | %s | %s | %d",
+                    entryId,
+                    ptr->member.nickname, ptr->member.speciality,
+                    ptr->member.scholarships, ptr->member.experience);
+            /*printf("%d: %s \t\t  %s \t\t %s \t\t  %d\n",
                 entryId,
                 ptr->member.nickname, ptr->member.speciality,
                 ptr->member.scholarships, ptr->member.experience
-            );
+            );*/
+            printf("%s", message);
         }
         if (entryId > params->end){
             //L'ensemble des items potentiels sont maintenant passes

@@ -5,7 +5,7 @@ project(SIF1015)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pthread")
 
 #However, the file(GLOB...) allows for wildcard additions:
-file(GLOB SOURCES "src/*.c")
+file(GLOB SOURCES "src/*.cpp")
 
 #Bring the headers, such as Student.h into the project
 include_directories(src)

@@ -5,24 +5,12 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-struct Info_FIFO_Transaction {
+struct Transaction {
     pid_t pid_client;
     int status_code;
     char transaction[200];
 };
 
-class Transaction
-{
-private:
-    int status_code = 0;
-    std::string transaction;
-public:
-    Transaction();
-    std::string getTransaction();
-    char* getTransactionAsCStr();
-    Info_FIFO_Transaction toTransaction();
-    int getStatusCode();
-    pid_t getPidClient();
-};
-
+void printTransaction(Transaction transaction);
+Transaction prepareTransaction(char message[200]);
 #endif // TRANSACTION_H

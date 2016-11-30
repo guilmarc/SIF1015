@@ -6,6 +6,8 @@
 #include "receptioncontroller.h"
 #include "user.h"
 #include <string.h>
+#include <QCloseEvent>
+#include <QMessageBox>
 
 const QString MainWindow::TIME_FORMAT = "HH:mm:ss";
 
@@ -25,23 +27,19 @@ MainWindow::~MainWindow()
 void MainWindow::boot()
 {
     this->initControllers();
-    this->transmissionController->connectToFifo();
     this->promptForLogin();
     this->initListModels();
-    connect(ui->commandInput, SIGNAL(returnPressed()), ui->sendButton, SIGNAL(clicked()));
-    this->pairControllers();
     this->initLayout();
+    this->receptionController->initRead();
     this->transmitLogin();
 }
 
 void MainWindow::initControllers()
 {
-    this->receptionController = new ReceptionController();
-    this->transmissionController = new TransmissionController();
-}
-
-void MainWindow::pairControllers()
-{
+    std::string receptionName = BaseController::getQualifiedClienFifoName(getpid());
+    std::string transmissionName = SERVER_FIFO_NAME;
+    this->receptionController = new ReceptionController(receptionName);
+    this->transmissionController = new TransmissionController(transmissionName);
     this->receptionController->setContext(this);
     this->transmissionController->setContext(this);
 }
@@ -50,6 +48,7 @@ void MainWindow::initLayout()
 {
     this->displayPid();
     this->displayNickname();
+    connect(ui->commandInput, SIGNAL(returnPressed()), ui->sendButton, SIGNAL(clicked()));
 }
 
 void MainWindow::initListModels()
@@ -73,13 +72,15 @@ void MainWindow::promptForLogin()
 void MainWindow::refreshTransmissionList()
 {
     this->transmissionListModel->setStringList(*this->transmissionMessageList);
-    QModelIndex indexOfTheCellIWant = transmissionListModel->index(transmissionListModel->rowCount() - 1);
-    ui->transmissionView->setCurrentIndex(indexOfTheCellIWant);
+    QModelIndex lastCellIndex = transmissionListModel->index(transmissionListModel->rowCount() - 1);
+    ui->transmissionView->setCurrentIndex(lastCellIndex);
 }
 
 void MainWindow::refreshReceptionList()
 {
     this->receptionListModel->setStringList(*this->receptionMessageList);
+    QModelIndex lastCellIndex = receptionListModel->index(receptionListModel->rowCount() - 1);
+    ui->receptionView->setCurrentIndex(lastCellIndex);
 }
 
 void MainWindow::pushTransmissionResponse(QString message)
@@ -106,7 +107,7 @@ void MainWindow::pushMessageToReceptionList(QString text)
 
 void MainWindow::displayPid()
 {
-    ui->pidLabel->setText(QString("PID : %1").arg(this->transmissionController->getPid()));
+    ui->pidLabel->setText(QString("PID : %1").arg(getpid()));
 }
 
 void MainWindow::displayNickname()
@@ -124,8 +125,17 @@ QString MainWindow::getCurrentTime()
 void MainWindow::on_sendButton_clicked()
 {
     QString text = ui->commandInput->text();
-    ui->commandInput->setText("");
-    this->sendCommand(text);
+    if(text.compare("quit") == 0) {
+        this->close();
+    } else {
+        ui->commandInput->setText("");
+        this->sendCommand(text);
+    }
+}
+
+std::string MainWindow::getRemoveCommand()
+{
+    return "E " + User::getLoggedUser()->getNickname();
 }
 
 void MainWindow::transmitLogin()
@@ -142,4 +152,18 @@ void MainWindow::sendCommand(QString command)
     QByteArray array = command.toLocal8Bit();
     strcpy(transactionMessage, array.data());
     this->transmissionController->send(transactionMessage);
+}
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    QMessageBox::StandardButton responseBtn = QMessageBox::question(this, "Client", tr("Êtes-vous sur de vouloir vous déconnecter?\n"),
+                                                                QMessageBox::Cancel | QMessageBox::Yes,
+                                                                QMessageBox::Yes);
+    if (responseBtn != QMessageBox::Yes) {
+        event->ignore();
+    } else {
+        this->sendCommand(QString::fromStdString(this->getRemoveCommand()));
+        this->receptionController->getFifo()->destroy();
+        event->accept();
+    }
 }

@@ -1,30 +1,15 @@
 #include "transaction.h"
 
-Transaction::Transaction()
+void printTransaction(Transaction transaction)
 {
-    this->transaction = "";
+    fprintf(stderr, "\nTRANSACTION\n-\tPID: %i;\n-\tContent: %s;\n\n", transaction.pid_client, transaction.transaction);
 }
 
-std::string Transaction::getTransaction()
+Transaction prepareTransaction(char message[200])
 {
-    return this->transaction;
-}
-
-Info_FIFO_Transaction Transaction::toTransaction()
-{
-    Info_FIFO_Transaction transaction;
-    transaction.pid_client = this->getPidClient();
-    transaction.status_code = this->getStatusCode();
-    strcpy(transaction.transaction, this->getTransaction().c_str());
+    Transaction transaction;
+    transaction.status_code = 0;
+    transaction.pid_client = getpid();
+    strcpy(transaction.transaction, message);
     return transaction;
-}
-
-int Transaction::getStatusCode()
-{
-    return this->status_code;
-}
-
-pid_t Transaction::getPidClient()
-{
-    return getpid();
 }
