@@ -1,5 +1,0 @@
-A tidge PHPMastermind DEC 1
-A elac PHPNewbie DEC 1
-L C 1-15
-M 2 elac PHPMastermind DEC 2
-L C 1-15

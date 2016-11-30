@@ -28,3 +28,13 @@
 *.exe
 *.out
 *.app
+
+.idea/
+TP2/.idea/
+
+.DS_Store
+
+*.xml
+
+TP2/bin/
+
