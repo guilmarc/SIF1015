@@ -8,9 +8,17 @@
 #include <sys/un.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/stat.h>
 
 int main()
 {
+
+    //Ce code fonctionne pour la lecture des stats de fichier
+    struct stat filestat;
+    stat("data.txt", &filestat);
+
+    //TEST D'UTILISATION DE STAT
+
     int server_sockfd, client_sockfd;
     int server_len, client_len;
     struct sockaddr_un server_address;
