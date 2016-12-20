@@ -12,6 +12,18 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+
+
+char* getFileName() {
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read = 0;
+
+    puts("Entrez le nom du fichier : ");
+    read = getline(&line, &len, stdin);
+    return line;
+}
 
 int main()
 {
@@ -19,7 +31,10 @@ int main()
     int len;
     struct sockaddr_in address;
     int result;
-    char ch= 'A';
+
+    //char* filename = getFileName();
+    //char* filename = "data.txt";
+    char filename[50] = "data.txt";
 
     //Créer un socket pour le client
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -27,7 +42,7 @@ int main()
     //Nommer le socket tel que demandé par le serveur
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = inet_addr("127.0.0.1");
-    address.sin_port = 9734;
+    address.sin_port = 9994;
     len = sizeof(address);
 
     //Connexion du socket local au socket du serveur déjà en mémoire
@@ -38,9 +53,13 @@ int main()
     }
 
     //Il est maintenant possible d'écrire et de lire via sockfd
-    write(sockfd, &ch, 1);
-    read(sockfd, &ch, 1);
-    printf("Donnée reçues du serveur = %c\n", ch);
+
+    struct stat filestat;   //Structure contenant les infos d'un fichier
+
+    write(sockfd, &filename, sizeof(filename));
+    read(sockfd, &filestat, sizeof(filestat));
+    printf("Donnée reçues du serveur = %d\n", filestat.st_size);
     close(sockfd);
     exit(0);
 }
+
