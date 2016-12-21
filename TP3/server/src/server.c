@@ -13,22 +13,26 @@
 
 #include <stdlib.h>
 
+#include <pthread.h>
+
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR -1
 #define PORT = 9999
 #define MAX_CONNECTIONS = 5
 
 void runServer();
+void readStat();
+void* sendFileStat(void* arg);
 
 int main()
 {
 
     //Ce code fonctionne pour la lecture des stats de fichier
-    struct stat filestat;
-    stat("data.txt", &filestat);
+    //struct stat filestat;
+    //stat("data.txt", &filestat);
 
     runServer();
-
+    //readStat();
 }
 
 
@@ -69,6 +73,15 @@ int main()
 //
 //    }
 //}
+//void readStat(){
+//    struct stat filestat;
+//
+//    stat("data.txt", &filestat);
+//
+//    printf("SERVEUR: Taille du fichiers = %d\n", filestat.st_size);
+//}
+
+
 
 void runServer() {
 
@@ -85,7 +98,7 @@ void runServer() {
 
     sin.sin_family = AF_INET;
 
-    sin.sin_port = 9994; // htons(9999);
+    sin.sin_port = 9992; // htons(9999);
 
     if (bind(server_socket, (struct sockaddr *) &sin, sizeof sin) == SOCKET_ERROR) {
         perror("Impossible de lier le socket à l'adapteur réseau");
@@ -106,24 +119,37 @@ void runServer() {
 
         int sinsize = sizeof csin;
 
-        client_socket = accept(server_socket, (struct socketaddr *) &csin, &sinsize);
+        client_socket = accept(server_socket, (struct sockaddr *) &csin, &sinsize);
 
         if (client_socket == INVALID_SOCKET) {
             perror("Le serveur est incapable d'accepter la connexion");
             exit(-1);
         }
 
-        char filename[50];
-        read(client_socket, &filename, 50);
-
-        printf("SERVEUR: Donnée reçue du client = %s\n", filename);
-
-        struct stat filestat;
-        stat(&filename, &filestat);
-
-        write(client_socket, &filestat, sizeof(filestat));
-
-        close(client_socket);
+        pthread_t client_th;
+        pthread_create(&client_th, NULL, sendFileStat, &client_socket);
 
     }
+}
+
+
+void* sendFileStat(void* arg){
+
+    int* sockfd = (int*) arg;
+
+    char filename[50];
+     read(sockfd, &filename, 50);
+
+    printf("SERVEUR: Donnée reçue du client = %s\n", filename);
+
+    struct stat filestat;
+    stat(filename, &filestat);
+
+    printf("SERVEUR: Taille du fichier = %d\n", filestat.st_size);
+
+    write(sockfd, &filestat, sizeof(filestat));
+
+    close(*sockfd);
+    pthread_exit(0);
+
 }

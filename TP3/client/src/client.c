@@ -13,7 +13,7 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-
+#include <time.h>
 
 char* getFileName() {
     char *line = NULL;
@@ -32,9 +32,9 @@ int main()
     struct sockaddr_in address;
     int result;
 
-    //char* filename = getFileName();
+    char* filename = getFileName();
     //char* filename = "data.txt";
-    char filename[50] = "data.txt";
+    //char filename[50] = "data.txt";
 
     //Créer un socket pour le client
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -42,7 +42,7 @@ int main()
     //Nommer le socket tel que demandé par le serveur
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = inet_addr("127.0.0.1");
-    address.sin_port = 9994;
+    address.sin_port = 9992;
     len = sizeof(address);
 
     //Connexion du socket local au socket du serveur déjà en mémoire
@@ -57,8 +57,18 @@ int main()
     struct stat filestat;   //Structure contenant les infos d'un fichier
 
     write(sockfd, &filename, sizeof(filename));
+
     read(sockfd, &filestat, sizeof(filestat));
-    printf("Donnée reçues du serveur = %d\n", filestat.st_size);
+
+    printf("CLIENT : Donnée reçues du serveur = %d\n", filestat.st_size);
+
+
+    char date[10];
+    strftime(date, 10, "%d-%m-%y", localtime(&(filestat.st_ctimespec)));
+    printf("The file %s was last modified at %s\n", filename, date);
+
+    //printf("CLIENT: Date du fichier = %s\n",  localtime(&(filestat.st_ctimespec)) );
+
     close(sockfd);
     exit(0);
 }
